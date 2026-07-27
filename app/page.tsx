@@ -14,12 +14,23 @@ import { DesktopSidebar } from "@/components/DesktopSidebar";
 import { MobileHeader } from "@/components/MobileHeader";
 
 export default function Page() {
-  const { screen, darkModeEnabled } = useAskillaStore();
+  const { screen, darkModeEnabled, user, setScreen } = useAskillaStore();
   const [mounted, setMounted] = React.useState(false);
 
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  // Auto-redirect returning users who already completed onboarding
+  useEffect(() => {
+    if (!mounted) return;
+    const isReturningUser = user.name && user.name.trim().length > 0;
+    const isOnboardingScreen = screen === "landing" || screen === "onboarding" || screen === "intro";
+
+    if (isReturningUser && isOnboardingScreen) {
+      setScreen("home");
+    }
+  }, [mounted, user.name, screen, setScreen]);
 
   useEffect(() => {
     if (darkModeEnabled) {

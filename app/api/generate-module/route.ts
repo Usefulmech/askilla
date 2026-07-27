@@ -3,6 +3,8 @@ import { generateAskillaModule } from "@/lib/ai/module-generator";
 import { prisma } from "@/lib/db/prisma";
 import { LearningLanguage } from "@/lib/types/askilla";
 
+export const dynamic = "force-dynamic";
+
 export async function POST(req: Request) {
   try {
     const body = await req.json();

@@ -1,177 +1,128 @@
-# 🎓 Askilla — AI Tutor ("Ask Anything. Sabi Everything.")
+# Askilla — AI Learning Platform
 
 > **3MTT Knowledge Showcase 2.0 Project**  
-> An AI-powered conversational tutor designed for Nigerian learners across all educational levels (WAEC, JAMB, University, Digital Skills, Business Writing). Askilla breaks down any topic into bite-sized micro-lesson modules in **Standard English** and **Nigerian Pidgin** with warm feedback from **Uncle Sabi**, voice STT/TTS capabilities, and zero red-X shaming.
+> Askilla is an AI-powered educational tutor designed for Nigerian learners across high school exams (WAEC/JAMB), university STEM courses, career digital skills, and business writing. It breaks down complex topics into structured micro-lessons in **Standard English** and **Nigerian Pidgin**, featuring warm feedback from **Uncle Sabi**, neural voice synthesis, and zero-shame check-in assessments.
 
 ---
 
-## 🌟 Key Features
+## Core Capabilities
 
-- **🗣️ Bilingual Learning Support:** Lessons, explanations, questions, and feedback generated natively in Standard English and Nigerian Pidgin.
-- **👨‍🏫 Uncle Sabi Tutor Persona:** Warm, patient Nigerian tutor tone that never shames learners. Replaces red X's with encouraging hints (*"You're close! Let's think about it differently."*).
-- **🎤 Voice STT & TTS:** Speak answers directly using browser Speech Recognition (`en-NG` / native English) and listen to explanations read aloud with Speech Synthesis.
-- **⚡ AI & Offline Native Engine:** Powered by OpenAI GPT-4o for live custom topic generation, with an instant offline fallback generator.
-- **📊 PostgreSQL & Analytics Dataset:** Full Prisma ORM schema connected to Neon Serverless Postgres for user sessions, module caching, and attempt analytics.
-- **🎨 Warm Notebook Design System:** Strict 3-color palette (`#F5F5F0` base background, `#2D2D2D` text, `#D4A574` primary action) with Plus Jakarta Sans & Inter typography.
-- **🏆 Shareable Completion Cards:** Generate "I Sabi [Topic] Now!" cards to share wins on WhatsApp and social media.
+- **Bilingual Support**: Instant lesson generation in Standard English and authentic Nigerian Pidgin.
+- **Uncle Sabi Tutor Persona**: Patient, encouraging instructional tone with multi-tier hints instead of red-X shaming.
+- **Neural Voice Tutor**: Text-to-speech audio synthesis (`tts-1-hd`) with Pidgin cadence pre-processing and voice input.
+- **Concept Visualizer**: Embedded vector SVG diagrams modeling exact scientific mechanisms, mathematical proofs, and technical workflows.
+- **Neon PostgreSQL Persistence**: Connected via Prisma ORM for user progress tracking, module caching, and attempt analytics.
+- **Verified Educational Citations**: Real-world source attributions from Khan Academy, OpenStax, and educational portals.
 
 ---
 
-## 🏗️ Architecture & Project Structure
-
-The codebase is organized cleanly into decoupled frontend, backend, and database layers:
+## Architecture & Project Structure
 
 ```
 askilla/
-├── app/                        # Next.js 15 App Router (Frontend Pages & API Routes)
-│   ├── api/                    # Serverless Backend Endpoints
-│   │   ├── generate-module/    # AI Topic Generation & DB Cache API
-│   │   └── progress/           # User Attempt & Analytics API
-│   ├── globals.css             # Theme Tokens, Fonts, & Micro-animations
-│   ├── layout.tsx              # Root HTML Layout & Viewport Configuration
-│   └── page.tsx                # Main Screen Flow Router
+├── app/                        # Next.js 14 App Router (Pages & Serverless API Routes)
+│   ├── admin/dataset/          # Private Creator Analytics & Dataset Hub
+│   ├── api/                    # Serverless Endpoints (generate-module, analytics, tts, chat)
+│   ├── globals.css             # Design Tokens & Micro-animations
+│   ├── layout.tsx              # Root HTML Layout & Viewport Metadata
+│   ├── page.tsx                # Main Screen Controller
+│   └── share/                  # Certificate Verification & Share Page
 ├── components/                 # Reusable React UI Components
-│   ├── UncleSabiMascot.tsx     # Uncle Sabi Avatar & Speech Bubble System
-│   ├── LanguageSelector.tsx    # Native Language Pill Selectors
-│   ├── VoiceInput.tsx          # Browser SpeechRecognition STT Component
-│   ├── AudioPlayer.tsx         # Browser SpeechSynthesis TTS Component
-│   ├── OnboardingModal.tsx     # Screen 0: Language & User Onboarding
-│   ├── IntroWalkthrough.tsx    # Screen 1: 3-Step Animated Walkthrough
-│   ├── HomeDashboard.tsx       # Screen 2: Topic Picker & Trending Topics
-│   ├── LearningSession.tsx     # Screen 3 & 4: Core Lesson, Question & Feedback
-│   ├── ProgressDashboard.tsx   # Screen 5: Circular Ring & Achievement Card
-│   ├── SettingsView.tsx        # Screen 6: Language & Preferences Toggles
-│   └── BottomNav.tsx           # Mobile Thumb Navigation Bar
-├── lib/                        # Shared Utilities & Backend Services
-│   ├── ai/                     # LLM Prompts & Native Module Generator
-│   │   ├── prompts.ts          # Structured Prompt Engineering
-│   │   └── module-generator.ts # OpenAI API Integration & Native Fallbacks
-│   ├── db/                     # Prisma Client Singleton
-│   │   └── prisma.ts           # PostgreSQL Database Connection
-│   ├── store/                  # Client State Management
-│   │   └── useAskillaStore.ts  # Zustand App Store
-│   └── types/                  # TypeScript Interfaces
-│       └── askilla.ts          # Module & Question Data Models
-├── prisma/                     # Database Models & Migrations
-│   └── schema.prisma           # PostgreSQL Prisma Schema
-├── .env.example                # Environment Variable Template
-├── .gitignore                  # Git Exclusion Rules
-├── package.json                # Project Dependencies & Scripts
-├── tailwind.config.js          # Tailwind CSS Configuration
-└── tsconfig.json               # TypeScript Configuration
+│   ├── HomeDashboard.tsx       # Search Bar & Trending Study Tracks
+│   ├── LearningSession.tsx     # Active Lesson, SVG Visualizer & Check-in Questions
+│   ├── ProgressDashboard.tsx   # Learning Analytics & Certificate Archive
+│   ├── AudioPlayer.tsx         # Neural TTS Audio Player
+│   ├── OnboardingModal.tsx     # Required Student Onboarding
+│   └── SettingsView.tsx        # Language & Dark Mode Toggles
+├── lib/                        # Shared Utilities & AI Engine
+│   ├── ai/                     # Prompt Engineering & Module Generation
+│   ├── db/                     # Prisma PostgreSQL Client Singleton
+│   └── store/                  # Zustand App Store
+├── prisma/                     # Database Models & Schema Definition
+│   └── schema.prisma           # PostgreSQL Schema (User, UserProgress, QuestionAttempt, DatasetLog)
+└── public/                     # Static Assets & Favicon Branding
 ```
 
 ---
 
-## 🚀 Full Installation & Setup Guide
+## Environment Setup
 
-### 1. Prerequisites
-
-Ensure you have the following installed on your machine:
+### 1. Requirements
 - **Node.js**: v18.17.0 or higher
-- **npm** (or `pnpm` / `yarn`)
-- **Git**
+- **npm** v9.0.0 or higher
+- **PostgreSQL**: Neon Serverless Postgres instance
 
 ---
 
-### 2. Clone & Install Dependencies
+### 2. Installation & Configuration
 
-```bash
-# Clone the repository
-git clone https://github.com/your-username/askilla.git
+1. Clone the repository and install dependencies:
+   ```bash
+   git clone https://github.com/Usefulmech/askilla.git
+   cd askilla
+   npm install
+   ```
 
-# Navigate into project directory
-cd askilla
+2. Create a `.env` file in the root directory:
+   ```env
+   # Neon PostgreSQL Connection Strings
+   DATABASE_URL="postgresql://user:password@ep-floral-meadow-123456.us-east-2.aws.neon.tech/askilla?sslmode=require"
+   DIRECT_URL="postgresql://user:password@ep-floral-meadow-123456.us-east-2.aws.neon.tech/askilla?sslmode=require"
 
-# Install dependencies
-npm install
-```
+   # OpenAI Credentials
+   OPENAI_API_KEY="sk-proj-your-openai-api-key"
 
----
+   # Optional Tavily Web Search Key
+   TAVILY_API_KEY="tvly-your-tavily-api-key"
 
-### 3. Configure Environment Variables
+   # App URL
+   NEXT_PUBLIC_APP_URL="http://localhost:3000"
+   ```
 
-Create a `.env.local` file in the root directory by copying `.env.example`:
+3. Generate Prisma Client and synchronize database schema:
+   ```bash
+   npx prisma generate
+   npx prisma db push
+   ```
 
-```bash
-cp .env.example .env.local
-```
-
-Open `.env.local` and add your database and OpenAI credentials:
-
-```env
-# Database Connection String for PostgreSQL (Neon Serverless Postgres)
-DATABASE_URL="postgresql://user:password@ep-cool-sample-123456.us-east-2.aws.neon.tech/askilla?sslmode=require"
-
-# OpenAI API Key for GPT-4o (Optional: Fallback engine works automatically if omitted)
-OPENAI_API_KEY="sk-proj-your-actual-openai-api-key"
-
-# Environment Mode
-NODE_ENV="development"
-```
-
----
-
-### 4. Setup Database (Neon PostgreSQL + Prisma)
-
-Generate the Prisma Client and push the schema to your Neon PostgreSQL database:
-
-```bash
-# Generate Prisma Client types
-npm run db:generate
-
-# Push schema directly to Neon PostgreSQL database
-npm run db:push
-```
+4. Run the development server:
+   ```bash
+   npm run dev
+   ```
+   Open [http://localhost:3000](http://localhost:3000) to access Askilla locally.
 
 ---
 
-### 5. Run Development Server
+## Production Vercel Deployment Guide
 
-Start the local Next.js development server:
+To deploy Askilla to Vercel Cloud:
 
-```bash
-npm run dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) in your browser to test Askilla.
-
----
-
-## 🛠️ Available Scripts
-
-In the project directory, you can run:
-
-- `npm run dev` — Starts the development server at `localhost:3000`
-- `npm run build` — Builds the production bundle
-- `npm run start` — Starts the production server
-- `npm run db:generate` — Generates Prisma client types
-- `npm run db:push` — Synchronizes schema changes to your PostgreSQL database
+1. Push your latest codebase to GitHub.
+2. Import the repository on [Vercel](https://vercel.com/new).
+3. Configure the Project Environment Variables (`OPENAI_API_KEY`, `DATABASE_URL`, `DIRECT_URL`, `NEXT_PUBLIC_APP_URL`).
+4. Set Build Command: `npx prisma generate && next build`.
+5. Click **Deploy**.
 
 ---
 
-## 📱 Interactive User Flow (7 Screens)
+## Available Scripts
 
-1. **Onboarding (Screen 0):** Select your preferred learning language (English, Pidgin, Yoruba, Hausa, Igbo) and enter your phone number/name.
-2. **Walkthrough (Screen 1):** 3-step animated intro ("Ask anything", "Learn your way", "Sabi everything").
-3. **Home Dashboard (Screen 2):** Type or speak any topic in the search bar or choose from trending pills (*WAEC Math*, *JAMB English*, *Excel Basics*, *Data Analysis*).
-4. **Learning Session (Screen 3):** Read micro-lessons with bolded English terms, native language guides, SVG diagrams, and faint source citations. Listen via voice TTS or speak your answer via mic.
-5. **Feedback States (Screen 4):** Receive encouraging Uncle Sabi feedback. Correct answers trigger celebration confetti; wrong answers provide multi-tier hints without shaming.
-6. **Progress View (Screen 5):** Track your progress with the circular progress ring and generate shareable achievement cards.
-7. **Settings (Screen 6):** Change your learning language anytime, toggle voice feedback, or switch dark mode.
+- `npm run dev` — Starts local development server at `localhost:3000`
+- `npm run build` — Builds optimized Next.js production bundle
+- `npm run start` — Starts production build server
+- `npx tsc --noEmit` — Executes TypeScript type verification
 
 ---
 
-## 🔒 Developer / Creator ML Dataset Hub
+## Developer ML Dataset & Analytics Hub
 
 Askilla includes an automated background educational interaction logger for AI model fine-tuning and predictive analytics:
 
-- **Local Dataset Path**: Saved automatically to `data/askilla_ml_dataset.jsonl` in structured JSONL format.
-- **Private Creator Admin Route**: Access `/admin/dataset` (e.g. `http://localhost:3000/admin/dataset`) to view live interaction metrics, inspect sample entries, and download `.jsonl` or `.csv` training datasets with 1 click.
-- **Student Privacy**: All dataset export tools are hidden from the student UI for a clean, distraction-free learning experience.
+- **Database Persistence**: Written directly to Neon PostgreSQL (`prisma.datasetLog`).
+- **Creator Admin Route**: Access `/admin/dataset` to view live interaction metrics, inspect sample entries, and download `.jsonl` or `.csv` training datasets.
 
 ---
 
-## 📜 License
+## License
 
-This project is created for the **3MTT Knowledge Showcase 2.0**. All rights reserved.
+Created for the **3MTT Knowledge Showcase 2.0**. All rights reserved.

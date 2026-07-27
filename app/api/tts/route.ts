@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 
 export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 // Phonetically transforms written Pidgin into stress-accented text for OpenAI Neural TTS to speak with authentic Nigerian cadence
 function phoneticPidginCadence(text: string): string {

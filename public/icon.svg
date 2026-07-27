@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <!-- Outer Ring & Circular Shield -->
+  <circle cx="256" cy="256" r="240" fill="#1E1E1E" stroke="#D4A574" stroke-width="20"/>
+  <circle cx="256" cy="256" r="210" fill="#252525" stroke="#D4A574" stroke-width="6" stroke-dasharray="16 12"/>
+
+  <!-- Stylized Askilla "A" Monogram -->
+  <!-- Left Leg of "A" -->
+  <path d="M 140 390 L 232 120 L 276 120 L 205 390 Z" fill="#D4A574"/>
+  
+  <!-- Right Leg of "A" -->
+  <path d="M 236 120 L 280 120 L 372 390 L 307 390 Z" fill="#E6C594"/>
+  
+  <!-- Graduation Cap Apex on top of "A" -->
+  <polygon points="256,70 330,110 256,150 182,110" fill="#FAFAD5" stroke="#D4A574" stroke-width="8"/>
+  <path d="M 330 110 L 330 170 L 340 180 L 320 180 Z" fill="#D4A574"/>
+  
+  <!-- Crossbar Spark of "A" (AI Knowledge Bridge) -->
+  <path d="M 175 295 L 337 295 L 320 335 L 192 335 Z" fill="#FAFAD5"/>
+  <circle cx="256" cy="315" r="14" fill="#D4A574"/>
+  
+  <!-- Sparkle Accent -->
+  <path d="M 380 160 Q 380 180 400 180 Q 380 180 380 200 Q 380 180 360 180 Q 380 180 380 160 Z" fill="#D4A574"/>
+</svg>

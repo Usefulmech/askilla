@@ -39,13 +39,20 @@ export const LearningSession: React.FC = () => {
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  // Auto-scroll to bottom of chat
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
-
   useEffect(() => {
-    scrollToBottom();
+    if (messages.length === 0) return;
+    const lastMsg = messages[messages.length - 1];
+
+    if (lastMsg.sender === "student" || isLoading || hintText || showAnswer) {
+      messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    } else if (lastMsg.sender === "uncle_sabi") {
+      const msgElement = document.getElementById(lastMsg.id);
+      if (msgElement) {
+        msgElement.scrollIntoView({ behavior: "smooth", block: "start" });
+      } else {
+        messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+      }
+    }
   }, [messages, isLoading, hintText, showAnswer]);
 
   // Initial Welcome, Resume Session, or Finished Track Options
@@ -871,8 +878,11 @@ export const LearningSession: React.FC = () => {
                   </span>
                 </div>
                 <div className="flex items-center gap-3 shrink-0">
-                  <span>
+                  <span className="hidden sm:inline">
                     {isAllFinished ? `Completed (${totalMods} of ${totalMods})` : `Lesson ${activeIndex + 1} of ${totalMods}`}
+                  </span>
+                  <span className="sm:hidden">
+                    {activeIndex + 1}/{totalMods}
                   </span>
                   <div className="w-16 sm:w-28 h-2 bg-[#E0E0E0] dark:bg-[#2D2D2D] rounded-full overflow-hidden shadow-inner">
                     <div 
@@ -896,11 +906,12 @@ export const LearningSession: React.FC = () => {
 
               return (
                 <motion.div
+                  id={msg.id}
                   key={msg.id}
                   initial={{ opacity: 0, y: 15, scale: 0.98 }}
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   transition={{ duration: 0.35 }}
-                  className={`flex items-start gap-2.5 sm:gap-3.5 w-full min-w-0 ${isSabi ? "justify-start" : "justify-end"}`}
+                  className={`flex items-start gap-2.5 sm:gap-3.5 w-full min-w-0 scroll-mt-40 ${isSabi ? "justify-start" : "justify-end"}`}
                 >
                   {/* Sabi Avatar */}
                   {isSabi && (
@@ -994,9 +1005,12 @@ export const LearningSession: React.FC = () => {
                         </div>
                       ) : msg.type === "question" ? (
                         <div className="space-y-4">
-                          <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#BA7A3B]">
-                            Check-in Question
-                          </span>
+                          <div className="flex items-center justify-between gap-2 border-b border-[#E0E0E0]/60 dark:border-[#2D2D2D]/60 pb-2">
+                            <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#BA7A3B]">
+                              Check-in Question
+                            </span>
+                            <AudioPlayer text={msg.content} />
+                          </div>
                           <h4 className="font-heading font-extrabold text-sm sm:text-base leading-snug text-[#2D2D2D] dark:text-[#EAEAEA]">
                             {renderFormattedText(msg.content)}
                           </h4>
@@ -1031,8 +1045,18 @@ export const LearningSession: React.FC = () => {
                         </div>
                       ) : (
                         // Standard Text Bubble
-                        <div className="text-xs sm:text-sm font-sans font-medium whitespace-pre-line leading-relaxed">
-                          {renderFormattedText(msg.content)}
+                        <div className="space-y-3.5">
+                          {isSabi && (
+                            <div className="flex items-center justify-between gap-2 border-b border-[#E0E0E0]/60 dark:border-[#2D2D2D]/60 pb-2">
+                              <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#BA7A3B]">
+                                Uncle Sabi Says
+                              </span>
+                              <AudioPlayer text={msg.content} />
+                            </div>
+                          )}
+                          <div className="text-xs sm:text-sm font-sans font-medium whitespace-pre-line leading-relaxed">
+                            {renderFormattedText(msg.content)}
+                          </div>
                         </div>
                       )}
                     </div>

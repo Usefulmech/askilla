@@ -95,7 +95,7 @@ export const MobileHeader: React.FC = () => {
 
                 <nav className="space-y-1.5">
                   {[
-                    { screen: "home" as const, label: "Home Dashboard", icon: Home },
+                    { screen: "home" as const, label: "Home", icon: Home },
                     { screen: "progress" as const, label: "My Learning Progress", icon: BookOpen },
                     { screen: "module" as const, label: "Active Practice", icon: Target },
                     { screen: "settings" as const, label: "Profile Settings", icon: User }

@@ -513,10 +513,11 @@ export const HomeDashboard: React.FC = () => {
                     setScreen("module");
                   }
                 }}
-                className="w-full p-5 rounded-2xl bg-[#FAFAD5] dark:bg-[#2D2D15] border-2 border-[#BA7A3B] dark:border-[#8E5724] hover:shadow-md cursor-pointer transition-all flex items-center justify-between group text-left active:scale-[0.98]"
+                className="w-full bg-[#FAFAD5]/50 dark:bg-[#1E1E1E]/60 border border-[#BA7A3B]/40 hover:border-[#BA7A3B] rounded-3xl p-5 sm:p-6 text-left flex flex-col sm:flex-row sm:items-center justify-between gap-4 transition-all hover:shadow-md group active:scale-[0.98]"
               >
-                <div className="space-y-1.5 flex-1 pr-4">
-                  <div className="flex items-center gap-2">
+                <div className="flex-1 min-w-0 w-full">
+                  <div className="flex items-center gap-2 mb-1.5">
+                    <div className="w-1.5 h-1.5 rounded-full bg-[#BA7A3B] animate-pulse" />
                     <span className="text-[10px] font-extrabold uppercase text-[#BA7A3B]">
                       {completedModuleIds.length >= currentCourse.modules.length
                         ? "Course Completed"
@@ -526,12 +527,12 @@ export const HomeDashboard: React.FC = () => {
                   <h3 className="font-heading font-bold text-base text-[#2D2D2D] dark:text-[#EAEAEA] truncate">
                     {currentCourse.topic}
                   </h3>
-                  <p className="text-xs sm:text-sm text-[#2D2D2D]/70 dark:text-[#EAEAEA]/70 font-sans font-medium">
+                  <p className="text-xs sm:text-sm text-[#2D2D2D]/70 dark:text-[#EAEAEA]/70 font-sans font-medium mt-1 line-clamp-2">
                     {completedModuleIds.length >= currentCourse.modules.length
                       ? "All modules mastered! Click to view your verified certificate."
                       : `${currentCourse.modules[Math.min(completedModuleIds.length, currentCourse.modules.length - 1)]?.title || "Active Module"}`}
                   </p>
-                  <div className="w-full max-w-xs h-2.5 bg-[#E0E0E0] dark:bg-[#2D2D2D] rounded-full overflow-hidden mt-2.5 shadow-inner">
+                  <div className="w-full h-2.5 bg-[#E0E0E0] dark:bg-[#2D2D2D] rounded-full overflow-hidden mt-3 shadow-inner">
                     <div 
                       className="h-full bg-[#BA7A3B] rounded-full transition-all duration-300" 
                       style={{ width: `${currentCourse.modules.length > 0 ? Math.min(100, Math.round((completedModuleIds.length / currentCourse.modules.length) * 100)) : 0}%` }}
@@ -539,12 +540,12 @@ export const HomeDashboard: React.FC = () => {
                   </div>
                 </div>
 
-                <div className="flex items-center gap-2 text-sm font-extrabold text-[#BA7A3B] transition-all group-hover:translate-x-1 shrink-0">
-                  <span className="hidden sm:inline">
+                <div className="flex items-center justify-end sm:justify-start gap-2 text-[11px] sm:text-sm font-extrabold text-[#BA7A3B] transition-all sm:group-hover:translate-x-1 shrink-0 w-full sm:w-auto uppercase sm:capitalize pt-2 sm:pt-0 border-t sm:border-t-0 border-[#BA7A3B]/10 sm:border-transparent mt-2 sm:mt-0">
+                  <span>
                     {completedModuleIds.length >= currentCourse.modules.length ? "View Win Card" : "Continue"}
                   </span>
-                  <div className="flex items-center justify-center w-9 h-9 rounded-full bg-[#BA7A3B] text-[#2D2D2D] dark:text-[#1E1E1E] shadow-sm shrink-0">
-                    <ArrowRight className="w-4 h-4" />
+                  <div className="flex items-center justify-center w-7 h-7 sm:w-9 sm:h-9 rounded-full bg-[#BA7A3B] text-[#2D2D2D] dark:text-[#1E1E1E] shadow-sm shrink-0">
+                    <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                   </div>
                 </div>
               </button>
@@ -612,7 +613,7 @@ export const HomeDashboard: React.FC = () => {
 
                 <nav className="space-y-1.5">
                   {[
-                    { screen: "home" as const, label: "Home Dashboard", icon: Home },
+                    { screen: "home" as const, label: "Home", icon: Home },
                     { screen: "progress" as const, label: "My Learning Progress", icon: BookOpen },
                     { screen: "module" as const, label: "Active Practice", icon: Target },
                     { screen: "settings" as const, label: "Profile Settings", icon: User }

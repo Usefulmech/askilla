@@ -145,8 +145,6 @@ export const useAskillaStore = create<AskillaState>()(
           activeModuleIndex: 0,
           activeQuestionIndex: 0,
           wrongAttemptCount: 0,
-          completedModuleIds: [],
-          completedCertificates: [],
           user: { id: "user_guest", phone: "", name: "", preferredLanguage: "pidgin" },
         }),
       resetAll: () =>

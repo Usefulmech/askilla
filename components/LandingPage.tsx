@@ -44,9 +44,17 @@ const demoLessons: DemoLesson[] = [
 ];
 
 export const LandingPage: React.FC = () => {
-  const { setScreen } = useAskillaStore();
+  const { setScreen, user } = useAskillaStore();
   const [activeLevelIdx, setActiveLevelIdx] = useState(0);
   const [aboutOpen, setAboutOpen] = useState(false);
+
+  const handleStartLearning = () => {
+    if (user.name) {
+      setScreen("home");
+    } else {
+      setScreen("onboarding");
+    }
+  };
 
   // Auto-rotate levels demo every 6 seconds
   useEffect(() => {
@@ -117,7 +125,7 @@ export const LandingPage: React.FC = () => {
           </button>
           <button
             type="button"
-            onClick={() => setScreen("onboarding")}
+            onClick={handleStartLearning}
             className="px-3.5 sm:px-5 py-1.5 sm:py-2.5 bg-[#D4A574] text-[#2D2D2D] font-heading font-extrabold text-[11px] sm:text-sm rounded-full hover:bg-[#C49463] active:scale-95 transition-all shadow-sm flex items-center gap-1 sm:gap-1.5 whitespace-nowrap shrink-0"
           >
             <span>Start Learning</span>
@@ -164,7 +172,7 @@ export const LandingPage: React.FC = () => {
             >
               <button
                 type="button"
-                onClick={() => setScreen("onboarding")}
+                onClick={handleStartLearning}
                 className="py-2.5 px-5 sm:py-3.5 sm:px-7 bg-gradient-to-r from-[#D4A574] to-[#C49463] text-[#2D2D2D] font-heading font-extrabold text-xs sm:text-base rounded-full shadow-md hover:shadow-lg hover:from-[#C49463] hover:to-[#B38352] active:scale-[0.98] transition-all inline-flex items-center justify-center gap-2 ring-2 sm:ring-4 ring-[#D4A574]/20 max-w-full"
               >
                 <span>Explore Now</span>

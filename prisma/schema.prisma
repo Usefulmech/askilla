@@ -1,0 +1,88 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id                String            @id @default(uuid())
+  phone             String            @unique
+  name              String?
+  preferredLanguage String            @default("english") @map("preferred_language")
+  createdAt         DateTime          @default(now()) @map("created_at")
+
+  progresses        UserProgress[]
+  attempts          QuestionAttempt[]
+
+  @@map("users")
+}
+
+model Module {
+  id          String         @id @default(uuid())
+  topic       String
+  language    String         // 'english', 'pidgin', 'yoruba', 'hausa', 'igbo'
+  difficulty  String?        @default("beginner")
+  content     Json           // Full module JSON payload
+  createdAt   DateTime       @default(now()) @map("created_at")
+
+  progresses  UserProgress[]
+  attempts    QuestionAttempt[]
+
+  @@map("modules")
+}
+
+model UserProgress {
+  id              String    @id @default(uuid())
+  userId          String    @map("user_id")
+  moduleId        String    @map("module_id")
+  currentQuestion Int       @default(0) @map("current_question")
+  correctAnswers  Int       @default(0) @map("correct_answers")
+  wrongAttempts   Int       @default(0) @map("wrong_attempts")
+  completed       Boolean   @default(false)
+  startedAt       DateTime  @default(now()) @map("started_at")
+  completedAt     DateTime? @map("completed_at")
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  module Module @relation(fields: [moduleId], references: [id], onDelete: Cascade)
+
+  @@map("user_progress")
+}
+
+model QuestionAttempt {
+  id            String   @id @default(uuid())
+  userId        String   @map("user_id")
+  moduleId      String   @map("module_id")
+  questionIndex Int      @map("question_index")
+  userAnswer    String   @map("user_answer")
+  isCorrect     Boolean  @map("is_correct")
+  feedbackGiven String?  @map("feedback_given")
+  language      String
+  createdAt     DateTime @default(now()) @map("created_at")
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  module Module @relation(fields: [moduleId], references: [id], onDelete: Cascade)
+
+  @@map("question_attempts")
+}
+
+model DatasetLog {
+  id          String   @id @default(uuid())
+  timestamp   DateTime @default(now())
+  eventType   String   @map("event_type")
+  topic       String
+  language    String
+  level       String   @default("beginner")
+  prompt      String?  @db.Text
+  explanation String?  @db.Text
+  userAnswer  String?  @map("user_answer") @db.Text
+  isCorrect   Boolean? @map("is_correct")
+  feedback    String?  @db.Text
+  metadata    Json?
+
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  @@map("dataset_logs")
+}

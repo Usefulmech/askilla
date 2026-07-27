@@ -7,11 +7,11 @@ import { Award, ArrowRight } from "lucide-react";
 
 function ShareContent() {
   const searchParams = useSearchParams();
-  const learner = searchParams.get("learner") || searchParams.get("name") || "";
-  const topic = searchParams.get("topic") || "Excel Basics";
-  const completed = searchParams.get("completed") || "3";
-  const total = searchParams.get("total") || "5";
-  const lang = searchParams.get("lang") || "pidgin";
+  const learner = searchParams?.get("learner") ?? searchParams?.get("name") ?? "";
+  const topic = searchParams?.get("topic") ?? "Excel Basics";
+  const completed = searchParams?.get("completed") ?? "3";
+  const total = searchParams?.get("total") ?? "5";
+  const lang = searchParams?.get("lang") ?? "pidgin";
 
   const getLanguageLabel = (l: string) => {
     switch (l.toLowerCase()) {

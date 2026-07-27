@@ -2,6 +2,13 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { AppScreen, AskillaCourseModule, CompletedCertificate, LearningLanguage, UserProfile } from "../types/askilla";
 
+interface LocalAnalytics {
+  totalAttempts: number;
+  correctAttempts: number;
+  pidginAttempts: number;
+  englishAttempts: number;
+}
+
 interface AskillaState {
   screen: AppScreen;
   language: LearningLanguage;
@@ -16,6 +23,7 @@ interface AskillaState {
   voiceFeedbackEnabled: boolean;
   darkModeEnabled: boolean;
   isLoadingModule: boolean;
+  localAnalytics: LocalAnalytics;
 
   setScreen: (screen: AppScreen) => void;
   setLanguage: (lang: LearningLanguage) => void;
@@ -30,6 +38,7 @@ interface AskillaState {
   archiveCertificate: (cert: CompletedCertificate) => void;
   toggleVoiceFeedback: () => void;
   toggleDarkMode: () => void;
+  recordAttempt: (isCorrect: boolean, lang: string) => void;
   logout: () => void;
   resetAll: () => void;
 }
@@ -55,6 +64,7 @@ export const useAskillaStore = create<AskillaState>()(
       voiceFeedbackEnabled: true,
       darkModeEnabled: false,
       isLoadingModule: false,
+      localAnalytics: { totalAttempts: 0, correctAttempts: 0, pidginAttempts: 0, englishAttempts: 0 },
 
       setScreen: (screen) => set({ screen }),
       setLanguage: (language) =>
@@ -136,6 +146,15 @@ export const useAskillaStore = create<AskillaState>()(
           if (exists) return state;
           return { completedCertificates: [cert, ...state.completedCertificates] };
         }),
+      recordAttempt: (isCorrect, lang) =>
+        set((state) => ({
+          localAnalytics: {
+            totalAttempts: state.localAnalytics.totalAttempts + 1,
+            correctAttempts: state.localAnalytics.correctAttempts + (isCorrect ? 1 : 0),
+            pidginAttempts: state.localAnalytics.pidginAttempts + (lang.toLowerCase() === "pidgin" ? 1 : 0),
+            englishAttempts: state.localAnalytics.englishAttempts + (lang.toLowerCase() !== "pidgin" ? 1 : 0),
+          },
+        })),
       toggleVoiceFeedback: () => set((state) => ({ voiceFeedbackEnabled: !state.voiceFeedbackEnabled })),
       toggleDarkMode: () => set((state) => ({ darkModeEnabled: !state.darkModeEnabled })),
       logout: () =>
@@ -173,6 +192,7 @@ export const useAskillaStore = create<AskillaState>()(
         completedCertificates: state.completedCertificates,
         voiceFeedbackEnabled: state.voiceFeedbackEnabled,
         darkModeEnabled: state.darkModeEnabled,
+        localAnalytics: state.localAnalytics,
       }),
     }
   )

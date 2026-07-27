@@ -7,6 +7,7 @@ import { Award, ArrowRight } from "lucide-react";
 
 function ShareContent() {
   const searchParams = useSearchParams();
+  const learner = searchParams.get("learner") || searchParams.get("name") || "";
   const topic = searchParams.get("topic") || "Excel Basics";
   const completed = searchParams.get("completed") || "3";
   const total = searchParams.get("total") || "5";
@@ -52,7 +53,12 @@ function ShareContent() {
         </div>
 
         {/* Brand Name */}
-        <div className="space-y-1">
+        <div className="space-y-2 flex flex-col items-center">
+          <img
+            src="/icon.svg"
+            alt="Askilla Logo"
+            className="w-10 h-10 rounded-xl shadow-sm border border-[#D4A574]/40"
+          />
           <span className="text-[10px] font-heading font-extrabold text-[#D4A574] tracking-widest uppercase">Askilla AI Tutor</span>
           <h2 className="font-heading font-extrabold text-3xl text-[#2D2D2D] dark:text-[#EAEAEA] tracking-tight">
             Sabi Certificate
@@ -62,7 +68,7 @@ function ShareContent() {
         {/* Certificate Statement */}
         <div className="space-y-4 py-2 border-y border-[#E0E0E0]/60 dark:border-[#2D2D2D]/60 relative z-10">
           <p className="text-xs uppercase tracking-widest text-[#2D2D2D]/55 dark:text-[#EAEAEA]/55 font-extrabold">
-            This is to show that a smart learner completed
+            This is to show that {learner ? <span className="text-[#D4A574] font-black">{learner}</span> : "a smart learner"} completed
           </p>
           <div className="space-y-1">
             <h3 className="font-heading font-extrabold text-2xl text-[#D4A574] leading-snug">

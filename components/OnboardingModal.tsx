@@ -49,7 +49,12 @@ export const OnboardingModal: React.FC = () => {
         transition={{ duration: 0.4 }}
       >
         {/* Brand Header */}
-        <div className="space-y-1.5">
+        <div className="space-y-2 flex flex-col items-center">
+          <img
+            src="/icon.svg"
+            alt="Askilla Logo"
+            className="w-14 h-14 rounded-2xl shadow-md border-2 border-[#D4A574]"
+          />
           <h1 className="font-heading font-extrabold text-3xl sm:text-4xl text-[#2D2D2D] dark:text-[#EAEAEA] tracking-tight">
             Askilla
           </h1>

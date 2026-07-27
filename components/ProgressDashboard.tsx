@@ -6,6 +6,7 @@ import { Share2, Award, Home, CheckCircle2, ArrowRight, Clock, Check, BarChart2,
 import { useAskillaStore } from "@/lib/store/useAskillaStore";
 import { getSubjectAlignedTopics } from "@/lib/ai/topic-recommender";
 import { CompletedCertificate } from "@/lib/types/askilla";
+import { ShareModal } from "./ShareModal";
 
 export const ProgressDashboard: React.FC = () => {
   const {
@@ -23,14 +24,12 @@ export const ProgressDashboard: React.FC = () => {
 
   const [copied, setCopied] = useState(false);
   const [activeCertModal, setActiveCertModal] = useState<CompletedCertificate | null>(null);
+  const [shareModalData, setShareModalData] = useState<{ topic: string; shareUrl: string } | null>(null);
 
   const handleShareCertificate = (topic: string, name: string) => {
-    const shareUrl = `${window.location.origin}/cert?topic=${encodeURIComponent(topic)}&learner=${encodeURIComponent(name)}`;
-    if (navigator.clipboard) {
-      navigator.clipboard.writeText(shareUrl);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 3000);
-    }
+    const origin = typeof window !== "undefined" ? window.location.origin : "";
+    const shareUrl = `${origin}/share?topic=${encodeURIComponent(topic)}&learner=${encodeURIComponent(name)}&lang=${encodeURIComponent(language)}`;
+    setShareModalData({ topic, shareUrl });
   };
   const [stats, setStats] = useState({
     completedModules: 0,
@@ -177,29 +176,9 @@ export const ProgressDashboard: React.FC = () => {
     }
   };
 
-  const handleShare = async () => {
+  const handleShare = () => {
     const shareUrl = getShareUrl();
-    const text = `I Sabi ${topicName} Now! Check my learning stats on Askilla:`;
-
-    // ALWAYS copy to clipboard and trigger toast alert so desktop users get instant visual feedback!
-    const success = copyTextToClipboard(`${text}\n${shareUrl}`);
-    if (success) {
-      setCopied(true);
-      setTimeout(() => setCopied(false), 3000);
-    }
-
-    // Strategy 1: Mobile Web Share API
-    if (typeof navigator !== "undefined" && navigator.share) {
-      try {
-        await navigator.share({
-          title: "I Sabi with Askilla!",
-          text,
-          url: shareUrl,
-        });
-      } catch (err: any) {
-        console.warn("navigator.share ignored or closed:", err);
-      }
-    }
+    setShareModalData({ topic: topicName, shareUrl });
   };
 
   const shareToWhatsApp = () => {
@@ -587,6 +566,14 @@ export const ProgressDashboard: React.FC = () => {
           </motion.div>
         )}
       </AnimatePresence>
+
+      <ShareModal
+        isOpen={!!shareModalData}
+        onClose={() => setShareModalData(null)}
+        title="I Sabi with Askilla!"
+        topic={shareModalData?.topic || ""}
+        shareUrl={shareModalData?.shareUrl || ""}
+      />
     </div>
   );
 };

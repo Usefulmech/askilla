@@ -97,9 +97,11 @@ export const LandingPage: React.FC = () => {
       <header className="fixed top-0 left-0 right-0 z-50 w-full px-4 sm:px-6 md:px-16 py-3.5 sm:py-4 flex items-center justify-between border-b border-[#E0E0E0]/60 dark:border-[#2D2D2D]/60 bg-[#F5F5F0]/95 dark:bg-[#121212]/95 backdrop-blur-md transition-colors">
         <div className="flex items-center gap-2 sm:gap-3">
           {/* Askilla Brand Icon Logo */}
-          <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-[#D4A574]/20 flex items-center justify-center text-[#D4A574] shadow-sm border border-[#D4A574]/30 shrink-0">
-            <GraduationCap className="w-4 h-4 sm:w-5 sm:h-5" />
-          </div>
+          <img
+            src="/icon.svg"
+            alt="Askilla Logo"
+            className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl shadow-sm border border-[#D4A574]/40 shrink-0"
+          />
           <h1 className="font-heading font-extrabold text-xl sm:text-2xl tracking-tight text-[#2D2D2D] dark:text-[#EAEAEA]">
             Askilla
           </h1>
@@ -125,7 +127,7 @@ export const LandingPage: React.FC = () => {
       </header>
 
       {/* Main Container */}
-      <main className="max-w-6xl mx-auto px-4 sm:px-6 md:px-12 pt-20 sm:pt-24 pb-12 space-y-12 sm:space-y-16 flex-1 text-center">
+      <main className="max-w-6xl mx-auto px-4 sm:px-6 md:px-12 pt-28 sm:pt-32 pb-12 space-y-12 sm:space-y-16 flex-1 text-center">
         
         {/* Winning 2-Column Hero Section */}
         <section className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-12 w-full items-center text-left pt-0 md:pt-1">
@@ -190,11 +192,13 @@ export const LandingPage: React.FC = () => {
               </motion.div>
 
               {/* Expanded Mascot Image fitting external circle */}
-              <div className="w-[84%] h-[84%] rounded-full overflow-hidden border-4 border-[#D4A574]/40 shadow-inner bg-white dark:bg-[#1E1E1E] flex items-center justify-center">
-                <img
+              <div className="w-[84%] h-[84%] rounded-full overflow-hidden border-4 border-[#D4A574]/40 shadow-inner bg-white dark:bg-[#1E1E1E] flex items-center justify-center relative">
+                <motion.img
                   src="/uncle_sabi.png"
                   alt="Uncle Sabi Mascot"
                   className="w-full h-full object-cover scale-110"
+                  animate={{ y: [-4, 4, -4], rotate: [-1, 1, -1] }}
+                  transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
                 />
               </div>
 

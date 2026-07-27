@@ -7,6 +7,8 @@ import { LanguageSelector } from "./LanguageSelector";
 import { LearningLanguage } from "@/lib/types/askilla";
 
 import { AboutModal } from "./AboutModal";
+import { EditProfileModal } from "./EditProfileModal";
+import { Edit3 } from "lucide-react";
 
 export const SettingsView: React.FC = () => {
   const {
@@ -22,6 +24,7 @@ export const SettingsView: React.FC = () => {
   } = useAskillaStore();
 
   const [aboutOpen, setAboutOpen] = React.useState(false);
+  const [editProfileOpen, setEditProfileOpen] = React.useState(false);
 
   return (
     <div className="min-h-screen bg-[#F5F5F0] dark:bg-[#121212] text-[#2D2D2D] dark:text-[#EAEAEA] pb-24 md:pb-12 md:pl-64 transition-colors duration-200">
@@ -57,6 +60,14 @@ export const SettingsView: React.FC = () => {
               </p>
             </div>
           </div>
+          <button
+            type="button"
+            onClick={() => setEditProfileOpen(true)}
+            className="px-4 py-2.5 rounded-2xl bg-[#FAFAD5] hover:bg-[#D4A574]/30 dark:bg-[#2D2D15] border border-[#D4A574] text-[#2D2D2D] dark:text-[#EAEAEA] text-xs font-bold transition-all flex items-center gap-1.5 active:scale-95 shrink-0"
+          >
+            <Edit3 className="w-4 h-4 text-[#D4A574]" />
+            Edit Profile
+          </button>
         </div>
 
         {/* Responsive Desktop Grid */}
@@ -160,6 +171,9 @@ export const SettingsView: React.FC = () => {
           </p>
         </div>
       </div>
+
+      <AboutModal isOpen={aboutOpen} onClose={() => setAboutOpen(false)} />
+      <EditProfileModal isOpen={editProfileOpen} onClose={() => setEditProfileOpen(false)} />
     </div>
   );
 };

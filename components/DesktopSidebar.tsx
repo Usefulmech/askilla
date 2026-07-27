@@ -29,13 +29,20 @@ export const DesktopSidebar: React.FC = () => {
     <aside className="hidden md:flex md:w-64 md:flex-col md:fixed md:inset-y-0 bg-white dark:bg-[#1E1E1E] border-r border-[#E0E0E0] dark:border-[#2D2D2D] shadow-sm z-40 p-5 justify-between transition-colors duration-200">
       <div className="space-y-6">
         {/* Brand Header */}
-        <div className="border-b border-[#E0E0E0]/60 dark:border-[#2D2D2D]/60 pb-4 text-left">
-          <h1 className="font-heading font-extrabold text-2xl text-[#2D2D2D] dark:text-[#EAEAEA] tracking-tight">
-            Askilla
-          </h1>
-          <p className="text-xs text-[#2D2D2D]/60 dark:text-[#EAEAEA]/60 font-sans mt-0.5">
-            Ask anything. Sabi everything.
-          </p>
+        <div className="border-b border-[#E0E0E0]/60 dark:border-[#2D2D2D]/60 pb-4 text-left flex items-center gap-3">
+          <img
+            src="/icon.svg"
+            alt="Askilla Logo"
+            className="w-9 h-9 rounded-xl shadow-sm border border-[#D4A574]/40 shrink-0"
+          />
+          <div>
+            <h1 className="font-heading font-extrabold text-2xl text-[#2D2D2D] dark:text-[#EAEAEA] tracking-tight leading-none">
+              Askilla
+            </h1>
+            <p className="text-[11px] text-[#2D2D2D]/60 dark:text-[#EAEAEA]/60 font-sans mt-1">
+              Ask anything. Sabi everything.
+            </p>
+          </div>
         </div>
 
         {/* Uncle Sabi Mascot Card */}

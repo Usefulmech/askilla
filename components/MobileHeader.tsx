@@ -30,9 +30,16 @@ export const MobileHeader: React.FC = () => {
           <Menu className="w-5 h-5" />
         </button>
 
-        <h1 className="font-heading font-extrabold text-2xl text-[#2D2D2D] dark:text-[#EAEAEA] tracking-tight">
-          Askilla
-        </h1>
+        <div className="flex items-center gap-2">
+          <img
+            src="/icon.svg"
+            alt="Askilla Logo"
+            className="w-7 h-7 rounded-lg shadow-sm border border-[#D4A574]/40 shrink-0"
+          />
+          <h1 className="font-heading font-extrabold text-2xl text-[#2D2D2D] dark:text-[#EAEAEA] tracking-tight">
+            Askilla
+          </h1>
+        </div>
 
         <button
           type="button"

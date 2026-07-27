@@ -79,8 +79,16 @@ export const UncleSabiMascot: React.FC<UncleSabiMascotProps> = ({
     <motion.div
       className={`relative rounded-full border-2 border-[#D4A574] dark:border-[#B38352] bg-[#FAFAD5] dark:bg-[#2D2D15] flex items-center justify-center overflow-hidden shadow-sm shrink-0 ${avatarSizes[size]}`}
       initial={{ scale: 0.9, opacity: 0 }}
-      animate={{ scale: 1, opacity: 1 }}
-      transition={{ duration: 0.3 }}
+      animate={{ 
+        scale: 1, 
+        opacity: 1,
+        y: [-1, 2, -1] 
+      }}
+      transition={{ 
+        duration: 4, 
+        repeat: Infinity, 
+        ease: "easeInOut" 
+      }}
     >
       {renderMascotGraphic()}
     </motion.div>

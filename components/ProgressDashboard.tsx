@@ -233,7 +233,7 @@ export const ProgressDashboard: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
           {/* Circular Accuracy Mastery Ring */}
           <div className="lg:col-span-4 bg-white dark:bg-[#1E1E1E] rounded-3xl p-6 shadow-sm border border-[#E0E0E0] dark:border-[#2D2D2D] flex flex-col items-center justify-center space-y-4">
-            <h3 className="font-heading font-extrabold text-sm uppercase tracking-wider text-[#D4A574]">
+            <h3 className="font-heading font-extrabold text-sm uppercase tracking-wider text-[#BA7A3B]">
               Accuracy Rate
             </h3>
             <div className="relative w-44 h-44 flex items-center justify-center">
@@ -251,7 +251,7 @@ export const ProgressDashboard: React.FC = () => {
                   cx="50"
                   cy="50"
                   r="40"
-                  stroke="#D4A574"
+                  stroke="#BA7A3B"
                   strokeWidth="8"
                   strokeDasharray="251.2"
                   strokeDashoffset={251.2 - (251.2 * effectiveAccuracyRate) / 100}
@@ -280,7 +280,7 @@ export const ProgressDashboard: React.FC = () => {
           <div className="lg:col-span-8 bg-white dark:bg-[#1E1E1E] rounded-3xl p-6 shadow-sm border border-[#E0E0E0] dark:border-[#2D2D2D] text-left flex flex-col justify-between space-y-6">
             <div className="flex items-center justify-between border-b border-[#E0E0E0]/60 dark:border-[#2D2D2D]/60 pb-3">
               <h3 className="font-heading font-extrabold text-base text-[#2D2D2D] dark:text-[#EAEAEA] flex items-center gap-2">
-                <BarChart2 className="w-5 h-5 text-[#D4A574]" />
+                <BarChart2 className="w-5 h-5 text-[#BA7A3B]" />
                 <span>Learning Analytics</span>
               </h3>
             </div>
@@ -327,12 +327,12 @@ export const ProgressDashboard: React.FC = () => {
             {/* Language breakdown split */}
             <div className="space-y-2 pt-2">
               <div className="flex items-center justify-between text-xs font-bold">
-                <span className="text-[#D4A574]">Pidgin Mode ({pidginPercent}%)</span>
+                <span className="text-[#BA7A3B]">Pidgin Mode ({pidginPercent}%)</span>
                 <span className="text-[#2D2D2D]/60 dark:text-[#EAEAEA]/60">English Mode ({englishPercent}%)</span>
               </div>
               <div className="w-full h-3.5 bg-[#E0E0E0] dark:bg-[#2D2D2D] rounded-full overflow-hidden flex shadow-inner">
                 <div
-                  className="h-full bg-[#D4A574] transition-all duration-500"
+                  className="h-full bg-[#BA7A3B] transition-all duration-500"
                   style={{ width: `${pidginPercent}%` }}
                 />
                 <div
@@ -347,7 +347,7 @@ export const ProgressDashboard: React.FC = () => {
         {/* Premium Styled Shareable Achievement Card */}
         {completedCount === 0 || completedCount < totalModules ? (
           <div className="bg-white dark:bg-[#1E1E1E] rounded-3xl p-8 shadow-sm border border-dashed border-[#E0E0E0] dark:border-[#2D2D2D] space-y-4 w-full max-w-full text-center relative overflow-hidden flex flex-col items-center py-12">
-            <div className="w-16 h-16 bg-[#F5F5F0] dark:bg-[#1C1C1C] border border-dashed border-[#D4A574]/35 rounded-full flex items-center justify-center text-[#D4A574]">
+            <div className="w-16 h-16 bg-[#F5F5F0] dark:bg-[#1C1C1C] border border-dashed border-[#BA7A3B]/35 rounded-full flex items-center justify-center text-[#BA7A3B]">
               <Award className="w-8 h-8 opacity-65" />
             </div>
             <div className="space-y-1.5 max-w-md">
@@ -360,24 +360,24 @@ export const ProgressDashboard: React.FC = () => {
             </div>
           </div>
         ) : (
-          <div className="bg-white dark:bg-[#1E1E1E] rounded-3xl p-6 sm:p-12 shadow-md border-4 border-double border-[#D4A574]/60 dark:border-[#B38352]/60 space-y-5 w-full max-w-full text-center relative overflow-hidden flex flex-col items-center">
+          <div className="bg-white dark:bg-[#1E1E1E] rounded-3xl p-6 sm:p-12 shadow-md border-4 border-double border-[#BA7A3B]/60 dark:border-[#8E5724]/60 space-y-5 w-full max-w-full text-center relative overflow-hidden flex flex-col items-center">
             {/* Decorative Corner Borders */}
-            <div className="absolute top-3 left-3 w-5 h-5 sm:w-6 sm:h-6 border-t-2 border-l-2 border-[#D4A574]" />
-            <div className="absolute top-3 right-3 w-5 h-5 sm:w-6 sm:h-6 border-t-2 border-r-2 border-[#D4A574]" />
-            <div className="absolute bottom-3 left-3 w-5 h-5 sm:w-6 sm:h-6 border-b-2 border-l-2 border-[#D4A574]" />
-            <div className="absolute bottom-3 right-3 w-5 h-5 sm:w-6 sm:h-6 border-b-2 border-r-2 border-[#D4A574]" />
+            <div className="absolute top-3 left-3 w-5 h-5 sm:w-6 sm:h-6 border-t-2 border-l-2 border-[#BA7A3B]" />
+            <div className="absolute top-3 right-3 w-5 h-5 sm:w-6 sm:h-6 border-t-2 border-r-2 border-[#BA7A3B]" />
+            <div className="absolute bottom-3 left-3 w-5 h-5 sm:w-6 sm:h-6 border-b-2 border-l-2 border-[#BA7A3B]" />
+            <div className="absolute bottom-3 right-3 w-5 h-5 sm:w-6 sm:h-6 border-b-2 border-r-2 border-[#BA7A3B]" />
 
             {/* Watermark Logo */}
             <div className="absolute -right-16 -bottom-16 w-56 h-56 opacity-[0.02] dark:opacity-[0.04] pointer-events-none">
-              <Award className="w-full h-full text-[#D4A574]" />
+              <Award className="w-full h-full text-[#BA7A3B]" />
             </div>
 
-            <div className="w-16 h-16 sm:w-20 sm:h-20 bg-[#FAFAD5] dark:bg-[#2D2D15] border-2 border-[#D4A574] rounded-full flex items-center justify-center text-[#D4A574] shadow-inner shrink-0">
+            <div className="w-16 h-16 sm:w-20 sm:h-20 bg-[#FAFAD5] dark:bg-[#2D2D15] border-2 border-[#BA7A3B] rounded-full flex items-center justify-center text-[#BA7A3B] shadow-inner shrink-0">
               <Award className="w-8 h-8 sm:w-10 sm:h-10" />
             </div>
 
             <div className="space-y-3 max-w-2xl">
-              <span className="text-[9px] sm:text-[10px] font-heading font-extrabold text-[#D4A574] uppercase tracking-widest bg-[#D4A574]/10 px-3 py-1 rounded-full border border-[#D4A574]/30">
+              <span className="text-[9px] sm:text-[10px] font-heading font-extrabold text-[#BA7A3B] uppercase tracking-widest bg-[#BA7A3B]/10 px-3 py-1 rounded-full border border-[#BA7A3B]/30">
                 Verified Sabi Certification
               </span>
               <h3 className="font-heading font-extrabold text-2xl sm:text-4xl lg:text-5xl text-[#2D2D2D] dark:text-[#EAEAEA] tracking-tight leading-tight pt-1">
@@ -392,7 +392,7 @@ export const ProgressDashboard: React.FC = () => {
             <div className="w-full max-w-md space-y-4 pt-2">
               <div className="grid grid-cols-2 gap-4 sm:gap-8 text-xs font-medium text-[#2D2D2D]/60 dark:text-[#EAEAEA]/60">
                 <div className="border-t border-[#E0E0E0] dark:border-[#2D2D2D] pt-2">
-                  <p className="font-mono text-[10px] tracking-wider text-[#D4A574] font-bold">UNCLE SABI</p>
+                  <p className="font-mono text-[10px] tracking-wider text-[#BA7A3B] font-bold">UNCLE SABI</p>
                   <p className="font-sans text-[9px] mt-0.5">Askilla Lead Instructor</p>
                 </div>
                 <div className="border-t border-[#E0E0E0] dark:border-[#2D2D2D] pt-2">
@@ -406,7 +406,7 @@ export const ProgressDashboard: React.FC = () => {
               <button
                 type="button"
                 onClick={() => handleShareCertificate(topicName, user.name || "Learner")}
-                className="w-full py-3 px-6 bg-[#D4A574] text-[#2D2D2D] font-extrabold text-xs sm:text-sm rounded-full shadow-md hover:bg-[#C49463] active:scale-95 transition-all flex items-center justify-center gap-2"
+                className="w-full py-3 px-6 bg-[#BA7A3B] text-[#2D2D2D] font-extrabold text-xs sm:text-sm rounded-full shadow-md hover:bg-[#A66A30] active:scale-95 transition-all flex items-center justify-center gap-2"
               >
                 <Share2 className="w-4 h-4" />
                 <span>Share Win Link</span>
@@ -420,7 +420,7 @@ export const ProgressDashboard: React.FC = () => {
           <div className="bg-white dark:bg-[#1E1E1E] rounded-3xl p-6 border border-[#E0E0E0] dark:border-[#2D2D2D] shadow-sm space-y-4 text-left w-full">
             <div className="flex items-center justify-between">
               <h3 className="font-heading font-bold text-base text-[#2D2D2D] dark:text-[#EAEAEA] flex items-center gap-2">
-                <Award className="w-5 h-5 text-[#D4A574]" />
+                <Award className="w-5 h-5 text-[#BA7A3B]" />
                 <span>Certificate History Archive ({completedCertificates.length})</span>
               </h3>
             </div>
@@ -430,22 +430,22 @@ export const ProgressDashboard: React.FC = () => {
                   key={cert.id}
                   type="button"
                   onClick={() => setActiveCertModal(cert)}
-                  className="p-4 rounded-2xl bg-[#FAFAD5]/30 dark:bg-[#2D2D15]/20 border border-[#D4A574]/30 hover:border-[#D4A574] space-y-2 text-left hover:shadow-md cursor-pointer transition-all active:scale-[0.98] group"
+                  className="p-4 rounded-2xl bg-[#FAFAD5]/30 dark:bg-[#2D2D15]/20 border border-[#BA7A3B]/30 hover:border-[#BA7A3B] space-y-2 text-left hover:shadow-md cursor-pointer transition-all active:scale-[0.98] group"
                 >
                   <div className="flex items-center justify-between">
-                    <span className="text-[10px] font-extrabold uppercase text-[#D4A574]">
+                    <span className="text-[10px] font-extrabold uppercase text-[#BA7A3B]">
                       {cert.dateCompleted}
                     </span>
-                    <span className="px-2 py-0.5 bg-[#D4A574]/20 text-[#D4A574] text-[9px] font-bold rounded-full uppercase">
+                    <span className="px-2 py-0.5 bg-[#BA7A3B]/20 text-[#BA7A3B] text-[9px] font-bold rounded-full uppercase">
                       {cert.scorePercent}% Score
                     </span>
                   </div>
-                  <h4 className="font-heading font-extrabold text-sm text-[#2D2D2D] dark:text-[#EAEAEA] group-hover:text-[#D4A574] transition-colors truncate">
+                  <h4 className="font-heading font-extrabold text-sm text-[#2D2D2D] dark:text-[#EAEAEA] group-hover:text-[#BA7A3B] transition-colors truncate">
                     {cert.topic}
                   </h4>
                   <div className="flex items-center justify-between pt-1 text-xs text-[#2D2D2D]/60 dark:text-[#EAEAEA]/60 font-sans">
                     <span className="truncate">Learner: <strong>{cert.learnerName}</strong></span>
-                    <span className="text-[#D4A574] font-bold shrink-0 text-[10px] uppercase">Click to view &rarr;</span>
+                    <span className="text-[#BA7A3B] font-bold shrink-0 text-[10px] uppercase">Click to view &rarr;</span>
                   </div>
                 </button>
               ))}
@@ -456,7 +456,7 @@ export const ProgressDashboard: React.FC = () => {
         {/* Next Topic Recommendations */}
         <div className="bg-white dark:bg-[#1E1E1E] rounded-3xl p-6 border border-[#E0E0E0] dark:border-[#2D2D2D] shadow-sm space-y-4 text-left w-full">
           <h3 className="font-heading font-bold text-base text-[#2D2D2D] dark:text-[#EAEAEA] flex items-center gap-2">
-            <Flame className="w-5 h-5 text-[#D4A574]" />
+            <Flame className="w-5 h-5 text-[#BA7A3B]" />
             <span>Suggested Next Topics</span>
           </h3>
           <p className="text-xs text-[#2D2D2D]/60 dark:text-[#EAEAEA]/60 font-sans">
@@ -471,10 +471,10 @@ export const ProgressDashboard: React.FC = () => {
                   useAskillaStore.setState({ completedModuleIds: [], currentCourse: null });
                   setCurrentTopic(nextTopic);
                 }}
-                className="px-5 py-3.5 bg-[#FAFAD5]/50 dark:bg-[#2D2D15]/30 border border-[#D4A574]/35 hover:border-[#D4A574] text-[#2D2D2D] dark:text-[#EAEAEA] text-sm font-bold rounded-full active:scale-95 transition-all flex items-center gap-2"
+                className="px-5 py-3.5 bg-[#FAFAD5]/50 dark:bg-[#2D2D15]/30 border border-[#BA7A3B]/35 hover:border-[#BA7A3B] text-[#2D2D2D] dark:text-[#EAEAEA] text-sm font-bold rounded-full active:scale-95 transition-all flex items-center gap-2"
               >
                 <span>{nextTopic}</span>
-                <ArrowRight className="w-4 h-4 text-[#D4A574]" />
+                <ArrowRight className="w-4 h-4 text-[#BA7A3B]" />
               </button>
             ))}
           </div>
@@ -489,7 +489,7 @@ export const ProgressDashboard: React.FC = () => {
               initial={{ opacity: 0, scale: 0.9, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9, y: 20 }}
-              className="bg-white dark:bg-[#1E1E1E] rounded-3xl p-6 sm:p-10 shadow-2xl border-4 border-double border-[#D4A574] max-w-xl w-full text-center relative space-y-5 overflow-hidden"
+              className="bg-white dark:bg-[#1E1E1E] rounded-3xl p-6 sm:p-10 shadow-2xl border-4 border-double border-[#BA7A3B] max-w-xl w-full text-center relative space-y-5 overflow-hidden"
             >
               {/* Close Button */}
               <button
@@ -500,12 +500,12 @@ export const ProgressDashboard: React.FC = () => {
                 ✕ Close
               </button>
 
-              <div className="w-16 h-16 bg-[#FAFAD5] dark:bg-[#2D2D15] border-2 border-[#D4A574] rounded-full flex items-center justify-center text-[#D4A574] shadow-inner shrink-0 mx-auto">
+              <div className="w-16 h-16 bg-[#FAFAD5] dark:bg-[#2D2D15] border-2 border-[#BA7A3B] rounded-full flex items-center justify-center text-[#BA7A3B] shadow-inner shrink-0 mx-auto">
                 <Award className="w-8 h-8" />
               </div>
 
               <div className="space-y-2">
-                <span className="text-[10px] font-heading font-extrabold text-[#D4A574] uppercase tracking-widest bg-[#D4A574]/10 px-3 py-1 rounded-full border border-[#D4A574]/30">
+                <span className="text-[10px] font-heading font-extrabold text-[#BA7A3B] uppercase tracking-widest bg-[#BA7A3B]/10 px-3 py-1 rounded-full border border-[#BA7A3B]/30">
                   Verified Sabi Certification
                 </span>
                 <h3 className="font-heading font-extrabold text-2xl sm:text-3xl text-[#2D2D2D] dark:text-[#EAEAEA] pt-1">
@@ -518,7 +518,7 @@ export const ProgressDashboard: React.FC = () => {
 
               <div className="grid grid-cols-2 gap-4 text-xs font-medium text-[#2D2D2D]/60 dark:text-[#EAEAEA]/60 pt-1">
                 <div className="border-t border-[#E0E0E0] dark:border-[#2D2D2D] pt-2">
-                  <p className="font-mono text-[10px] tracking-wider text-[#D4A574] font-bold">UNCLE SABI</p>
+                  <p className="font-mono text-[10px] tracking-wider text-[#BA7A3B] font-bold">UNCLE SABI</p>
                   <p className="font-sans text-[9px]">Askilla Lead Instructor</p>
                 </div>
                 <div className="border-t border-[#E0E0E0] dark:border-[#2D2D2D] pt-2">
@@ -533,7 +533,7 @@ export const ProgressDashboard: React.FC = () => {
                   onClick={() => {
                     handleShareCertificate(activeCertModal.topic, activeCertModal.learnerName);
                   }}
-                  className="w-full py-3.5 px-6 bg-[#D4A574] text-[#2D2D2D] font-extrabold text-xs sm:text-sm rounded-full shadow-md hover:bg-[#C49463] active:scale-95 transition-all flex items-center justify-center gap-2"
+                  className="w-full py-3.5 px-6 bg-[#BA7A3B] text-[#2D2D2D] font-extrabold text-xs sm:text-sm rounded-full shadow-md hover:bg-[#A66A30] active:scale-95 transition-all flex items-center justify-center gap-2"
                 >
                   <Share2 className="w-4 h-4" />
                   <span>Share Win Link</span>
@@ -561,7 +561,7 @@ export const ProgressDashboard: React.FC = () => {
             exit={{ opacity: 0, y: 20, scale: 0.9 }}
             className="fixed bottom-20 left-1/2 -translate-x-1/2 sm:bottom-6 sm:right-6 sm:left-auto sm:translate-x-0 bg-[#2D2D2D] dark:bg-[#EAEAEA] text-white dark:text-[#2D2D2D] px-5 py-3.5 rounded-2xl shadow-2xl flex items-center gap-2.5 z-50 text-xs sm:text-sm font-bold border border-[#E0E0E0]/15 w-[90%] sm:w-auto justify-center"
           >
-            <Check className="w-5 h-5 text-[#D4A574]" />
+            <Check className="w-5 h-5 text-[#BA7A3B]" />
             <span>Shareable win link copied to clipboard!</span>
           </motion.div>
         )}

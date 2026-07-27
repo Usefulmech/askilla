@@ -121,13 +121,13 @@ export const AudioPlayer: React.FC<AudioPlayerProps> = ({
       disabled={isLoading}
       className={`px-3 py-2 sm:px-5 sm:py-3 rounded-full border-2 text-xs sm:text-sm font-bold transition-all duration-200 flex items-center gap-1.5 sm:gap-2.5 active:scale-95 shadow-sm whitespace-nowrap dark:bg-[#1E1E1E] dark:border-[#2D2D2D] dark:text-[#EAEAEA] ${
         isPlaying
-          ? "bg-[#D4A574] border-[#D4A574] text-[#2D2D2D] dark:bg-[#D4A574] dark:text-[#2D2D2D] ring-4 ring-[#D4A574]/30 animate-pulse"
-          : "bg-[#FAFAD5]/70 border-[#D4A574] text-[#2D2D2D] hover:bg-[#D4A574]/20"
+          ? "bg-[#BA7A3B] border-[#BA7A3B] text-[#2D2D2D] dark:bg-[#BA7A3B] dark:text-[#2D2D2D] ring-4 ring-[#BA7A3B]/30 animate-pulse"
+          : "bg-[#FAFAD5]/70 border-[#BA7A3B] text-[#2D2D2D] hover:bg-[#BA7A3B]/20"
       }`}
     >
       {isLoading ? (
         <>
-          <Loader2 className="w-4 h-4 sm:w-5 sm:h-5 animate-spin text-[#D4A574]" />
+          <Loader2 className="w-4 h-4 sm:w-5 sm:h-5 animate-spin text-[#BA7A3B]" />
           <span>Loading...</span>
         </>
       ) : isPlaying ? (
@@ -137,7 +137,7 @@ export const AudioPlayer: React.FC<AudioPlayerProps> = ({
         </>
       ) : (
         <>
-          <Volume2 className="w-4 h-4 sm:w-5 sm:h-5 text-[#D4A574] shrink-0" />
+          <Volume2 className="w-4 h-4 sm:w-5 sm:h-5 text-[#BA7A3B] shrink-0" />
           <span className="hidden sm:inline">{label}</span>
           <span className="sm:hidden">Listen</span>
         </>

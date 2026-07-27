@@ -62,4 +62,5 @@ export type AppScreen =
   | "home"
   | "module"
   | "progress"
-  | "settings";
+  | "settings"
+  | "welcome";

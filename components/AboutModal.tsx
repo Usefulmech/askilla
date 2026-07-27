@@ -53,20 +53,20 @@ export const AboutModal: React.FC<AboutModalProps> = ({ isOpen, onClose }) => {
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 20 }}
           transition={{ duration: 0.25 }}
-          className="bg-white dark:bg-[#1E1E1E] border-2 border-[#D4A574]/40 rounded-3xl p-6 sm:p-8 max-w-2xl w-full shadow-2xl space-y-5 max-h-[90vh] overflow-y-auto text-left text-[#2D2D2D] dark:text-[#EAEAEA] relative"
+          className="bg-white dark:bg-[#1E1E1E] border-2 border-[#BA7A3B]/40 rounded-3xl p-6 sm:p-8 max-w-2xl w-full shadow-2xl space-y-5 max-h-[90vh] overflow-y-auto text-left text-[#2D2D2D] dark:text-[#EAEAEA] relative"
         >
           {/* Close button */}
           <button
             type="button"
             onClick={onClose}
-            className="absolute top-5 right-5 p-2 rounded-full bg-[#FAFAD5] dark:bg-[#2D2D15] text-[#2D2D2D] dark:text-[#EAEAEA] hover:bg-[#D4A574]/20 transition-colors"
+            className="absolute top-5 right-5 p-2 rounded-full bg-[#FAFAD5] dark:bg-[#2D2D15] text-[#2D2D2D] dark:text-[#EAEAEA] hover:bg-[#BA7A3B]/20 transition-colors"
           >
             <X className="w-5 h-5" />
           </button>
 
           {/* Header */}
           <div className="space-y-2 pr-8">
-            <span className="text-[10px] font-heading font-extrabold text-[#D4A574] uppercase tracking-widest bg-[#D4A574]/10 px-3 py-1 rounded-full border border-[#D4A574]/30 inline-block">
+            <span className="text-[10px] font-heading font-extrabold text-[#BA7A3B] uppercase tracking-widest bg-[#BA7A3B]/10 px-3 py-1 rounded-full border border-[#BA7A3B]/30 inline-block">
               3MTT Knowledge Showcase 2.0 • AI/ML Track
             </span>
             <h2 className="font-heading font-extrabold text-2xl sm:text-3xl text-[#2D2D2D] dark:text-[#EAEAEA] tracking-tight">
@@ -81,13 +81,13 @@ export const AboutModal: React.FC<AboutModalProps> = ({ isOpen, onClose }) => {
               onClick={() => setActiveTab("overview")}
               className={`pb-2.5 transition-colors relative ${
                 activeTab === "overview"
-                  ? "text-[#D4A574]"
+                  ? "text-[#BA7A3B]"
                   : "text-[#2D2D2D]/50 dark:text-[#EAEAEA]/50 hover:text-[#2D2D2D] dark:hover:text-[#EAEAEA]"
               }`}
             >
               <span>Platform Overview</span>
               {activeTab === "overview" && (
-                <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#D4A574] rounded-full" />
+                <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#BA7A3B] rounded-full" />
               )}
             </button>
             <button
@@ -95,13 +95,13 @@ export const AboutModal: React.FC<AboutModalProps> = ({ isOpen, onClose }) => {
               onClick={() => setActiveTab("ml_schema")}
               className={`pb-2.5 transition-colors relative ${
                 activeTab === "ml_schema"
-                  ? "text-[#D4A574]"
+                  ? "text-[#BA7A3B]"
                   : "text-[#2D2D2D]/50 dark:text-[#EAEAEA]/50 hover:text-[#2D2D2D] dark:hover:text-[#EAEAEA]"
               }`}
             >
               <span>AI/ML Telemetry Schema (Judges)</span>
               {activeTab === "ml_schema" && (
-                <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#D4A574] rounded-full" />
+                <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#BA7A3B] rounded-full" />
               )}
             </button>
           </div>
@@ -115,8 +115,8 @@ export const AboutModal: React.FC<AboutModalProps> = ({ isOpen, onClose }) => {
 
               {/* Core Pillars Grid */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 pt-1">
-                <div className="p-3.5 rounded-2xl bg-[#FAFAD5]/40 dark:bg-[#2D2D15]/20 border border-[#D4A574]/30 space-y-1.5">
-                  <div className="flex items-center gap-2 text-[#D4A574] font-extrabold text-xs uppercase tracking-wider">
+                <div className="p-3.5 rounded-2xl bg-[#FAFAD5]/40 dark:bg-[#2D2D15]/20 border border-[#BA7A3B]/30 space-y-1.5">
+                  <div className="flex items-center gap-2 text-[#BA7A3B] font-extrabold text-xs uppercase tracking-wider">
                     <Brain className="w-4 h-4" />
                     <span>Adaptive AI Tutor</span>
                   </div>
@@ -125,8 +125,8 @@ export const AboutModal: React.FC<AboutModalProps> = ({ isOpen, onClose }) => {
                   </p>
                 </div>
 
-                <div className="p-3.5 rounded-2xl bg-[#FAFAD5]/40 dark:bg-[#2D2D15]/20 border border-[#D4A574]/30 space-y-1.5">
-                  <div className="flex items-center gap-2 text-[#D4A574] font-extrabold text-xs uppercase tracking-wider">
+                <div className="p-3.5 rounded-2xl bg-[#FAFAD5]/40 dark:bg-[#2D2D15]/20 border border-[#BA7A3B]/30 space-y-1.5">
+                  <div className="flex items-center gap-2 text-[#BA7A3B] font-extrabold text-xs uppercase tracking-wider">
                     <Database className="w-4 h-4" />
                     <span>ML Interaction Pipeline</span>
                   </div>
@@ -135,8 +135,8 @@ export const AboutModal: React.FC<AboutModalProps> = ({ isOpen, onClose }) => {
                   </p>
                 </div>
 
-                <div className="p-3.5 rounded-2xl bg-[#FAFAD5]/40 dark:bg-[#2D2D15]/20 border border-[#D4A574]/30 space-y-1.5">
-                  <div className="flex items-center gap-2 text-[#D4A574] font-extrabold text-xs uppercase tracking-wider">
+                <div className="p-3.5 rounded-2xl bg-[#FAFAD5]/40 dark:bg-[#2D2D15]/20 border border-[#BA7A3B]/30 space-y-1.5">
+                  <div className="flex items-center gap-2 text-[#BA7A3B] font-extrabold text-xs uppercase tracking-wider">
                     <Cpu className="w-4 h-4" />
                     <span>Linguistic Isolation</span>
                   </div>
@@ -145,8 +145,8 @@ export const AboutModal: React.FC<AboutModalProps> = ({ isOpen, onClose }) => {
                   </p>
                 </div>
 
-                <div className="p-3.5 rounded-2xl bg-[#FAFAD5]/40 dark:bg-[#2D2D15]/20 border border-[#D4A574]/30 space-y-1.5">
-                  <div className="flex items-center gap-2 text-[#D4A574] font-extrabold text-xs uppercase tracking-wider">
+                <div className="p-3.5 rounded-2xl bg-[#FAFAD5]/40 dark:bg-[#2D2D15]/20 border border-[#BA7A3B]/30 space-y-1.5">
+                  <div className="flex items-center gap-2 text-[#BA7A3B] font-extrabold text-xs uppercase tracking-wider">
                     <Award className="w-4 h-4" />
                     <span>Verified Sabi Certs</span>
                   </div>
@@ -171,15 +171,15 @@ export const AboutModal: React.FC<AboutModalProps> = ({ isOpen, onClose }) => {
               </div>
 
               {/* AI/ML Dataset Schema Box */}
-              <div className="bg-[#FAFAD5]/20 dark:bg-[#2D2D15]/10 rounded-2xl p-4 border border-[#D4A574]/30 space-y-2">
+              <div className="bg-[#FAFAD5]/20 dark:bg-[#2D2D15]/10 rounded-2xl p-4 border border-[#BA7A3B]/30 space-y-2">
                 <div className="flex items-center justify-between">
-                  <h4 className="font-heading font-extrabold text-xs uppercase tracking-wider text-[#D4A574]">
+                  <h4 className="font-heading font-extrabold text-xs uppercase tracking-wider text-[#BA7A3B]">
                     Askilla-Telemetry-v1 Schema
                   </h4>
                   <button
                     type="button"
                     onClick={downloadTelemetrySample}
-                    className="text-[10px] font-extrabold text-[#D4A574] hover:underline"
+                    className="text-[10px] font-extrabold text-[#BA7A3B] hover:underline"
                   >
                     Download Sample JSON
                   </button>
@@ -214,7 +214,7 @@ export const AboutModal: React.FC<AboutModalProps> = ({ isOpen, onClose }) => {
             <button
               type="button"
               onClick={onClose}
-              className="px-6 py-3 bg-[#D4A574] text-[#2D2D2D] font-heading font-extrabold text-sm rounded-full hover:bg-[#C49463] active:scale-95 transition-all shadow-sm"
+              className="px-6 py-3 bg-[#BA7A3B] text-[#2D2D2D] font-heading font-extrabold text-sm rounded-full hover:bg-[#A66A30] active:scale-95 transition-all shadow-sm"
             >
               Close Window
             </button>

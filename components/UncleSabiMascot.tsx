@@ -48,7 +48,7 @@ export const UncleSabiMascot: React.FC<UncleSabiMascotProps> = ({
         xmlns="http://www.w3.org/2000/svg"
       >
         <circle cx="50" cy="50" r="46" fill="#F5F0E8" />
-        <path d="M 30 36 C 30 16, 70 16, 70 36 Z" fill="#D4A574" stroke="#7C572D" strokeWidth="2.5" />
+        <path d="M 30 36 C 30 16, 70 16, 70 36 Z" fill="#BA7A3B" stroke="#7C572D" strokeWidth="2.5" />
         <circle cx="50" cy="52" r="22" fill="#A87B51" />
         <circle cx="41" cy="50" r="6.5" stroke="#2D2D2D" strokeWidth="2.5" fill="none" />
         <circle cx="59" cy="50" r="6.5" stroke="#2D2D2D" strokeWidth="2.5" fill="none" />
@@ -62,7 +62,7 @@ export const UncleSabiMascot: React.FC<UncleSabiMascotProps> = ({
     return (
       <div className="relative inline-block my-4">
         {/* Outer decorative shadow accent ring */}
-        <div className="absolute -z-10 -top-2 -right-2 w-32 h-32 rounded-full bg-[#D4A574]/30 dark:bg-[#D4A574]/15 animate-pulse" />
+        <div className="absolute -z-10 -top-2 -right-2 w-32 h-32 rounded-full bg-[#BA7A3B]/30 dark:bg-[#BA7A3B]/15 animate-pulse" />
         <motion.div
           className="w-32 h-32 rounded-full border-4 border-[#2D2D2D] dark:border-[#1E1E1E] bg-[#FAFAD5] dark:bg-[#2D2D15] flex items-center justify-center overflow-hidden shadow-md"
           initial={{ scale: 0.8, opacity: 0 }}
@@ -77,7 +77,7 @@ export const UncleSabiMascot: React.FC<UncleSabiMascotProps> = ({
 
   const avatarElement = (
     <motion.div
-      className={`relative rounded-full border-2 border-[#D4A574] dark:border-[#B38352] bg-[#FAFAD5] dark:bg-[#2D2D15] flex items-center justify-center overflow-hidden shadow-sm shrink-0 ${avatarSizes[size]}`}
+      className={`relative rounded-full border-2 border-[#BA7A3B] dark:border-[#8E5724] bg-[#FAFAD5] dark:bg-[#2D2D15] flex items-center justify-center overflow-hidden shadow-sm shrink-0 ${avatarSizes[size]}`}
       initial={{ scale: 0.9, opacity: 0 }}
       animate={{ 
         scale: 1, 

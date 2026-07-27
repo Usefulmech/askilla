@@ -16,7 +16,7 @@ export const MobileHeader: React.FC = () => {
 
   const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
 
-  if (screen === "landing" || screen === "onboarding" || screen === "intro") return null;
+  if (screen === "landing" || screen === "onboarding" || screen === "intro" || screen === "welcome") return null;
 
   return (
     <>
@@ -34,7 +34,7 @@ export const MobileHeader: React.FC = () => {
           <img
             src="/icon.svg"
             alt="Askilla Logo"
-            className="w-7 h-7 rounded-lg shadow-sm border border-[#D4A574]/40 shrink-0"
+            className="w-7 h-7 rounded-lg shadow-sm border border-[#BA7A3B]/40 shrink-0"
           />
           <h1 className="font-heading font-extrabold text-2xl text-[#2D2D2D] dark:text-[#EAEAEA] tracking-tight">
             Askilla
@@ -44,7 +44,7 @@ export const MobileHeader: React.FC = () => {
         <button
           type="button"
           onClick={() => setScreen("settings")}
-          className="px-4 py-2 bg-[#FAFAD5] dark:bg-[#2D2D15] text-[#2D2D2D] dark:text-[#EAEAEA] font-bold text-xs rounded-full border border-[#D4A574]/40 capitalize hover:bg-[#D4A574]/20 dark:hover:bg-[#D4A574]/35 transition-colors"
+          className="px-4 py-2 bg-[#FAFAD5] dark:bg-[#2D2D15] text-[#2D2D2D] dark:text-[#EAEAEA] font-bold text-xs rounded-full border border-[#BA7A3B]/40 capitalize hover:bg-[#BA7A3B]/20 dark:hover:bg-[#BA7A3B]/35 transition-colors"
         >
           {language} Mode
         </button>
@@ -83,13 +83,13 @@ export const MobileHeader: React.FC = () => {
                   </button>
                 </div>
 
-                <div className="bg-[#FAFAD5] dark:bg-[#2D2D15] rounded-2xl p-3.5 border-2 border-[#D4A574] dark:border-[#B38352] flex items-center justify-start gap-3">
+                <div className="bg-[#FAFAD5] dark:bg-[#2D2D15] rounded-2xl p-3.5 border-2 border-[#BA7A3B] dark:border-[#8E5724] flex items-center justify-start gap-3">
                   <div className="w-10 h-10 rounded-full border border-[#2D2D2D] dark:border-white/20 bg-white dark:bg-[#1E1E1E] flex items-center justify-center overflow-hidden shrink-0">
                     <img src="/uncle_sabi.png" alt="Uncle Sabi" className="w-full h-full object-cover scale-105" />
                   </div>
                   <div className="space-y-0.5">
                     <h3 className="font-heading font-extrabold text-xs text-[#2D2D2D] dark:text-[#EAEAEA]">Uncle Sabi</h3>
-                    <span className="inline-block px-2 py-0.5 bg-[#D4A574] text-[#2D2D2D] text-[9px] font-extrabold rounded-full capitalize">{language} Mode</span>
+                    <span className="inline-block px-2 py-0.5 bg-[#BA7A3B] text-[#2D2D2D] text-[9px] font-extrabold rounded-full capitalize">{language} Mode</span>
                   </div>
                 </div>
 

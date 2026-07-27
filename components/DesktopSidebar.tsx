@@ -16,7 +16,7 @@ export const DesktopSidebar: React.FC = () => {
     logout,
   } = useAskillaStore();
 
-  if (screen === "landing" || screen === "onboarding" || screen === "intro") return null;
+  if (screen === "landing" || screen === "onboarding" || screen === "intro" || screen === "welcome") return null;
 
   const navItems: { screen: AppScreen; label: string; icon: React.FC<{ className?: string }> }[] = [
     { screen: "home", label: "Home", icon: Home },
@@ -33,7 +33,7 @@ export const DesktopSidebar: React.FC = () => {
           <img
             src="/icon.svg"
             alt="Askilla Logo"
-            className="w-9 h-9 rounded-xl shadow-sm border border-[#D4A574]/40 shrink-0"
+            className="w-9 h-9 rounded-xl shadow-sm border border-[#BA7A3B]/40 shrink-0"
           />
           <div>
             <h1 className="font-heading font-extrabold text-2xl text-[#2D2D2D] dark:text-[#EAEAEA] tracking-tight leading-none">
@@ -46,7 +46,7 @@ export const DesktopSidebar: React.FC = () => {
         </div>
 
         {/* Uncle Sabi Mascot Card */}
-        <div className="bg-[#FAFAD5] dark:bg-[#2D2D15] rounded-2xl p-3.5 border-2 border-[#D4A574] dark:border-[#B38352] flex items-center justify-start gap-3">
+        <div className="bg-[#FAFAD5] dark:bg-[#2D2D15] rounded-2xl p-3.5 border-2 border-[#BA7A3B] dark:border-[#8E5724] flex items-center justify-start gap-3">
           <div className="w-12 h-12 rounded-full border-2 border-[#2D2D2D] dark:border-white/20 bg-white dark:bg-[#1E1E1E] flex items-center justify-center overflow-hidden shrink-0 shadow-sm">
             <img 
               src="/uncle_sabi.png" 
@@ -58,7 +58,7 @@ export const DesktopSidebar: React.FC = () => {
             <h2 className="font-heading font-extrabold text-sm text-[#2D2D2D] dark:text-[#EAEAEA] whitespace-nowrap">
               Uncle Sabi
             </h2>
-            <span className="inline-block px-2.5 py-0.5 bg-[#D4A574] text-[#2D2D2D] text-[10px] font-extrabold rounded-full capitalize whitespace-nowrap">
+            <span className="inline-block px-2.5 py-0.5 bg-[#BA7A3B] text-[#2D2D2D] text-[10px] font-extrabold rounded-full capitalize whitespace-nowrap">
               {language} Mode
             </span>
           </div>
@@ -79,7 +79,7 @@ export const DesktopSidebar: React.FC = () => {
                 onClick={() => setScreen(item.screen)}
                 className={`w-full flex items-center gap-3 px-3.5 py-3 rounded-2xl font-semibold text-xs transition-all duration-200 ${
                   isActive
-                    ? "bg-[#D4A574] text-[#2D2D2D] font-extrabold shadow-sm"
+                    ? "bg-[#BA7A3B] text-[#2D2D2D] font-extrabold shadow-sm"
                     : "text-[#2D2D2D]/80 dark:text-[#EAEAEA]/80 hover:bg-[#F5F5F0] dark:hover:bg-[#121212]"
                 }`}
               >
@@ -104,7 +104,7 @@ export const DesktopSidebar: React.FC = () => {
       {/* Footer Info & Log Out */}
       <div className="border-t border-[#E0E0E0]/60 dark:border-[#2D2D2D]/60 pt-4 text-left space-y-3">
         <div className="flex items-center gap-2 text-xs text-[#2D2D2D]/70 dark:text-[#EAEAEA]/70 font-semibold">
-          <Award className="w-4 h-4 text-[#D4A574]" />
+          <Award className="w-4 h-4 text-[#BA7A3B]" />
           <span>{completedModuleIds.length} Modules Completed</span>
         </div>
 

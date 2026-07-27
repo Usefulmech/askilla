@@ -42,13 +42,13 @@ function ShareContent() {
         transition={{ duration: 0.5 }}
       >
         {/* Certificate Accent Border */}
-        <div className="absolute inset-2 border border-dashed border-[#D4A574]/40 rounded-2xl pointer-events-none" />
+        <div className="absolute inset-2 border border-dashed border-[#BA7A3B]/40 rounded-2xl pointer-events-none" />
 
         {/* Certificate Badge */}
         <div className="relative inline-block my-2 z-10">
-          <div className="absolute -z-10 -top-2 -right-2 w-28 h-28 rounded-full bg-[#D4A574]/20 animate-pulse" />
-          <div className="w-24 h-24 rounded-full border-4 border-[#2D2D2D] dark:border-[#D4A574]/40 bg-[#FAFAD5] dark:bg-[#2D2D15] flex items-center justify-center overflow-hidden shadow-lg mx-auto">
-            <Award className="w-12 h-12 text-[#D4A574]" />
+          <div className="absolute -z-10 -top-2 -right-2 w-28 h-28 rounded-full bg-[#BA7A3B]/20 animate-pulse" />
+          <div className="w-24 h-24 rounded-full border-4 border-[#2D2D2D] dark:border-[#BA7A3B]/40 bg-[#FAFAD5] dark:bg-[#2D2D15] flex items-center justify-center overflow-hidden shadow-lg mx-auto">
+            <Award className="w-12 h-12 text-[#BA7A3B]" />
           </div>
         </div>
 
@@ -57,9 +57,9 @@ function ShareContent() {
           <img
             src="/icon.svg"
             alt="Askilla Logo"
-            className="w-10 h-10 rounded-xl shadow-sm border border-[#D4A574]/40"
+            className="w-10 h-10 rounded-xl shadow-sm border border-[#BA7A3B]/40"
           />
-          <span className="text-[10px] font-heading font-extrabold text-[#D4A574] tracking-widest uppercase">Askilla AI Tutor</span>
+          <span className="text-[10px] font-heading font-extrabold text-[#BA7A3B] tracking-widest uppercase">Askilla AI Tutor</span>
           <h2 className="font-heading font-extrabold text-3xl text-[#2D2D2D] dark:text-[#EAEAEA] tracking-tight">
             Sabi Certificate
           </h2>
@@ -68,10 +68,10 @@ function ShareContent() {
         {/* Certificate Statement */}
         <div className="space-y-4 py-2 border-y border-[#E0E0E0]/60 dark:border-[#2D2D2D]/60 relative z-10">
           <p className="text-xs uppercase tracking-widest text-[#2D2D2D]/55 dark:text-[#EAEAEA]/55 font-extrabold">
-            This is to show that {learner ? <span className="text-[#D4A574] font-black">{learner}</span> : "a smart learner"} completed
+            This is to show that {learner ? <span className="text-[#BA7A3B] font-black">{learner}</span> : "a smart learner"} completed
           </p>
           <div className="space-y-1">
-            <h3 className="font-heading font-extrabold text-2xl text-[#D4A574] leading-snug">
+            <h3 className="font-heading font-extrabold text-2xl text-[#BA7A3B] leading-snug">
               {topic}
             </h3>
             <p className="text-sm font-semibold text-[#2D2D2D]/80 dark:text-[#EAEAEA]/80">
@@ -84,12 +84,12 @@ function ShareContent() {
         </div>
 
         {/* Sabi Quote bubble */}
-        <div className="bg-[#FAFAD5] dark:bg-[#2D2D15] p-5 rounded-2xl border border-[#D4A574]/40 text-left flex items-start gap-4">
-          <div className="w-12 h-12 rounded-full bg-white dark:bg-[#1C1C1C] border-2 border-[#D4A574] flex-shrink-0 flex items-center justify-center font-heading font-extrabold text-lg">
+        <div className="bg-[#FAFAD5] dark:bg-[#2D2D15] p-5 rounded-2xl border border-[#BA7A3B]/40 text-left flex items-start gap-4">
+          <div className="w-12 h-12 rounded-full bg-white dark:bg-[#1C1C1C] border-2 border-[#BA7A3B] flex-shrink-0 flex items-center justify-center font-heading font-extrabold text-lg">
             US
           </div>
           <div>
-            <span className="text-[9px] font-extrabold text-[#D4A574] uppercase tracking-wider block mb-0.5">Uncle Sabi says:</span>
+            <span className="text-[9px] font-extrabold text-[#BA7A3B] uppercase tracking-wider block mb-0.5">Uncle Sabi says:</span>
             <p className="text-base font-heading font-extrabold text-[#2D2D2D] dark:text-[#EAEAEA]">
               &quot;{getSabiText(lang)}&quot;
             </p>
@@ -103,7 +103,7 @@ function ShareContent() {
         <div className="pt-2 relative z-10">
           <a
             href="/"
-            className="w-full py-4.5 px-8 bg-gradient-to-r from-[#D4A574] to-[#C49463] text-[#2D2D2D] font-heading font-extrabold text-base rounded-full shadow-lg hover:shadow-xl hover:from-[#C49463] hover:to-[#B38352] active:scale-[0.97] transition-all flex items-center justify-center gap-3 decoration-none"
+            className="w-full py-4.5 px-8 bg-gradient-to-r from-[#BA7A3B] to-[#A66A30] text-[#2D2D2D] font-heading font-extrabold text-base rounded-full shadow-lg hover:shadow-xl hover:from-[#A66A30] hover:to-[#8E5724] active:scale-[0.97] transition-all flex items-center justify-center gap-3 decoration-none"
           >
             <span>Learn with Askilla Today</span>
             <ArrowRight className="w-5 h-5" />

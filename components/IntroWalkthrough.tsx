@@ -45,7 +45,7 @@ export const IntroWalkthrough: React.FC = () => {
         <button
           type="button"
           onClick={() => setScreen("home")}
-          className="text-sm font-bold text-[#2D2D2D]/70 dark:text-[#EAEAEA]/70 hover:text-[#2D2D2D] dark:hover:text-[#EAEAEA] px-5 py-2.5 rounded-full border-2 border-[#E0E0E0] dark:border-[#2D2D2D] hover:border-[#D4A574] transition-all active:scale-95 flex items-center gap-2"
+          className="text-sm font-bold text-[#2D2D2D]/70 dark:text-[#EAEAEA]/70 hover:text-[#2D2D2D] dark:hover:text-[#EAEAEA] px-5 py-2.5 rounded-full border-2 border-[#E0E0E0] dark:border-[#2D2D2D] hover:border-[#BA7A3B] transition-all active:scale-95 flex items-center gap-2"
         >
           <span>Skip</span>
           <SkipForward className="w-4 h-4" />
@@ -66,7 +66,7 @@ export const IntroWalkthrough: React.FC = () => {
             {/* Animated Step Visual */}
             {currentStep === 0 && (
               <div className="space-y-4 py-2">
-                <h2 className="font-heading font-extrabold text-3xl text-[#2D2D2D] dark:text-[#EAEAEA] border-r-4 border-[#D4A574] inline-block pr-2.5">
+                <h2 className="font-heading font-extrabold text-3xl text-[#2D2D2D] dark:text-[#EAEAEA] border-r-4 border-[#BA7A3B] inline-block pr-2.5">
                   Ask anything
                 </h2>
                 <p className="text-sm text-[#2D2D2D]/70 dark:text-[#EAEAEA]/70 font-sans leading-relaxed px-2">
@@ -78,7 +78,7 @@ export const IntroWalkthrough: React.FC = () => {
                   {steps[0].pills?.map((pill) => (
                     <span
                       key={pill}
-                      className="px-3.5 py-2 bg-[#D4A574] text-[#2D2D2D] text-xs sm:text-sm font-extrabold rounded-full shadow-sm"
+                      className="px-3.5 py-2 bg-[#BA7A3B] text-[#2D2D2D] text-xs sm:text-sm font-extrabold rounded-full shadow-sm"
                     >
                       {pill}
                     </span>
@@ -101,7 +101,7 @@ export const IntroWalkthrough: React.FC = () => {
                   {steps[1].chips?.map((chip) => (
                     <span
                       key={chip}
-                      className="px-3.5 py-2 border-2 border-[#D4A574] dark:border-[#B38352] bg-[#FAFAD5]/50 dark:bg-[#2D2D15]/35 text-[#2D2D2D] dark:text-[#EAEAEA] text-xs sm:text-sm font-extrabold rounded-full"
+                      className="px-3.5 py-2 border-2 border-[#BA7A3B] dark:border-[#8E5724] bg-[#FAFAD5]/50 dark:bg-[#2D2D15]/35 text-[#2D2D2D] dark:text-[#EAEAEA] text-xs sm:text-sm font-extrabold rounded-full"
                     >
                       {chip}
                     </span>
@@ -112,7 +112,7 @@ export const IntroWalkthrough: React.FC = () => {
 
             {currentStep === 2 && (
               <div className="space-y-4 py-4 flex flex-col items-center">
-                <div className="w-20 h-20 bg-[#FAFAD5] dark:bg-[#2D2D15] border-3 border-[#D4A574] dark:border-[#B38352] rounded-full flex items-center justify-center shadow-sm mb-2 animate-pulse">
+                <div className="w-20 h-20 bg-[#FAFAD5] dark:bg-[#2D2D15] border-3 border-[#BA7A3B] dark:border-[#8E5724] rounded-full flex items-center justify-center shadow-sm mb-2 animate-pulse">
                   <Check className="w-10 h-10 text-[#2D2D2D] dark:text-[#EAEAEA]" />
                 </div>
                 <h2 className="font-heading font-extrabold text-3xl text-[#2D2D2D] dark:text-[#EAEAEA]">
@@ -132,7 +132,7 @@ export const IntroWalkthrough: React.FC = () => {
             <div
               key={idx}
               className={`h-2.5 rounded-full transition-all duration-300 ${
-                currentStep === idx ? "w-10 bg-[#D4A574]" : "w-2.5 bg-[#E0E0E0] dark:bg-[#2D2D2D]"
+                currentStep === idx ? "w-10 bg-[#BA7A3B]" : "w-2.5 bg-[#E0E0E0] dark:bg-[#2D2D2D]"
               }`}
             />
           ))}
@@ -144,7 +144,7 @@ export const IntroWalkthrough: React.FC = () => {
         <button
           type="button"
           onClick={handleNext}
-          className="w-full py-3.5 px-6 bg-[#D4A574] text-[#2D2D2D] font-heading font-extrabold text-sm sm:text-base rounded-full shadow-lg hover:bg-[#C49463] active:scale-[0.97] transition-all duration-200 flex items-center justify-center gap-3"
+          className="w-full py-3.5 px-6 bg-[#BA7A3B] text-[#2D2D2D] font-heading font-extrabold text-sm sm:text-base rounded-full shadow-lg hover:bg-[#A66A30] active:scale-[0.97] transition-all duration-200 flex items-center justify-center gap-3"
         >
           <span>{currentStep === steps.length - 1 ? "Start Sabi Now" : "Continue"}</span>
           <ArrowRight className="w-5 h-5" />

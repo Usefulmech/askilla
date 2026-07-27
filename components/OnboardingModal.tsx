@@ -53,7 +53,7 @@ export const OnboardingModal: React.FC = () => {
           <img
             src="/icon.svg"
             alt="Askilla Logo"
-            className="w-14 h-14 rounded-2xl shadow-md border-2 border-[#D4A574]"
+            className="w-14 h-14 rounded-2xl shadow-md border-2 border-[#BA7A3B]"
           />
           <h1 className="font-heading font-extrabold text-3xl sm:text-4xl text-[#2D2D2D] dark:text-[#EAEAEA] tracking-tight">
             Askilla
@@ -85,10 +85,10 @@ export const OnboardingModal: React.FC = () => {
               <button
                 type="button"
                 onClick={() => setLangDropdownOpen(!langDropdownOpen)}
-                className="w-full flex items-center justify-between px-5 py-4 bg-white dark:bg-[#1E1E1E] border-2 border-[#E0E0E0] dark:border-[#2D2D2D] rounded-full text-[#2D2D2D] dark:text-[#EAEAEA] text-sm font-bold hover:border-[#D4A574] focus:outline-none focus:border-[#D4A574] transition-colors"
+                className="w-full flex items-center justify-between px-5 py-4 bg-white dark:bg-[#1E1E1E] border-2 border-[#E0E0E0] dark:border-[#2D2D2D] rounded-full text-[#2D2D2D] dark:text-[#EAEAEA] text-sm font-bold hover:border-[#BA7A3B] focus:outline-none focus:border-[#BA7A3B] transition-colors"
               >
                 <div className="flex items-center gap-2.5">
-                  <Globe className="w-5 h-5 text-[#D4A574]" />
+                  <Globe className="w-5 h-5 text-[#BA7A3B]" />
                   <span>{selectedLabel}</span>
                 </div>
                 <ChevronDown className={`w-5 h-5 text-[#2D2D2D]/50 dark:text-[#EAEAEA]/50 transition-transform ${langDropdownOpen ? "rotate-180" : ""}`} />
@@ -108,12 +108,12 @@ export const OnboardingModal: React.FC = () => {
                         }}
                         className={`w-full flex items-center justify-between px-5 py-3.5 text-sm font-semibold transition-colors ${
                           isActive
-                            ? "bg-[#D4A574]/15 dark:bg-[#D4A574]/20 text-[#2D2D2D] dark:text-[#EAEAEA] font-bold"
+                            ? "bg-[#BA7A3B]/15 dark:bg-[#BA7A3B]/20 text-[#2D2D2D] dark:text-[#EAEAEA] font-bold"
                             : "text-[#2D2D2D] dark:text-[#EAEAEA] hover:bg-[#F5F5F0] dark:hover:bg-[#252525]"
                         }`}
                       >
                         <span>{lang.label}</span>
-                        {isActive && <Check className="w-4 h-4 text-[#D4A574]" />}
+                        {isActive && <Check className="w-4 h-4 text-[#BA7A3B]" />}
                       </button>
                     );
                   })}
@@ -128,7 +128,7 @@ export const OnboardingModal: React.FC = () => {
               Phone Number
             </label>
             <div className="relative flex items-center">
-              <Phone className="absolute left-4 w-4 h-4 text-[#D4A574]" />
+              <Phone className="absolute left-4 w-4 h-4 text-[#BA7A3B]" />
               <span className="absolute left-11 text-xs font-bold text-[#2D2D2D]/60 dark:text-[#EAEAEA]/60 border-r border-[#E0E0E0] dark:border-[#2D2D2D] pr-3">
                 +234
               </span>
@@ -137,7 +137,7 @@ export const OnboardingModal: React.FC = () => {
                 placeholder="803 000 0000"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
-                className="w-full pl-24 pr-5 py-4 bg-[#FFFFFF] dark:bg-[#1C1C1C] border-2 border-[#E0E0E0] dark:border-[#2D2D2D] rounded-full text-[#2D2D2D] dark:text-[#EAEAEA] placeholder-[#2D2D2D]/40 dark:placeholder-[#EAEAEA]/40 focus:outline-none focus:border-[#D4A574] text-sm font-sans transition-colors"
+                className="w-full pl-24 pr-5 py-4 bg-[#FFFFFF] dark:bg-[#1C1C1C] border-2 border-[#E0E0E0] dark:border-[#2D2D2D] rounded-full text-[#2D2D2D] dark:text-[#EAEAEA] placeholder-[#2D2D2D]/40 dark:placeholder-[#EAEAEA]/40 focus:outline-none focus:border-[#BA7A3B] text-sm font-sans transition-colors"
               />
             </div>
           </div>
@@ -148,7 +148,7 @@ export const OnboardingModal: React.FC = () => {
               Your Full Name <span className="text-red-500">*</span>
             </label>
             <div className="relative flex items-center">
-              <User className="absolute left-4 w-4 h-4 text-[#D4A574]" />
+              <User className="absolute left-4 w-4 h-4 text-[#BA7A3B]" />
               <input
                 type="text"
                 placeholder="Enter your name (e.g. Tunde Johnson)"
@@ -159,7 +159,7 @@ export const OnboardingModal: React.FC = () => {
                 }}
                 className={`w-full pl-11 pr-5 py-4 bg-[#FFFFFF] dark:bg-[#1C1C1C] border-2 ${
                   nameError ? "border-red-500" : "border-[#E0E0E0] dark:border-[#2D2D2D]"
-                } rounded-full text-[#2D2D2D] dark:text-[#EAEAEA] placeholder-[#2D2D2D]/40 dark:placeholder-[#EAEAEA]/40 focus:outline-none focus:border-[#D4A574] text-sm font-sans transition-colors`}
+                } rounded-full text-[#2D2D2D] dark:text-[#EAEAEA] placeholder-[#2D2D2D]/40 dark:placeholder-[#EAEAEA]/40 focus:outline-none focus:border-[#BA7A3B] text-sm font-sans transition-colors`}
               />
             </div>
             {nameError && (
@@ -175,7 +175,7 @@ export const OnboardingModal: React.FC = () => {
           <button
             type="button"
             onClick={handleStart}
-            className="w-full py-3.5 px-6 bg-gradient-to-r from-[#D4A574] to-[#C49463] text-[#2D2D2D] font-heading font-extrabold text-sm sm:text-base rounded-full shadow-lg hover:shadow-xl hover:from-[#C49463] hover:to-[#B38352] active:scale-[0.97] transition-all duration-300 flex items-center justify-center gap-3 ring-2 ring-[#D4A574]/30"
+            className="w-full py-3.5 px-6 bg-gradient-to-r from-[#BA7A3B] to-[#A66A30] text-[#2D2D2D] font-heading font-extrabold text-sm sm:text-base rounded-full shadow-lg hover:shadow-xl hover:from-[#A66A30] hover:to-[#8E5724] active:scale-[0.97] transition-all duration-300 flex items-center justify-center gap-3 ring-2 ring-[#BA7A3B]/30"
           >
             <span>Start Learning</span>
             <ArrowRight className="w-5 h-5" />

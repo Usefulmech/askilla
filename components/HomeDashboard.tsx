@@ -30,9 +30,9 @@ const PremiumPen: React.FC<{ state: "writing" | "erasing" | "idle"; className?: 
             <stop offset="100%" stopColor="#444444" className="pen-body-stop-100" />
           </linearGradient>
           <linearGradient id="penGold" x1="0" y1="1" x2="1" y2="0">
-            <stop offset="0%" stopColor="#C49463" />
+            <stop offset="0%" stopColor="#A66A30" />
             <stop offset="50%" stopColor="#E9C496" />
-            <stop offset="100%" stopColor="#B38352" />
+            <stop offset="100%" stopColor="#8E5724" />
           </linearGradient>
           <linearGradient id="penSilver" x1="0" y1="1" x2="1" y2="0">
             <stop offset="0%" stopColor="#D1D5DB" />
@@ -52,7 +52,7 @@ const PremiumPen: React.FC<{ state: "writing" | "erasing" | "idle"; className?: 
         <path
           d="M26 38L30 34L33 37L29 41L26 38Z"
           fill="url(#penGold)"
-          stroke="#B38352"
+          stroke="#8E5724"
           strokeWidth="0.5"
         />
         {/* Silver Grip Section */}
@@ -66,14 +66,14 @@ const PremiumPen: React.FC<{ state: "writing" | "erasing" | "idle"; className?: 
         <path
           d="M12 52L20 44L23 47L15 55L12 52Z"
           fill="url(#penGold)"
-          stroke="#B38352"
+          stroke="#8E5724"
           strokeWidth="0.5"
         />
         {/* Gold Nib Tip */}
         <path
           d="M6 58L14 50L16 52L8 60L6 58Z"
           fill="url(#penGold)"
-          stroke="#B38352"
+          stroke="#8E5724"
           strokeWidth="0.5"
         />
         {/* Breather hole */}
@@ -288,7 +288,7 @@ export const HomeDashboard: React.FC = () => {
         <button
           type="button"
           onClick={() => setScreen("settings")}
-          className="px-4 py-2 bg-[#FAFAD5] dark:bg-[#2D2D15] text-[#2D2D2D] dark:text-[#EAEAEA] font-bold text-xs rounded-full border border-[#D4A574]/40 capitalize hover:bg-[#D4A574]/20 dark:hover:bg-[#D4A574]/35 transition-colors"
+          className="px-4 py-2 bg-[#FAFAD5] dark:bg-[#2D2D15] text-[#2D2D2D] dark:text-[#EAEAEA] font-bold text-xs rounded-full border border-[#BA7A3B]/40 capitalize hover:bg-[#BA7A3B]/20 dark:hover:bg-[#BA7A3B]/35 transition-colors"
         >
           {language} Mode
         </button>
@@ -306,7 +306,7 @@ export const HomeDashboard: React.FC = () => {
           <h2 className="font-heading font-extrabold text-3xl sm:text-5xl text-[#2D2D2D] dark:text-[#EAEAEA] leading-tight min-h-[60px] text-center">
             <span>
               {typedText}
-              <span className="inline-block w-1.5 h-7 sm:h-10 ml-1.5 bg-[#D4A574] animate-pulse align-middle rounded-full" />
+              <span className="inline-block w-1.5 h-7 sm:h-10 ml-1.5 bg-[#BA7A3B] animate-pulse align-middle rounded-full" />
             </span>
           </h2>
           <p className="text-sm sm:text-base text-[#2D2D2D]/75 dark:text-[#EAEAEA]/75 font-sans leading-relaxed font-medium max-w-xl mx-auto">
@@ -336,13 +336,13 @@ export const HomeDashboard: React.FC = () => {
               placeholder="Type a topic, subject, or skill..."
               value={inputTopic}
               onChange={(e) => setInputTopic(e.target.value)}
-              className="w-full pl-12 pr-28 sm:pl-16 sm:pr-40 py-4 sm:py-5 bg-white dark:bg-[#1E1E1E] border-2 border-[#E0E0E0] dark:border-[#2D2D2D] text-[#2D2D2D] dark:text-[#EAEAEA] placeholder-[#2D2D2D]/40 dark:placeholder-[#EAEAEA]/40 focus:outline-none focus:border-[#D4A574] text-sm sm:text-lg rounded-full shadow-sm font-sans transition-all duration-200"
+              className="w-full pl-12 pr-28 sm:pl-16 sm:pr-40 py-4 sm:py-5 bg-white dark:bg-[#1E1E1E] border-2 border-[#E0E0E0] dark:border-[#2D2D2D] text-[#2D2D2D] dark:text-[#EAEAEA] placeholder-[#2D2D2D]/40 dark:placeholder-[#EAEAEA]/40 focus:outline-none focus:border-[#BA7A3B] text-sm sm:text-lg rounded-full shadow-sm font-sans transition-all duration-200"
             />
             <div className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center">
               <button
                 type="submit"
                 disabled={isLoadingModule || !inputTopic.trim()}
-                className="px-5 py-2.5 sm:px-8 sm:py-3.5 bg-[#D4A574] text-[#2D2D2D] text-xs sm:text-base font-extrabold rounded-full hover:bg-[#C49463] active:scale-95 disabled:opacity-50 transition-all flex items-center gap-2 shadow-sm animate-breathing"
+                className="px-5 py-2.5 sm:px-8 sm:py-3.5 bg-[#BA7A3B] text-[#2D2D2D] text-xs sm:text-base font-extrabold rounded-full hover:bg-[#A66A30] active:scale-95 disabled:opacity-50 transition-all flex items-center gap-2 shadow-sm animate-breathing"
               >
                 <span>{isLoadingModule ? "Building..." : "Learn"}</span>
                 {!isLoadingModule && <ArrowRight className="w-5 h-5" />}
@@ -372,7 +372,7 @@ export const HomeDashboard: React.FC = () => {
           {/* Header & Category Tabs */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#E0E0E0]/60 dark:border-[#2D2D2D]/60 pb-3">
             <div className="flex items-center gap-2">
-              <TrendingUp className="w-5 h-5 text-[#D4A574] shrink-0" />
+              <TrendingUp className="w-5 h-5 text-[#BA7A3B] shrink-0" />
               <h2 className="text-xs sm:text-sm font-extrabold text-[#2D2D2D] dark:text-[#EAEAEA] uppercase tracking-wider">
                 Trending Learning Tracks
               </h2>
@@ -395,7 +395,7 @@ export const HomeDashboard: React.FC = () => {
                     onClick={() => setActiveDomain(tab.id)}
                     className={`px-3 py-1.5 rounded-full text-[11px] sm:text-xs font-bold shrink-0 whitespace-nowrap transition-all flex items-center gap-1.5 ${
                       active
-                        ? "bg-[#D4A574] text-[#2D2D2D] shadow-sm"
+                        ? "bg-[#BA7A3B] text-[#2D2D2D] shadow-sm"
                         : "bg-[#F5F5F0] dark:bg-[#2C2C2C] text-[#2D2D2D]/70 dark:text-[#EAEAEA]/70 hover:bg-[#FAFAD5]/60"
                     }`}
                   >
@@ -413,9 +413,9 @@ export const HomeDashboard: React.FC = () => {
             <button
               type="button"
               onClick={() => scrollCarousel("left")}
-              className="hidden md:flex absolute -left-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-white dark:bg-[#1E1E1E] border-2 border-[#D4A574] shadow-xl items-center justify-center text-[#2D2D2D] dark:text-[#EAEAEA] hover:bg-[#FAFAD5] dark:hover:bg-[#2D2D15] hover:scale-110 active:scale-95 transition-all opacity-0 group-hover:opacity-100"
+              className="hidden md:flex absolute -left-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-white dark:bg-[#1E1E1E] border-2 border-[#BA7A3B] shadow-xl items-center justify-center text-[#2D2D2D] dark:text-[#EAEAEA] hover:bg-[#FAFAD5] dark:hover:bg-[#2D2D15] hover:scale-110 active:scale-95 transition-all opacity-0 group-hover:opacity-100"
             >
-              <ChevronLeft className="w-6 h-6 text-[#D4A574]" />
+              <ChevronLeft className="w-6 h-6 text-[#BA7A3B]" />
             </button>
 
             {/* Horizontal Touch Scrollable Slider (Mobile Peek & Snap Center) */}
@@ -438,11 +438,11 @@ export const HomeDashboard: React.FC = () => {
                     setInputTopic(item.topic);
                     handleSearch(item.topic);
                   }}
-                  className="snap-center sm:snap-start shrink-0 w-[88vw] max-w-[340px] sm:w-[350px] md:w-[380px] p-5 sm:p-7 rounded-3xl bg-[#FAFAD5]/45 dark:bg-[#2D2D15]/25 border-2 border-[#D4A574]/40 hover:border-[#D4A574] text-left transition-all active:scale-[0.98] flex flex-col justify-between space-y-3.5 group hover:shadow-xl shadow-sm"
+                  className="snap-center sm:snap-start shrink-0 w-[88vw] max-w-[340px] sm:w-[350px] md:w-[380px] p-5 sm:p-7 rounded-3xl bg-[#FAFAD5]/45 dark:bg-[#2D2D15]/25 border-2 border-[#BA7A3B]/40 hover:border-[#BA7A3B] text-left transition-all active:scale-[0.98] flex flex-col justify-between space-y-3.5 group hover:shadow-xl shadow-sm"
                 >
                   <div className="space-y-2">
                     <div className="flex items-center justify-between gap-2">
-                      <span className="px-2.5 py-0.5 bg-[#D4A574]/20 border border-[#D4A574]/40 text-[#D4A574] text-[9px] sm:text-[10px] font-extrabold rounded-full uppercase tracking-wider truncate max-w-[65%]">
+                      <span className="px-2.5 py-0.5 bg-[#BA7A3B]/20 border border-[#BA7A3B]/40 text-[#BA7A3B] text-[9px] sm:text-[10px] font-extrabold rounded-full uppercase tracking-wider truncate max-w-[65%]">
                         {item.domainLabel}
                       </span>
                       <span className="text-[9px] sm:text-[10px] text-[#2D2D2D]/60 dark:text-[#EAEAEA]/60 font-extrabold uppercase truncate">
@@ -450,7 +450,7 @@ export const HomeDashboard: React.FC = () => {
                       </span>
                     </div>
 
-                    <h3 className="font-heading font-extrabold text-sm sm:text-lg text-[#2D2D2D] dark:text-[#EAEAEA] group-hover:text-[#D4A574] transition-colors line-clamp-1">
+                    <h3 className="font-heading font-extrabold text-sm sm:text-lg text-[#2D2D2D] dark:text-[#EAEAEA] group-hover:text-[#BA7A3B] transition-colors line-clamp-1">
                       {item.topic}
                     </h3>
 
@@ -459,9 +459,9 @@ export const HomeDashboard: React.FC = () => {
                     </p>
                   </div>
 
-                  <div className="flex items-center justify-between pt-2.5 border-t border-[#D4A574]/25 text-[11px] sm:text-xs font-bold text-[#2D2D2D]/70 dark:text-[#EAEAEA]/70">
+                  <div className="flex items-center justify-between pt-2.5 border-t border-[#BA7A3B]/25 text-[11px] sm:text-xs font-bold text-[#2D2D2D]/70 dark:text-[#EAEAEA]/70">
                     <span className="truncate">{item.learnerCount}</span>
-                    <div className="flex items-center gap-1 text-[#D4A574] font-extrabold shrink-0 group-hover:translate-x-1 transition-transform">
+                    <div className="flex items-center gap-1 text-[#BA7A3B] font-extrabold shrink-0 group-hover:translate-x-1 transition-transform">
                       <span>Start Track</span>
                       <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                     </div>
@@ -474,9 +474,9 @@ export const HomeDashboard: React.FC = () => {
             <button
               type="button"
               onClick={() => scrollCarousel("right")}
-              className="hidden md:flex absolute -right-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-white dark:bg-[#1E1E1E] border-2 border-[#D4A574] shadow-xl items-center justify-center text-[#2D2D2D] dark:text-[#EAEAEA] hover:bg-[#FAFAD5] dark:hover:bg-[#2D2D15] hover:scale-110 active:scale-95 transition-all opacity-0 group-hover:opacity-100"
+              className="hidden md:flex absolute -right-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-white dark:bg-[#1E1E1E] border-2 border-[#BA7A3B] shadow-xl items-center justify-center text-[#2D2D2D] dark:text-[#EAEAEA] hover:bg-[#FAFAD5] dark:hover:bg-[#2D2D15] hover:scale-110 active:scale-95 transition-all opacity-0 group-hover:opacity-100"
             >
-              <ChevronRight className="w-6 h-6 text-[#D4A574]" />
+              <ChevronRight className="w-6 h-6 text-[#BA7A3B]" />
             </button>
           </div>
         </motion.div>
@@ -490,12 +490,12 @@ export const HomeDashboard: React.FC = () => {
           >
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2 text-sm font-extrabold text-[#2D2D2D] dark:text-[#EAEAEA] uppercase tracking-wider">
-                <BookOpen className="w-5 h-5 text-[#D4A574]" />
+                <BookOpen className="w-5 h-5 text-[#BA7A3B]" />
                 <span>Active Track &amp; Continue Learning</span>
               </div>
 
               {currentCourse && completedModuleIds.length >= currentCourse.modules.length && (
-                <span className="px-2.5 py-1 bg-[#D4A574]/20 border border-[#D4A574]/40 text-[#D4A574] text-[10px] font-extrabold rounded-full uppercase">
+                <span className="px-2.5 py-1 bg-[#BA7A3B]/20 border border-[#BA7A3B]/40 text-[#BA7A3B] text-[10px] font-extrabold rounded-full uppercase">
                   100% Completed
                 </span>
               )}
@@ -513,11 +513,11 @@ export const HomeDashboard: React.FC = () => {
                     setScreen("module");
                   }
                 }}
-                className="w-full p-5 rounded-2xl bg-[#FAFAD5] dark:bg-[#2D2D15] border-2 border-[#D4A574] dark:border-[#B38352] hover:shadow-md cursor-pointer transition-all flex items-center justify-between group text-left active:scale-[0.98]"
+                className="w-full p-5 rounded-2xl bg-[#FAFAD5] dark:bg-[#2D2D15] border-2 border-[#BA7A3B] dark:border-[#8E5724] hover:shadow-md cursor-pointer transition-all flex items-center justify-between group text-left active:scale-[0.98]"
               >
                 <div className="space-y-1.5 flex-1 pr-4">
                   <div className="flex items-center gap-2">
-                    <span className="text-[10px] font-extrabold uppercase text-[#D4A574]">
+                    <span className="text-[10px] font-extrabold uppercase text-[#BA7A3B]">
                       {completedModuleIds.length >= currentCourse.modules.length
                         ? "Course Completed"
                         : `Module ${Math.min(completedModuleIds.length + 1, currentCourse.modules.length)} of ${currentCourse.modules.length}`}
@@ -533,17 +533,17 @@ export const HomeDashboard: React.FC = () => {
                   </p>
                   <div className="w-full max-w-xs h-2.5 bg-[#E0E0E0] dark:bg-[#2D2D2D] rounded-full overflow-hidden mt-2.5 shadow-inner">
                     <div 
-                      className="h-full bg-[#D4A574] rounded-full transition-all duration-300" 
+                      className="h-full bg-[#BA7A3B] rounded-full transition-all duration-300" 
                       style={{ width: `${currentCourse.modules.length > 0 ? Math.min(100, Math.round((completedModuleIds.length / currentCourse.modules.length) * 100)) : 0}%` }}
                     />
                   </div>
                 </div>
 
-                <div className="flex items-center gap-2 text-sm font-extrabold text-[#D4A574] transition-all group-hover:translate-x-1 shrink-0">
+                <div className="flex items-center gap-2 text-sm font-extrabold text-[#BA7A3B] transition-all group-hover:translate-x-1 shrink-0">
                   <span className="hidden sm:inline">
                     {completedModuleIds.length >= currentCourse.modules.length ? "View Win Card" : "Continue"}
                   </span>
-                  <div className="flex items-center justify-center w-9 h-9 rounded-full bg-[#D4A574] text-[#2D2D2D] dark:text-[#1E1E1E] shadow-sm shrink-0">
+                  <div className="flex items-center justify-center w-9 h-9 rounded-full bg-[#BA7A3B] text-[#2D2D2D] dark:text-[#1E1E1E] shadow-sm shrink-0">
                     <ArrowRight className="w-4 h-4" />
                   </div>
                 </div>
@@ -600,13 +600,13 @@ export const HomeDashboard: React.FC = () => {
                   </button>
                 </div>
 
-                <div className="bg-[#FAFAD5] dark:bg-[#2D2D15] rounded-2xl p-3.5 border-2 border-[#D4A574] dark:border-[#B38352] flex items-center justify-start gap-3">
+                <div className="bg-[#FAFAD5] dark:bg-[#2D2D15] rounded-2xl p-3.5 border-2 border-[#BA7A3B] dark:border-[#8E5724] flex items-center justify-start gap-3">
                   <div className="w-10 h-10 rounded-full border border-[#2D2D2D] dark:border-white/20 bg-white dark:bg-[#1E1E1E] flex items-center justify-center overflow-hidden shrink-0">
                     <img src="/uncle_sabi.png" alt="Uncle Sabi" className="w-full h-full object-cover scale-105" />
                   </div>
                   <div className="space-y-0.5">
                     <h3 className="font-heading font-extrabold text-xs text-[#2D2D2D] dark:text-[#EAEAEA]">Uncle Sabi</h3>
-                    <span className="inline-block px-2 py-0.5 bg-[#D4A574] text-[#2D2D2D] text-[9px] font-extrabold rounded-full capitalize">{language} Mode</span>
+                    <span className="inline-block px-2 py-0.5 bg-[#BA7A3B] text-[#2D2D2D] text-[9px] font-extrabold rounded-full capitalize">{language} Mode</span>
                   </div>
                 </div>
 
@@ -667,16 +667,16 @@ export const HomeDashboard: React.FC = () => {
               initial={{ scale: 0.9, y: 20 }}
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.9, y: 20 }}
-              className="bg-white dark:bg-[#1E1E1E] rounded-3xl p-8 max-w-sm w-full border-2 border-[#D4A574] dark:border-[#B38352] shadow-2xl space-y-6"
+              className="bg-white dark:bg-[#1E1E1E] rounded-3xl p-8 max-w-sm w-full border-2 border-[#BA7A3B] dark:border-[#8E5724] shadow-2xl space-y-6"
             >
               {/* Learning / Course Building Animation */}
               <div className="relative w-28 h-28 mx-auto flex items-center justify-center">
-                <div className="absolute inset-0 rounded-full border-4 border-dashed border-[#D4A574]/40 animate-spin" style={{ animationDuration: '8s' }} />
-                <div className="absolute inset-2 rounded-full border-4 border-[#D4A574]/10 border-t-[#D4A574] animate-spin" style={{ animationDuration: '1.5s' }} />
+                <div className="absolute inset-0 rounded-full border-4 border-dashed border-[#BA7A3B]/40 animate-spin" style={{ animationDuration: '8s' }} />
+                <div className="absolute inset-2 rounded-full border-4 border-[#BA7A3B]/10 border-t-[#BA7A3B] animate-spin" style={{ animationDuration: '1.5s' }} />
                 
                 <div className="relative flex items-center justify-center z-10">
-                  <BookOpen className="w-10 h-10 text-[#D4A574] animate-pulse" />
-                  <Sparkles className="w-4 h-4 text-[#D4A574] absolute -top-3 -right-2 animate-bounce" />
+                  <BookOpen className="w-10 h-10 text-[#BA7A3B] animate-pulse" />
+                  <Sparkles className="w-4 h-4 text-[#BA7A3B] absolute -top-3 -right-2 animate-bounce" />
                 </div>
               </div>
               
@@ -691,7 +691,7 @@ export const HomeDashboard: React.FC = () => {
 
               {/* Progress bar animation */}
               <div className="w-full h-2 bg-[#E0E0E0] dark:bg-[#2D2D2D] rounded-full overflow-hidden">
-                <div className="h-full bg-[#D4A574] rounded-full animate-pulse" style={{ width: '80%' }} />
+                <div className="h-full bg-[#BA7A3B] rounded-full animate-pulse" style={{ width: '80%' }} />
               </div>
             </motion.div>
           </motion.div>

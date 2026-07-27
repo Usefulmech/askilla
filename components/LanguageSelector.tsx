@@ -33,10 +33,10 @@ export const LanguageSelector: React.FC<LanguageSelectorProps> = ({
       <button
         type="button"
         onClick={() => setOpen(!open)}
-        className="w-full flex items-center justify-between px-5 py-4 bg-white dark:bg-[#1E1E1E] border-2 border-[#E0E0E0] dark:border-[#2D2D2D] rounded-full text-[#2D2D2D] dark:text-[#EAEAEA] text-sm font-bold hover:border-[#D4A574] focus:outline-none focus:border-[#D4A574] transition-colors"
+        className="w-full flex items-center justify-between px-5 py-4 bg-white dark:bg-[#1E1E1E] border-2 border-[#E0E0E0] dark:border-[#2D2D2D] rounded-full text-[#2D2D2D] dark:text-[#EAEAEA] text-sm font-bold hover:border-[#BA7A3B] focus:outline-none focus:border-[#BA7A3B] transition-colors"
       >
         <div className="flex items-center gap-2.5">
-          <Globe className="w-5 h-5 text-[#D4A574]" />
+          <Globe className="w-5 h-5 text-[#BA7A3B]" />
           <span>{selectedOption.label}</span>
         </div>
         <ChevronDown className={`w-5 h-5 text-[#2D2D2D]/50 dark:text-[#EAEAEA]/50 transition-transform ${open ? "rotate-180" : ""}`} />
@@ -56,12 +56,12 @@ export const LanguageSelector: React.FC<LanguageSelectorProps> = ({
                 }}
                 className={`w-full flex items-center justify-between px-5 py-3.5 text-sm font-semibold transition-colors ${
                   isSelected
-                    ? "bg-[#D4A574]/15 dark:bg-[#D4A574]/20 text-[#2D2D2D] dark:text-[#EAEAEA] font-bold"
+                    ? "bg-[#BA7A3B]/15 dark:bg-[#BA7A3B]/20 text-[#2D2D2D] dark:text-[#EAEAEA] font-bold"
                     : "text-[#2D2D2D] dark:text-[#EAEAEA] hover:bg-[#F5F5F0] dark:hover:bg-[#252525]"
                 }`}
               >
                 <span>{lang.label}</span>
-                {isSelected && <Check className="w-4 h-4 text-[#D4A574]" />}
+                {isSelected && <Check className="w-4 h-4 text-[#BA7A3B]" />}
               </button>
             );
           })}

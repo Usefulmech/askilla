@@ -8,7 +8,7 @@ import { AppScreen } from "@/lib/types/askilla";
 export const BottomNav: React.FC = () => {
   const { screen, setScreen } = useAskillaStore();
 
-  if (screen === "landing" || screen === "onboarding" || screen === "intro" || screen === "module") return null;
+  if (screen === "landing" || screen === "onboarding" || screen === "intro" || screen === "module" || screen === "welcome") return null;
 
   const navItems: { screen: AppScreen; label: string; icon: React.FC<{ className?: string }> }[] = [
     { screen: "home", label: "Home", icon: Home },
@@ -30,11 +30,11 @@ export const BottomNav: React.FC = () => {
               onClick={() => setScreen(item.screen)}
               className={`flex flex-col items-center gap-1 px-3 py-1.5 rounded-xl transition-all duration-200 ${
                 isActive
-                  ? "text-[#D4A574] font-bold"
+                  ? "text-[#BA7A3B] font-bold"
                   : "text-[#2D2D2D]/50 dark:text-[#EAEAEA]/55 hover:text-[#2D2D2D] dark:hover:text-[#EAEAEA]"
               }`}
             >
-              <Icon className={`w-5 h-5 ${isActive ? "text-[#D4A574]" : ""}`} />
+              <Icon className={`w-5 h-5 ${isActive ? "text-[#BA7A3B]" : ""}`} />
               <span className="text-[10px] font-semibold font-sans tracking-tight">{item.label}</span>
             </button>
           );

@@ -7,6 +7,8 @@ import { ArrowLeft, Home, RotateCcw, Eye, Lightbulb, Check, ChevronRight } from 
 import { useAskillaStore } from "@/lib/store/useAskillaStore";
 import { AudioPlayer } from "./AudioPlayer";
 import { VoiceInput } from "./VoiceInput";
+import { BlockMath, InlineMath } from "react-katex";
+import "katex/dist/katex.min.css";
 
 interface ChatMessage {
   id: string;
@@ -498,7 +500,7 @@ export const LearningSession: React.FC = () => {
       confetti({
         particleCount: 60,
         spread: 60,
-        colors: ["#D4A574", "#2D2D2D", "#FAFAD5"],
+        colors: ["#BA7A3B", "#2D2D2D", "#FAFAD5"],
       });
 
       const hasNextQuestion = qIdx + 1 < mod.questions.length;
@@ -701,70 +703,7 @@ export const LearningSession: React.FC = () => {
     }
   };
 
-  const renderMath = (mathStr: string) => {
-    if (!mathStr) return null;
-    let clean = mathStr;
 
-    // Log functions: \log_2(x) or \log(x)
-    clean = clean.replace(/\\log_?([0-9a-zA-Z]+)?/g, (_, base) => (base ? `log<sub>${base}</sub>` : "log"));
-
-    // Square roots \sqrt{content}
-    clean = clean.replace(/\\sqrt{([^}]+)}/g, '<span class="font-sans mr-0.5">√</span><span class="border-t border-current px-0.5">$1</span>');
-
-    // Fractions \frac{num}{den}
-    clean = clean.replace(/\\frac{([^}]+)}{([^}]+)}/g, '<span class="inline-flex flex-col align-middle text-center text-xs mx-0.5"><span class="border-b border-current pb-0.5">$1</span><span class="pt-0.5">$2</span></span>');
-
-    // Arrows & Reaction Symbols
-    clean = clean
-      .replace(/\r/g, "")
-      .replace(/[\r\n\s]*ightarrow|\\(?:rightarrow|to|longrightarrow)|rightarrow/gi, " → ")
-      .replace(/[\r\n\s]*eftarrow|\\(?:leftarrow|longleftarrow)|leftarrow/gi, " ← ")
-      .replace(/\\(?:leftrightarrow)|leftrightarrow/gi, " ↔ ")
-      .replace(/\\(?:Rightarrow)|Rightarrow/gi, " ⇒ ")
-      .replace(/\\(?:Leftarrow)|Leftarrow/gi, " ⇐ ");
-
-    // Symbols & Greek Letters
-    clean = clean
-      .replace(/\\(?:quad|qquad)/g, "  ")
-      .replace(/\\(?:cdot|times)/g, " × ")
-      .replace(/\\dots/g, "...")
-      .replace(/\\pm/g, "±")
-      .replace(/\\neq/g, "≠")
-      .replace(/\\le/g, "≤")
-      .replace(/\\ge/g, "≥")
-      .replace(/\\div/g, "÷")
-      .replace(/\\infty/g, "∞")
-      .replace(/\\approx/g, "≈")
-      .replace(/\\alpha/g, "α")
-      .replace(/\\beta/g, "β")
-      .replace(/\\gamma/g, "γ")
-      .replace(/\\theta/g, "θ")
-      .replace(/\\pi/g, "π")
-      .replace(/\\lambda/g, "λ")
-      .replace(/\\delta/g, "δ")
-      .replace(/\\Delta/g, "Δ")
-      .replace(/\\sigma/g, "σ")
-      .replace(/\\Sigma/g, "∑")
-      .replace(/\\sum/g, "∑")
-      .replace(/\\int/g, "∫")
-      .replace(/\\mu/g, "μ")
-      .replace(/\\omega/g, "ω")
-      .replace(/\\phi/g, "φ")
-      .replace(/\\epsilon/g, "ε");
-
-    // Superscripts
-    clean = clean.replace(/\^{([^}]+)}/g, "<sup>$1</sup>");
-    clean = clean.replace(/\^([a-zA-Z0-9+-]+)/g, "<sup>$1</sup>");
-
-    // Subscripts
-    clean = clean.replace(/_{([^}]+)}/g, "<sub>$1</sub>");
-    clean = clean.replace(/_([a-zA-Z0-9+-]+)/g, "<sub>$1</sub>");
-
-    // Remove remaining backslashes
-    clean = clean.replace(/\\/g, "");
-
-    return <span dangerouslySetInnerHTML={{ __html: clean }} />;
-  };
 
   const renderFormattedText = (rawText: string) => {
     if (!rawText) return null;
@@ -793,9 +732,9 @@ export const LearningSession: React.FC = () => {
             return (
               <h3
                 key={`header-${lineIdx}`}
-                className="font-heading font-extrabold text-xs sm:text-sm md:text-base text-[#D4A574] mt-4 mb-2 uppercase tracking-wider flex items-center gap-2 border-b border-[#D4A574]/25 pb-1 text-left"
+                className="font-heading font-extrabold text-xs sm:text-sm md:text-base text-[#BA7A3B] mt-4 mb-2 uppercase tracking-wider flex items-center gap-2 border-b border-[#BA7A3B]/25 pb-1 text-left"
               >
-                <span className="w-2 h-2 rounded-full bg-[#D4A574] shrink-0" />
+                <span className="w-2 h-2 rounded-full bg-[#BA7A3B] shrink-0" />
                 <span>{headerTitle}</span>
               </h3>
             );
@@ -814,9 +753,9 @@ export const LearningSession: React.FC = () => {
               return (
                 <div
                   key={`block-math-${lineIdx}-${idx}`}
-                  className="my-3 p-4 rounded-2xl bg-[#FAFAD5]/50 dark:bg-[#2D2D15]/30 border-2 border-[#D4A574]/40 text-center font-serif text-base sm:text-xl overflow-x-auto whitespace-nowrap shadow-md text-[#2D2D2D] dark:text-[#EAEAEA] tracking-wide"
+                  className="my-3 p-4 rounded-2xl bg-[#FAFAD5]/50 dark:bg-[#2D2D15]/30 border-2 border-[#BA7A3B]/40 text-center font-serif text-base sm:text-xl overflow-x-auto whitespace-nowrap shadow-md text-[#2D2D2D] dark:text-[#EAEAEA] tracking-wide"
                 >
-                  {renderMath(mathContent)}
+                  <BlockMath math={mathContent} />
                 </div>
               );
             }
@@ -832,9 +771,9 @@ export const LearningSession: React.FC = () => {
                 return (
                   <span
                     key={`inline-math-${lineIdx}-${idx}-${i}`}
-                    className="font-serif italic mx-0.5 px-1 py-0.5 bg-[#FAFAD5]/60 dark:bg-[#2D2D15]/40 rounded-md text-[#2D2D2D] dark:text-[#EAEAEA] border border-[#D4A574]/30"
+                    className="font-serif italic mx-0.5 px-1 py-0.5 bg-[#FAFAD5]/60 dark:bg-[#2D2D15]/40 rounded-md text-[#2D2D2D] dark:text-[#EAEAEA] border border-[#BA7A3B]/30"
                   >
-                    {renderMath(mathContent)}
+                    <InlineMath math={mathContent} />
                   </span>
                 );
               }
@@ -843,7 +782,7 @@ export const LearningSession: React.FC = () => {
                 return (
                   <strong
                     key={`bold-${lineIdx}-${idx}-${i}`}
-                    className="font-extrabold text-[#2D2D2D] dark:text-[#FFFFFF] bg-[#D4A574]/20 dark:bg-[#D4A574]/30 px-1.5 py-0.5 rounded-md border border-[#D4A574]/35 mx-0.5 inline-block my-0.5"
+                    className="font-extrabold text-[#2D2D2D] dark:text-[#FFFFFF] bg-[#BA7A3B]/20 dark:bg-[#BA7A3B]/30 px-1.5 py-0.5 rounded-md border border-[#BA7A3B]/35 mx-0.5 inline-block my-0.5"
                   >
                     {part.slice(2, -2)}
                   </strong>
@@ -857,7 +796,7 @@ export const LearningSession: React.FC = () => {
           if (isBullet) {
             return (
               <div key={`bullet-${lineIdx}`} className="flex items-start gap-2.5 my-1 pl-1 text-left text-xs sm:text-sm md:text-base font-sans font-medium text-[#2D2D2D]/90 dark:text-[#EAEAEA]/90 leading-relaxed">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#D4A574] shrink-0 mt-2" />
+                <span className="w-1.5 h-1.5 rounded-full bg-[#BA7A3B] shrink-0 mt-2" />
                 <div className="flex-1">{renderedContent}</div>
               </div>
             );
@@ -889,7 +828,7 @@ export const LearningSession: React.FC = () => {
                 <ArrowLeft className="w-5 h-5" />
               </button>
               <div className="flex flex-col text-left">
-                <span className="text-[10px] font-heading font-extrabold text-[#D4A574] tracking-widest uppercase">
+                <span className="text-[10px] font-heading font-extrabold text-[#BA7A3B] tracking-widest uppercase">
                   Askilla Inline Chat
                 </span>
                 <h1 className="font-heading font-extrabold text-sm sm:text-base md:text-lg text-[#2D2D2D] dark:text-[#EAEAEA] line-clamp-1">
@@ -903,7 +842,7 @@ export const LearningSession: React.FC = () => {
               onClick={() => setScreen("home")}
               className="p-2.5 bg-white dark:bg-[#1E1E1E] border border-[#E0E0E0] dark:border-[#2D2D2D] hover:bg-[#F5F5F0] dark:hover:bg-[#121212] rounded-full text-xs font-bold font-heading active:scale-95 transition-all flex items-center gap-1.5"
             >
-              <Home className="w-4 h-4 text-[#D4A574]" />
+              <Home className="w-4 h-4 text-[#BA7A3B]" />
               <span className="hidden sm:inline">Home</span>
             </button>
           </div>
@@ -926,7 +865,7 @@ export const LearningSession: React.FC = () => {
             <div className="w-full bg-[#FAFAD5]/80 dark:bg-[#2D2D15]/60 border-t border-[#E0E0E0]/10 dark:border-[#2D2D2D]/10 py-2.5 px-4 shadow-sm transition-all">
               <div className="max-w-6xl xl:max-w-7xl mx-auto px-4 sm:px-6 md:px-8 flex items-center justify-between text-xs font-sans font-medium text-[#2D2D2D]/60 dark:text-[#EAEAEA]/60">
                 <div className="flex items-center gap-2 max-w-[60%]">
-                  <span className="w-2 h-2 rounded-full bg-[#D4A574] shrink-0" />
+                  <span className="w-2 h-2 rounded-full bg-[#BA7A3B] shrink-0" />
                   <span className="truncate">
                     Topic: <strong className="font-extrabold text-[#2D2D2D] dark:text-[#EAEAEA]">{currentModTitle}</strong>
                   </span>
@@ -937,7 +876,7 @@ export const LearningSession: React.FC = () => {
                   </span>
                   <div className="w-16 sm:w-28 h-2 bg-[#E0E0E0] dark:bg-[#2D2D2D] rounded-full overflow-hidden shadow-inner">
                     <div 
-                      className="h-full bg-[#D4A574] rounded-full transition-all duration-300"
+                      className="h-full bg-[#BA7A3B] rounded-full transition-all duration-300"
                       style={{ width: `${progressPercent}%` }}
                     />
                   </div>
@@ -965,7 +904,7 @@ export const LearningSession: React.FC = () => {
                 >
                   {/* Sabi Avatar */}
                   {isSabi && (
-                    <div className="w-8 h-8 sm:w-11 sm:h-11 rounded-full border-2 border-[#D4A574] bg-[#FAFAD5] dark:bg-[#2D2D15] overflow-hidden flex items-center justify-center shrink-0 shadow-sm mt-0.5">
+                    <div className="w-8 h-8 sm:w-11 sm:h-11 rounded-full border-2 border-[#BA7A3B] bg-[#FAFAD5] dark:bg-[#2D2D15] overflow-hidden flex items-center justify-center shrink-0 shadow-sm mt-0.5">
                       <img src="/uncle_sabi.png" alt="Uncle Sabi" className="w-full h-full object-cover" />
                     </div>
                   )}
@@ -977,14 +916,14 @@ export const LearningSession: React.FC = () => {
                       className={`p-3.5 sm:p-5 md:p-6 lg:p-6 rounded-2xl sm:rounded-3xl border shadow-sm text-left min-w-0 overflow-hidden ${
                         isSabi
                           ? "bg-white dark:bg-[#1E1E1E] border-[#E0E0E0] dark:border-[#2D2D2D] text-[#2D2D2D] dark:text-[#EAEAEA]"
-                          : "bg-[#D4A574] border-[#D4A574] text-[#2D2D2D] font-extrabold rounded-tr-none rounded-br-2xl inline-block shadow-md"
+                          : "bg-[#BA7A3B] border-[#BA7A3B] text-[#2D2D2D] font-extrabold rounded-tr-none rounded-br-2xl inline-block shadow-md"
                       }`}
                     >
                       {/* Submodule layout inside chat */}
                       {msg.type === "explanation" && msg.data ? (
                         <div className="space-y-3.5">
                           <div className="flex items-center justify-between gap-2 border-b border-[#E0E0E0]/60 dark:border-[#2D2D2D]/60 pb-2">
-                            <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#D4A574]">
+                            <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#BA7A3B]">
                               Uncle Sabi Explanation
                             </span>
                             <AudioPlayer text={msg.content} />
@@ -993,13 +932,13 @@ export const LearningSession: React.FC = () => {
                             {renderFormattedText(msg.content)}
                           </div>
                           {msg.data.diagram && (
-                            <div className="my-3.5 p-3 sm:p-5 overflow-hidden rounded-2xl border border-[#D4A574]/40 bg-[#FAFAD5]/45 dark:bg-[#2D2D15]/20 shadow-inner text-[#2D2D2D] dark:text-[#EAEAEA] flex flex-col items-center gap-2">
+                            <div className="my-3.5 p-3 sm:p-5 overflow-hidden rounded-2xl border border-[#BA7A3B]/40 bg-[#FAFAD5]/45 dark:bg-[#2D2D15]/20 shadow-inner text-[#2D2D2D] dark:text-[#EAEAEA] flex flex-col items-center gap-2">
                               <div
                                 className="w-full flex justify-center items-center overflow-x-auto"
                                 dangerouslySetInnerHTML={{ __html: cleanSvg(msg.data.diagram) }}
                               />
-                              <div className="flex items-center gap-1.5 text-[10px] font-sans font-extrabold uppercase tracking-wider text-[#D4A574]">
-                                <span className="w-1.5 h-1.5 rounded-full bg-[#D4A574] shrink-0" />
+                              <div className="flex items-center gap-1.5 text-[10px] font-sans font-extrabold uppercase tracking-wider text-[#BA7A3B]">
+                                <span className="w-1.5 h-1.5 rounded-full bg-[#BA7A3B] shrink-0" />
                                 Uncle Sabi Concept Visualizer
                               </div>
                             </div>
@@ -1019,7 +958,7 @@ export const LearningSession: React.FC = () => {
                             )}
                           {msg.data.source && (
                             <p className="text-[10px] text-[#2D2D2D]/40 dark:text-[#EAEAEA]/40 font-sans flex items-center gap-1 pt-1">
-                              <span className="inline-block w-1.5 h-1.5 rounded-full bg-[#D4A574]/50" />
+                              <span className="inline-block w-1.5 h-1.5 rounded-full bg-[#BA7A3B]/50" />
                               Sourced from <span className="font-bold text-[#2D2D2D]/60 dark:text-[#EAEAEA]/60">{friendlySiteName(msg.data.source)}</span>
                             </p>
                           )}
@@ -1029,7 +968,7 @@ export const LearningSession: React.FC = () => {
                           {/* Primary high-precision SVG vector diagram */}
                           {msg.data.diagram ? (
                             <div
-                              className="p-4 sm:p-6 overflow-hidden rounded-2xl border border-[#D4A574]/40 bg-[#FAFAD5]/45 dark:bg-[#2D2D15]/20 shadow-inner text-[#2D2D2D] dark:text-[#EAEAEA] flex justify-center items-center"
+                              className="p-4 sm:p-6 overflow-hidden rounded-2xl border border-[#BA7A3B]/40 bg-[#FAFAD5]/45 dark:bg-[#2D2D15]/20 shadow-inner text-[#2D2D2D] dark:text-[#EAEAEA] flex justify-center items-center"
                               dangerouslySetInnerHTML={{ __html: cleanSvg(msg.data.diagram) }}
                             />
                           ) : msg.content ? (
@@ -1055,7 +994,7 @@ export const LearningSession: React.FC = () => {
                         </div>
                       ) : msg.type === "question" ? (
                         <div className="space-y-4">
-                          <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#D4A574]">
+                          <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#BA7A3B]">
                             Check-in Question
                           </span>
                           <h4 className="font-heading font-extrabold text-sm sm:text-base leading-snug text-[#2D2D2D] dark:text-[#EAEAEA]">
@@ -1069,10 +1008,10 @@ export const LearningSession: React.FC = () => {
                                 onClick={() =>
                                   handleAnswerQuestion(msg.data.modIdx, msg.data.qIdx, opt, msg.data.questionObj)
                                 }
-                                className="w-full text-left p-3.5 rounded-2xl border-2 border-[#E0E0E0] dark:border-[#3D3D3D] hover:border-[#D4A574] text-xs sm:text-sm font-semibold transition-all duration-200 bg-white dark:bg-[#1E1E1E] text-[#2D2D2D] dark:text-[#EAEAEA] hover:bg-[#FAFAD5]/40 dark:hover:bg-[#2D2D15]/30 flex items-center justify-between active:scale-[0.98]"
+                                className="w-full text-left p-3.5 rounded-2xl border-2 border-[#E0E0E0] dark:border-[#3D3D3D] hover:border-[#BA7A3B] text-xs sm:text-sm font-semibold transition-all duration-200 bg-white dark:bg-[#1E1E1E] text-[#2D2D2D] dark:text-[#EAEAEA] hover:bg-[#FAFAD5]/40 dark:hover:bg-[#2D2D15]/30 flex items-center justify-between active:scale-[0.98]"
                               >
                                 <span>{opt}</span>
-                                <ChevronRight className="w-4 h-4 text-[#D4A574]" />
+                                <ChevronRight className="w-4 h-4 text-[#BA7A3B]" />
                               </button>
                             ))}
                           </div>
@@ -1112,7 +1051,7 @@ export const LearningSession: React.FC = () => {
                                 handleCtaClick(opt, msg);
                               }
                             }}
-                            className="px-5 py-2.5 bg-[#FAFAD5] dark:bg-[#2D2D15] border border-[#D4A574] text-[#2D2D2D] dark:text-[#EAEAEA] font-heading font-extrabold text-xs rounded-full hover:bg-[#D4A574] hover:text-white transition-all duration-200 shadow-sm active:scale-95"
+                            className="px-5 py-2.5 bg-[#FAFAD5] dark:bg-[#2D2D15] border border-[#BA7A3B] text-[#2D2D2D] dark:text-[#EAEAEA] font-heading font-extrabold text-xs rounded-full hover:bg-[#BA7A3B] hover:text-white transition-all duration-200 shadow-sm active:scale-95"
                           >
                             {opt}
                           </button>
@@ -1132,13 +1071,13 @@ export const LearningSession: React.FC = () => {
               animate={{ opacity: 1, y: 0 }}
               className="flex items-start gap-3 w-full justify-start"
             >
-              <div className="w-10 h-10 rounded-full border border-[#D4A574] bg-[#FAFAD5] dark:bg-[#2D2D15] overflow-hidden flex items-center justify-center shrink-0 shadow-sm">
+              <div className="w-10 h-10 rounded-full border border-[#BA7A3B] bg-[#FAFAD5] dark:bg-[#2D2D15] overflow-hidden flex items-center justify-center shrink-0 shadow-sm">
                 <img src="/uncle_sabi.png" alt="Uncle Sabi" className="w-full h-full object-cover" />
               </div>
               <div className="bg-white dark:bg-[#1E1E1E] rounded-3xl p-4 border border-[#E0E0E0] dark:border-[#2D2D2D] flex items-center gap-2">
-                <span className="w-2.5 h-2.5 bg-[#D4A574] rounded-full animate-bounce" style={{ animationDelay: "0ms" }} />
-                <span className="w-2.5 h-2.5 bg-[#D4A574] rounded-full animate-bounce" style={{ animationDelay: "150ms" }} />
-                <span className="w-2.5 h-2.5 bg-[#D4A574] rounded-full animate-bounce" style={{ animationDelay: "300ms" }} />
+                <span className="w-2.5 h-2.5 bg-[#BA7A3B] rounded-full animate-bounce" style={{ animationDelay: "0ms" }} />
+                <span className="w-2.5 h-2.5 bg-[#BA7A3B] rounded-full animate-bounce" style={{ animationDelay: "150ms" }} />
+                <span className="w-2.5 h-2.5 bg-[#BA7A3B] rounded-full animate-bounce" style={{ animationDelay: "300ms" }} />
               </div>
             </motion.div>
           )}
@@ -1148,9 +1087,9 @@ export const LearningSession: React.FC = () => {
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              className="p-4 bg-[#FAFAD5] dark:bg-[#2D2D15] border-l-4 border-l-[#D4A574] border border-[#E0E0E0] dark:border-[#2D2D2D] rounded-2xl flex items-start gap-3 text-left w-full sm:max-w-xl mx-auto"
+              className="p-4 bg-[#FAFAD5] dark:bg-[#2D2D15] border-l-4 border-l-[#BA7A3B] border border-[#E0E0E0] dark:border-[#2D2D2D] rounded-2xl flex items-start gap-3 text-left w-full sm:max-w-xl mx-auto"
             >
-              <Lightbulb className="w-5 h-5 text-[#D4A574] shrink-0 mt-0.5" />
+              <Lightbulb className="w-5 h-5 text-[#BA7A3B] shrink-0 mt-0.5" />
               <div>
                 <h5 className="font-heading font-extrabold text-xs text-[#2D2D2D] dark:text-[#EAEAEA] uppercase tracking-wider">
                   Uncle Sabi Hint
@@ -1167,9 +1106,9 @@ export const LearningSession: React.FC = () => {
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              className="p-4 bg-emerald-50 dark:bg-emerald-950/20 border-l-4 border-l-[#D4A574] border border-emerald-200 dark:border-emerald-900/40 rounded-2xl flex items-start gap-3 text-left w-full sm:max-w-xl mx-auto"
+              className="p-4 bg-emerald-50 dark:bg-emerald-950/20 border-l-4 border-l-[#BA7A3B] border border-emerald-200 dark:border-emerald-900/40 rounded-2xl flex items-start gap-3 text-left w-full sm:max-w-xl mx-auto"
             >
-              <Check className="w-5 h-5 text-[#D4A574] shrink-0 mt-0.5" />
+              <Check className="w-5 h-5 text-[#BA7A3B] shrink-0 mt-0.5" />
               <div>
                 <h5 className="font-heading font-extrabold text-xs text-emerald-800 dark:text-emerald-300 uppercase tracking-wider">
                   Answer Revealed
@@ -1204,7 +1143,7 @@ export const LearningSession: React.FC = () => {
                   ? "Ask Uncle Sabi any question..."
                   : "Ask Uncle Sabi a question..."
               }
-              className="w-full py-3.5 pl-4 pr-12 rounded-full border-2 border-[#E0E0E0] dark:border-[#2D2D2D] bg-white dark:bg-[#1E1E1E] text-xs sm:text-sm font-semibold focus:outline-none focus:border-[#D4A574] transition-all text-[#2D2D2D] dark:text-[#EAEAEA] shadow-inner"
+              className="w-full py-3.5 pl-4 pr-12 rounded-full border-2 border-[#E0E0E0] dark:border-[#2D2D2D] bg-white dark:bg-[#1E1E1E] text-xs sm:text-sm font-semibold focus:outline-none focus:border-[#BA7A3B] transition-all text-[#2D2D2D] dark:text-[#EAEAEA] shadow-inner"
             />
             {/* Integrated Voice Input microphone trigger */}
             <div className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center">
@@ -1217,7 +1156,7 @@ export const LearningSession: React.FC = () => {
           </div>
           <button
             type="submit"
-            className="px-4 sm:px-6 py-3.5 bg-gradient-to-r from-[#D4A574] to-[#C49463] text-[#2D2D2D] hover:from-[#C49463] hover:to-[#B38352] font-heading font-extrabold text-xs sm:text-sm rounded-full active:scale-95 transition-all shadow-md"
+            className="px-4 sm:px-6 py-3.5 bg-gradient-to-r from-[#BA7A3B] to-[#A66A30] text-[#2D2D2D] hover:from-[#A66A30] hover:to-[#8E5724] font-heading font-extrabold text-xs sm:text-sm rounded-full active:scale-95 transition-all shadow-md"
           >
             Send
           </button>

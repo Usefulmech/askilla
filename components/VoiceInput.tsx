@@ -72,13 +72,13 @@ export const VoiceInput: React.FC<VoiceInputProps> = ({
         iconOnly
           ? `p-2 rounded-full border transition-all duration-200 flex items-center justify-center active:scale-[0.97] ${
               isListening
-                ? "bg-[#D4A574] border-[#D4A574] text-[#2D2D2D] animate-pulse shadow-md ring-4 ring-[#D4A574]/25"
-                : "bg-transparent border-transparent text-[#D4A574] hover:bg-[#FAFAD5]/50 dark:hover:bg-[#2D2D15]/25"
+                ? "bg-[#BA7A3B] border-[#BA7A3B] text-[#2D2D2D] animate-pulse shadow-md ring-4 ring-[#BA7A3B]/25"
+                : "bg-transparent border-transparent text-[#BA7A3B] hover:bg-[#FAFAD5]/50 dark:hover:bg-[#2D2D15]/25"
             }`
           : `w-full py-4 px-6 rounded-full border-2 text-sm font-bold transition-all duration-200 flex items-center justify-center gap-3 active:scale-[0.97] shadow-sm ${
               isListening
-                ? "bg-[#D4A574] border-[#D4A574] text-[#2D2D2D] dark:bg-[#D4A574] dark:border-[#D4A574] dark:text-[#2D2D2D] animate-pulse shadow-md ring-4 ring-[#D4A574]/25"
-                : "bg-white dark:bg-[#1C1C1C] border-[#D4A574] dark:border-[#B38352] text-[#2D2D2D] dark:text-[#EAEAEA] hover:bg-[#FAFAD5]/50 dark:hover:bg-[#2D2D15]/25"
+                ? "bg-[#BA7A3B] border-[#BA7A3B] text-[#2D2D2D] dark:bg-[#BA7A3B] dark:border-[#BA7A3B] dark:text-[#2D2D2D] animate-pulse shadow-md ring-4 ring-[#BA7A3B]/25"
+                : "bg-white dark:bg-[#1C1C1C] border-[#BA7A3B] dark:border-[#8E5724] text-[#2D2D2D] dark:text-[#EAEAEA] hover:bg-[#FAFAD5]/50 dark:hover:bg-[#2D2D15]/25"
             }`
       }
       title={label}

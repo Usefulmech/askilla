@@ -74,7 +74,7 @@ export default function CreatorDatasetPage() {
         {/* Top Header */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[#E0E0E0] dark:border-[#2D2D2D] pb-6">
           <div className="space-y-1">
-            <div className="flex items-center gap-2 text-xs font-extrabold text-[#D4A574] uppercase tracking-widest">
+            <div className="flex items-center gap-2 text-xs font-extrabold text-[#BA7A3B] uppercase tracking-widest">
               <Database className="w-4 h-4" />
               <span>Creator / Developer Hub</span>
             </div>
@@ -91,13 +91,13 @@ export default function CreatorDatasetPage() {
               href="/"
               className="px-4 py-2.5 rounded-full bg-white dark:bg-[#1E1E1E] border border-[#E0E0E0] dark:border-[#2D2D2D] text-xs font-bold flex items-center gap-2 hover:bg-[#FAFAD5]/50 transition-all"
             >
-              <ArrowLeft className="w-4 h-4 text-[#D4A574]" />
+              <ArrowLeft className="w-4 h-4 text-[#BA7A3B]" />
               <span>Back to App</span>
             </Link>
             <button
               type="button"
               onClick={fetchDataset}
-              className="p-2.5 rounded-full bg-white dark:bg-[#1E1E1E] border border-[#E0E0E0] dark:border-[#2D2D2D] text-[#2D2D2D] dark:text-[#EAEAEA] hover:border-[#D4A574] transition-all"
+              className="p-2.5 rounded-full bg-white dark:bg-[#1E1E1E] border border-[#E0E0E0] dark:border-[#2D2D2D] text-[#2D2D2D] dark:text-[#EAEAEA] hover:border-[#BA7A3B] transition-all"
             >
               <RefreshCw className={`w-4 h-4 ${loading ? "animate-spin" : ""}`} />
             </button>
@@ -111,10 +111,10 @@ export default function CreatorDatasetPage() {
               Total Logged Records
             </span>
             <div className="flex items-center justify-between">
-              <span className="font-heading font-extrabold text-3xl text-[#D4A574]">
+              <span className="font-heading font-extrabold text-3xl text-[#BA7A3B]">
                 {totalCount}
               </span>
-              <Layers className="w-6 h-6 text-[#D4A574]/40" />
+              <Layers className="w-6 h-6 text-[#BA7A3B]/40" />
             </div>
           </div>
 
@@ -124,7 +124,7 @@ export default function CreatorDatasetPage() {
             </span>
             <div className="flex items-center justify-between">
               <span className="font-heading font-extrabold text-lg">JSONL / CSV</span>
-              <FileText className="w-6 h-6 text-[#D4A574]/40" />
+              <FileText className="w-6 h-6 text-[#BA7A3B]/40" />
             </div>
           </div>
 
@@ -133,14 +133,14 @@ export default function CreatorDatasetPage() {
               File Path
             </span>
             <div className="flex items-center justify-between">
-              <span className="font-mono text-xs text-[#D4A574] truncate">data/askilla_ml_dataset.jsonl</span>
-              <Sparkles className="w-6 h-6 text-[#D4A574]/40" />
+              <span className="font-mono text-xs text-[#BA7A3B] truncate">data/askilla_ml_dataset.jsonl</span>
+              <Sparkles className="w-6 h-6 text-[#BA7A3B]/40" />
             </div>
           </div>
         </div>
 
         {/* Actions & Export Buttons */}
-        <div className="bg-gradient-to-r from-[#FAFAD5] to-white dark:from-[#2D2D15] dark:to-[#1E1E1E] rounded-3xl p-6 border border-[#D4A574]/40 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="bg-gradient-to-r from-[#FAFAD5] to-white dark:from-[#2D2D15] dark:to-[#1E1E1E] rounded-3xl p-6 border border-[#BA7A3B]/40 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="space-y-1 text-left">
             <h3 className="font-heading font-extrabold text-base">Export Dataset for Model Training</h3>
             <p className="text-xs text-[#2D2D2D]/70 dark:text-[#EAEAEA]/70">
@@ -153,7 +153,7 @@ export default function CreatorDatasetPage() {
               type="button"
               onClick={downloadJsonl}
               disabled={records.length === 0}
-              className="px-5 py-3 bg-[#D4A574] text-[#2D2D2D] font-extrabold text-xs rounded-full shadow-md hover:bg-[#C49463] active:scale-95 transition-all flex items-center justify-center gap-2 disabled:opacity-50"
+              className="px-5 py-3 bg-[#BA7A3B] text-[#2D2D2D] font-extrabold text-xs rounded-full shadow-md hover:bg-[#A66A30] active:scale-95 transition-all flex items-center justify-center gap-2 disabled:opacity-50"
             >
               <Download className="w-4 h-4" />
               <span>Download JSONL</span>
@@ -162,7 +162,7 @@ export default function CreatorDatasetPage() {
               type="button"
               onClick={downloadCsv}
               disabled={records.length === 0}
-              className="px-5 py-3 bg-white dark:bg-[#121212] border border-[#D4A574] text-[#D4A574] font-extrabold text-xs rounded-full hover:bg-[#FAFAD5] dark:hover:bg-[#2D2D15] active:scale-95 transition-all flex items-center justify-center gap-2 disabled:opacity-50"
+              className="px-5 py-3 bg-white dark:bg-[#121212] border border-[#BA7A3B] text-[#BA7A3B] font-extrabold text-xs rounded-full hover:bg-[#FAFAD5] dark:hover:bg-[#2D2D15] active:scale-95 transition-all flex items-center justify-center gap-2 disabled:opacity-50"
             >
               <Download className="w-4 h-4" />
               <span>Export CSV</span>
@@ -180,7 +180,7 @@ export default function CreatorDatasetPage() {
             </div>
           ) : records.length === 0 ? (
             <div className="py-12 text-center space-y-2">
-              <Database className="w-10 h-10 text-[#D4A574]/40 mx-auto" />
+              <Database className="w-10 h-10 text-[#BA7A3B]/40 mx-auto" />
               <p className="text-xs text-[#2D2D2D]/60 dark:text-[#EAEAEA]/60">
                 No dataset records yet. Generating course modules or taking lessons will automatically log records here.
               </p>
@@ -204,7 +204,7 @@ export default function CreatorDatasetPage() {
                         {r.timestamp ? new Date(r.timestamp).toLocaleTimeString() : "-"}
                       </td>
                       <td className="py-3 px-3">
-                        <span className="px-2 py-0.5 rounded-full bg-[#D4A574]/15 text-[#D4A574] font-extrabold text-[9px] uppercase">
+                        <span className="px-2 py-0.5 rounded-full bg-[#BA7A3B]/15 text-[#BA7A3B] font-extrabold text-[9px] uppercase">
                           {r.event_type}
                         </span>
                       </td>

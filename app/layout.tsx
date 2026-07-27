@@ -30,7 +30,7 @@ export default function RootLayout({
         <link rel="icon" type="image/svg+xml" href="/icon.svg" />
         <link rel="apple-touch-icon" href="/icon.svg" />
       </head>
-      <body className="antialiased min-h-screen bg-[#F5F5F0] dark:bg-[#121212] text-[#2D2D2D] dark:text-[#EAEAEA] selection:bg-[#D4A574]/30 overflow-x-hidden">
+      <body className="antialiased min-h-screen bg-[#F5F5F0] dark:bg-[#121212] text-[#2D2D2D] dark:text-[#EAEAEA] selection:bg-[#BA7A3B]/30 overflow-x-hidden">
         {children}
       </body>
     </html>

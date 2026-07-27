@@ -71,13 +71,13 @@ export const EditProfileModal: React.FC<EditProfileModalProps> = ({
               Full Name
             </label>
             <div className="relative">
-              <User className="w-5 h-5 absolute left-3.5 top-1/2 -translate-y-1/2 text-[#D4A574]" />
+              <User className="w-5 h-5 absolute left-3.5 top-1/2 -translate-y-1/2 text-[#BA7A3B]" />
               <input
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="Enter your name"
-                className="w-full pl-11 pr-4 py-3 rounded-2xl border border-[#E0E0E0] dark:border-[#2D2D2D] bg-[#FAFAD5]/30 dark:bg-[#121212] text-[#2D2D2D] dark:text-[#EAEAEA] font-medium text-sm focus:outline-none focus:ring-2 focus:ring-[#D4A574]"
+                className="w-full pl-11 pr-4 py-3 rounded-2xl border border-[#E0E0E0] dark:border-[#2D2D2D] bg-[#FAFAD5]/30 dark:bg-[#121212] text-[#2D2D2D] dark:text-[#EAEAEA] font-medium text-sm focus:outline-none focus:ring-2 focus:ring-[#BA7A3B]"
                 required
               />
             </div>
@@ -89,13 +89,13 @@ export const EditProfileModal: React.FC<EditProfileModalProps> = ({
               Phone Number
             </label>
             <div className="relative">
-              <Phone className="w-5 h-5 absolute left-3.5 top-1/2 -translate-y-1/2 text-[#D4A574]" />
+              <Phone className="w-5 h-5 absolute left-3.5 top-1/2 -translate-y-1/2 text-[#BA7A3B]" />
               <input
                 type="tel"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
                 placeholder="8012345678"
-                className="w-full pl-11 pr-4 py-3 rounded-2xl border border-[#E0E0E0] dark:border-[#2D2D2D] bg-[#FAFAD5]/30 dark:bg-[#121212] text-[#2D2D2D] dark:text-[#EAEAEA] font-medium text-sm focus:outline-none focus:ring-2 focus:ring-[#D4A574]"
+                className="w-full pl-11 pr-4 py-3 rounded-2xl border border-[#E0E0E0] dark:border-[#2D2D2D] bg-[#FAFAD5]/30 dark:bg-[#121212] text-[#2D2D2D] dark:text-[#EAEAEA] font-medium text-sm focus:outline-none focus:ring-2 focus:ring-[#BA7A3B]"
               />
             </div>
           </div>
@@ -111,7 +111,7 @@ export const EditProfileModal: React.FC<EditProfileModalProps> = ({
                 onClick={() => setPrefLang("pidgin")}
                 className={`px-4 py-2.5 rounded-2xl text-xs font-extrabold transition-all border ${
                   prefLang === "pidgin"
-                    ? "bg-[#D4A574] text-[#2D2D2D] border-[#D4A574] shadow-sm"
+                    ? "bg-[#BA7A3B] text-[#2D2D2D] border-[#BA7A3B] shadow-sm"
                     : "bg-[#FAFAD5]/40 dark:bg-[#121212] border-[#E0E0E0] dark:border-[#2D2D2D] text-[#2D2D2D] dark:text-[#EAEAEA]"
                 }`}
               >
@@ -122,7 +122,7 @@ export const EditProfileModal: React.FC<EditProfileModalProps> = ({
                 onClick={() => setPrefLang("english")}
                 className={`px-4 py-2.5 rounded-2xl text-xs font-extrabold transition-all border ${
                   prefLang === "english"
-                    ? "bg-[#D4A574] text-[#2D2D2D] border-[#D4A574] shadow-sm"
+                    ? "bg-[#BA7A3B] text-[#2D2D2D] border-[#BA7A3B] shadow-sm"
                     : "bg-[#FAFAD5]/40 dark:bg-[#121212] border-[#E0E0E0] dark:border-[#2D2D2D] text-[#2D2D2D] dark:text-[#EAEAEA]"
                 }`}
               >
@@ -134,7 +134,7 @@ export const EditProfileModal: React.FC<EditProfileModalProps> = ({
           {/* Submit Button */}
           <button
             type="submit"
-            className="w-full mt-2 py-3.5 px-6 rounded-2xl bg-[#D4A574] hover:bg-[#c39463] text-[#2D2D2D] font-heading font-extrabold text-sm transition-all shadow-md active:scale-98 flex items-center justify-center gap-2"
+            className="w-full mt-2 py-3.5 px-6 rounded-2xl bg-[#BA7A3B] hover:bg-[#c39463] text-[#2D2D2D] font-heading font-extrabold text-sm transition-all shadow-md active:scale-98 flex items-center justify-center gap-2"
           >
             {saved ? (
               <>

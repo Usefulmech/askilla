@@ -92,19 +92,19 @@ export const ShareModal: React.FC<ShareModalProps> = ({
 
         {/* Header */}
         <div>
-          <div className="w-12 h-12 rounded-2xl bg-[#FAFAD5] dark:bg-[#2D2D15] border border-[#D4A574] flex items-center justify-center mb-3">
-            <Share2 className="w-6 h-6 text-[#D4A574]" />
+          <div className="w-12 h-12 rounded-2xl bg-[#FAFAD5] dark:bg-[#2D2D15] border border-[#BA7A3B] flex items-center justify-center mb-3">
+            <Share2 className="w-6 h-6 text-[#BA7A3B]" />
           </div>
           <h2 className="font-heading font-extrabold text-xl sm:text-2xl text-[#2D2D2D] dark:text-[#EAEAEA]">
             Share Your Achievement
           </h2>
           <p className="text-xs sm:text-sm text-[#2D2D2D]/60 dark:text-[#EAEAEA]/60 font-sans mt-1">
-            Show your friends you sabi <span className="font-bold text-[#D4A574]">{topic}</span>!
+            Show your friends you sabi <span className="font-bold text-[#BA7A3B]">{topic}</span>!
           </p>
         </div>
 
         {/* Quick Link Copy Box */}
-        <div className="p-3.5 bg-[#FAFAD5]/50 dark:bg-[#121212] rounded-2xl border border-[#D4A574]/40 flex items-center gap-2">
+        <div className="p-3.5 bg-[#FAFAD5]/50 dark:bg-[#121212] rounded-2xl border border-[#BA7A3B]/40 flex items-center gap-2">
           <input
             type="text"
             readOnly
@@ -114,7 +114,7 @@ export const ShareModal: React.FC<ShareModalProps> = ({
           <button
             type="button"
             onClick={handleCopy}
-            className="px-3.5 py-2 rounded-xl bg-[#D4A574] hover:bg-[#c39463] text-[#2D2D2D] text-xs font-extrabold transition-all flex items-center gap-1.5 shrink-0 active:scale-95"
+            className="px-3.5 py-2 rounded-xl bg-[#BA7A3B] hover:bg-[#c39463] text-[#2D2D2D] text-xs font-extrabold transition-all flex items-center gap-1.5 shrink-0 active:scale-95"
           >
             {copied ? (
               <>
@@ -172,9 +172,9 @@ export const ShareModal: React.FC<ShareModalProps> = ({
               <button
                 type="button"
                 onClick={handleNativeShare}
-                className="p-3.5 rounded-2xl border border-[#E0E0E0] dark:border-[#2D2D2D] bg-[#D4A574]/15 hover:bg-[#D4A574]/25 text-[#2D2D2D] dark:text-[#EAEAEA] font-bold text-xs flex items-center justify-center gap-2 transition-all active:scale-95"
+                className="p-3.5 rounded-2xl border border-[#E0E0E0] dark:border-[#2D2D2D] bg-[#BA7A3B]/15 hover:bg-[#BA7A3B]/25 text-[#2D2D2D] dark:text-[#EAEAEA] font-bold text-xs flex items-center justify-center gap-2 transition-all active:scale-95"
               >
-                <Share2 className="w-4 h-4 text-[#D4A574]" />
+                <Share2 className="w-4 h-4 text-[#BA7A3B]" />
                 More Options
               </button>
             )}

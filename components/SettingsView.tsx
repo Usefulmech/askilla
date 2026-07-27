@@ -48,7 +48,7 @@ export const SettingsView: React.FC = () => {
         {/* User Info Card */}
         <div className="bg-white dark:bg-[#1E1E1E] rounded-3xl p-6 border border-[#E0E0E0] dark:border-[#2D2D2D] shadow-sm flex items-center justify-between gap-4">
           <div className="flex items-center gap-4">
-            <div className="w-14 h-14 rounded-full bg-[#FAFAD5] dark:bg-[#2D2D15] border-2 border-[#D4A574] dark:border-[#B38352] flex items-center justify-center font-heading font-extrabold text-xl text-[#2D2D2D] dark:text-[#EAEAEA]">
+            <div className="w-14 h-14 rounded-full bg-[#FAFAD5] dark:bg-[#2D2D15] border-2 border-[#BA7A3B] dark:border-[#8E5724] flex items-center justify-center font-heading font-extrabold text-xl text-[#2D2D2D] dark:text-[#EAEAEA]">
               {user.name ? user.name[0].toUpperCase() : <UserIcon className="w-6 h-6 text-[#2D2D2D] dark:text-[#EAEAEA]" />}
             </div>
             <div>
@@ -63,9 +63,9 @@ export const SettingsView: React.FC = () => {
           <button
             type="button"
             onClick={() => setEditProfileOpen(true)}
-            className="px-4 py-2.5 rounded-2xl bg-[#FAFAD5] hover:bg-[#D4A574]/30 dark:bg-[#2D2D15] border border-[#D4A574] text-[#2D2D2D] dark:text-[#EAEAEA] text-xs font-bold transition-all flex items-center gap-1.5 active:scale-95 shrink-0"
+            className="px-4 py-2.5 rounded-2xl bg-[#FAFAD5] hover:bg-[#BA7A3B]/30 dark:bg-[#2D2D15] border border-[#BA7A3B] text-[#2D2D2D] dark:text-[#EAEAEA] text-xs font-bold transition-all flex items-center gap-1.5 active:scale-95 shrink-0"
           >
-            <Edit3 className="w-4 h-4 text-[#D4A574]" />
+            <Edit3 className="w-4 h-4 text-[#BA7A3B]" />
             Edit Profile
           </button>
         </div>
@@ -75,7 +75,7 @@ export const SettingsView: React.FC = () => {
           {/* Language Selection */}
           <div className="bg-white dark:bg-[#1E1E1E] rounded-3xl p-6 border border-[#E0E0E0] dark:border-[#2D2D2D] shadow-sm space-y-4">
             <div className="flex items-center gap-2">
-              <Globe className="w-5 h-5 text-[#D4A574]" />
+              <Globe className="w-5 h-5 text-[#BA7A3B]" />
               <h2 className="font-heading font-bold text-base text-[#2D2D2D] dark:text-[#EAEAEA]">
                 Your Learning Language
               </h2>
@@ -97,7 +97,7 @@ export const SettingsView: React.FC = () => {
 
             <div className="flex items-center justify-between py-2 border-b border-[#E0E0E0]/60 dark:border-[#2D2D2D]/60">
               <div className="flex items-center gap-3">
-                <Volume2 className="w-5 h-5 text-[#D4A574]" />
+                <Volume2 className="w-5 h-5 text-[#BA7A3B]" />
                 <div>
                   <p className="text-sm font-semibold text-[#2D2D2D] dark:text-[#EAEAEA]">Voice Feedback</p>
                   <p className="text-xs text-[#2D2D2D]/60 dark:text-[#EAEAEA]/60">Read Uncle Sabi explanations aloud</p>
@@ -107,7 +107,7 @@ export const SettingsView: React.FC = () => {
                 type="button"
                 onClick={toggleVoiceFeedback}
                 className={`w-14 h-7 rounded-full transition-colors p-1 ${
-                  voiceFeedbackEnabled ? "bg-[#D4A574]" : "bg-[#E0E0E0] dark:bg-[#333333]"
+                  voiceFeedbackEnabled ? "bg-[#BA7A3B]" : "bg-[#E0E0E0] dark:bg-[#333333]"
                 }`}
               >
                 <div
@@ -120,7 +120,7 @@ export const SettingsView: React.FC = () => {
 
             <div className="flex items-center justify-between py-2 border-b border-[#E0E0E0]/60 dark:border-[#2D2D2D]/60">
               <div className="flex items-center gap-3">
-                <Moon className="w-5 h-5 text-[#D4A574]" />
+                <Moon className="w-5 h-5 text-[#BA7A3B]" />
                 <div>
                   <p className="text-sm font-semibold text-[#2D2D2D] dark:text-[#EAEAEA]">Dark Mode</p>
                   <p className="text-xs text-[#2D2D2D]/60 dark:text-[#EAEAEA]/60">Soft low-strain dark notebook contrast</p>
@@ -130,7 +130,7 @@ export const SettingsView: React.FC = () => {
                 type="button"
                 onClick={toggleDarkMode}
                 className={`w-14 h-7 rounded-full transition-colors p-1 ${
-                  darkModeEnabled ? "bg-[#D4A574]" : "bg-[#E0E0E0] dark:bg-[#333333]"
+                  darkModeEnabled ? "bg-[#BA7A3B]" : "bg-[#E0E0E0] dark:bg-[#333333]"
                 }`}
               >
                 <div
@@ -158,7 +158,7 @@ export const SettingsView: React.FC = () => {
         {/* About Section (Static) */}
         <div className="bg-white dark:bg-[#1E1E1E] rounded-3xl p-6 border border-[#E0E0E0] dark:border-[#2D2D2D] shadow-sm space-y-2">
           <div className="flex items-center gap-2">
-            <Info className="w-5 h-5 text-[#D4A574]" />
+            <Info className="w-5 h-5 text-[#BA7A3B]" />
             <h2 className="font-heading font-bold text-base text-[#2D2D2D] dark:text-[#EAEAEA]">
               About Askilla
             </h2>
@@ -166,7 +166,7 @@ export const SettingsView: React.FC = () => {
           <p className="text-xs text-[#2D2D2D]/70 dark:text-[#EAEAEA]/70 font-sans leading-relaxed">
             Askilla is an AI-powered vernacular micro-learning platform built for the <strong>3MTT Knowledge Showcase 2.0</strong>. Powered by OpenAI GPT-4o and Web Speech API, it delivers native language learning across Nigeria.
           </p>
-          <p className="text-xs text-[#D4A574] font-extrabold pt-1">
+          <p className="text-xs text-[#BA7A3B] font-extrabold pt-1">
             Ask anything. Sabi everything.
           </p>
         </div>

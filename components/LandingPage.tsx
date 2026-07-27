@@ -90,7 +90,7 @@ export const LandingPage: React.FC = () => {
       }
       if (part.startsWith("**") && part.endsWith("**")) {
         return (
-          <strong key={i} className="font-extrabold text-[#2D2D2D] dark:text-[#FFFFFF] bg-[#D4A574]/20 dark:bg-[#D4A574]/30 px-1 rounded-md">
+          <strong key={i} className="font-extrabold text-[#2D2D2D] dark:text-[#FFFFFF] bg-[#BA7A3B]/20 dark:bg-[#BA7A3B]/30 px-1 rounded-md">
             {part.slice(2, -2)}
           </strong>
         );
@@ -108,7 +108,7 @@ export const LandingPage: React.FC = () => {
           <img
             src="/icon.svg"
             alt="Askilla Logo"
-            className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl shadow-sm border border-[#D4A574]/40 shrink-0"
+            className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl shadow-sm border border-[#BA7A3B]/40 shrink-0"
           />
           <h1 className="font-heading font-extrabold text-xl sm:text-2xl tracking-tight text-[#2D2D2D] dark:text-[#EAEAEA]">
             Askilla
@@ -119,14 +119,14 @@ export const LandingPage: React.FC = () => {
           <button
             type="button"
             onClick={() => setAboutOpen(true)}
-            className="px-3 sm:px-4 py-1.5 sm:py-2.5 bg-white dark:bg-[#1E1E1E] text-[#2D2D2D] dark:text-[#EAEAEA] border border-[#E0E0E0] dark:border-[#2D2D2D] font-heading font-extrabold text-[11px] sm:text-sm rounded-full hover:border-[#D4A574] active:scale-95 transition-all shadow-sm whitespace-nowrap"
+            className="px-3 sm:px-4 py-1.5 sm:py-2.5 bg-white dark:bg-[#1E1E1E] text-[#2D2D2D] dark:text-[#EAEAEA] border border-[#E0E0E0] dark:border-[#2D2D2D] font-heading font-extrabold text-[11px] sm:text-sm rounded-full hover:border-[#BA7A3B] active:scale-95 transition-all shadow-sm whitespace-nowrap"
           >
             About
           </button>
           <button
             type="button"
             onClick={handleStartLearning}
-            className="px-3.5 sm:px-5 py-1.5 sm:py-2.5 bg-[#D4A574] text-[#2D2D2D] font-heading font-extrabold text-[11px] sm:text-sm rounded-full hover:bg-[#C49463] active:scale-95 transition-all shadow-sm flex items-center gap-1 sm:gap-1.5 whitespace-nowrap shrink-0"
+            className="px-3.5 sm:px-5 py-1.5 sm:py-2.5 bg-[#BA7A3B] text-[#2D2D2D] font-heading font-extrabold text-[11px] sm:text-sm rounded-full hover:bg-[#A66A30] active:scale-95 transition-all shadow-sm flex items-center gap-1 sm:gap-1.5 whitespace-nowrap shrink-0"
           >
             <span>Start Learning</span>
             <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
@@ -135,7 +135,7 @@ export const LandingPage: React.FC = () => {
       </header>
 
       {/* Main Container */}
-      <main className="max-w-6xl mx-auto px-4 sm:px-6 md:px-12 pt-28 sm:pt-32 pb-12 space-y-12 sm:space-y-16 flex-1 text-center">
+      <main className="max-w-6xl mx-auto px-4 sm:px-6 md:px-12 pt-16 sm:pt-32 pb-12 space-y-12 sm:space-y-16 flex-1 text-center">
         
         {/* Winning 2-Column Hero Section */}
         <section className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-12 w-full items-center text-left pt-0 md:pt-1">
@@ -149,7 +149,7 @@ export const LandingPage: React.FC = () => {
               transition={{ duration: 0.5, delay: 0.1 }}
             >
               Ask Anything.
-              <span className="block mt-1.5 sm:mt-2.5 bg-gradient-to-r from-[#D4A574] via-[#C49463] to-[#B38352] bg-clip-text text-transparent">
+              <span className="block mt-1.5 sm:mt-2.5 bg-gradient-to-r from-[#BA7A3B] via-[#A66A30] to-[#8E5724] bg-clip-text text-transparent">
                 Sabi Everything.
               </span>
             </motion.h2>
@@ -173,7 +173,7 @@ export const LandingPage: React.FC = () => {
               <button
                 type="button"
                 onClick={handleStartLearning}
-                className="py-2.5 px-5 sm:py-3.5 sm:px-7 bg-gradient-to-r from-[#D4A574] to-[#C49463] text-[#2D2D2D] font-heading font-extrabold text-xs sm:text-base rounded-full shadow-md hover:shadow-lg hover:from-[#C49463] hover:to-[#B38352] active:scale-[0.98] transition-all inline-flex items-center justify-center gap-2 ring-2 sm:ring-4 ring-[#D4A574]/20 max-w-full"
+                className="py-2.5 px-5 sm:py-3.5 sm:px-7 bg-gradient-to-r from-[#BA7A3B] to-[#A66A30] text-[#2D2D2D] font-heading font-extrabold text-xs sm:text-base rounded-full shadow-md hover:shadow-lg hover:from-[#A66A30] hover:to-[#8E5724] active:scale-[0.98] transition-all inline-flex items-center justify-center gap-2 ring-2 sm:ring-4 ring-[#BA7A3B]/20 max-w-full"
               >
                 <span>Explore Now</span>
                 <ArrowRight className="w-3.5 h-3.5 sm:w-5 sm:h-5" />
@@ -187,20 +187,20 @@ export const LandingPage: React.FC = () => {
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.6 }}
-              className="relative w-[270px] h-[270px] sm:w-[350px] sm:h-[350px] lg:w-[420px] lg:h-[420px] bg-gradient-to-tr from-[#FAFAD5]/60 via-[#D4A574]/25 to-[#FAFAD5]/40 dark:from-[#2D2D15]/50 dark:to-[#D4A574]/25 rounded-full flex flex-col items-center justify-center shadow-xl border-4 border-[#D4A574]/40 p-2.5 sm:p-4"
+              className="relative w-[270px] h-[270px] sm:w-[350px] sm:h-[350px] lg:w-[420px] lg:h-[420px] bg-gradient-to-tr from-[#FAFAD5]/60 via-[#BA7A3B]/25 to-[#FAFAD5]/40 dark:from-[#2D2D15]/50 dark:to-[#BA7A3B]/25 rounded-full flex flex-col items-center justify-center shadow-xl border-4 border-[#BA7A3B]/40 p-2.5 sm:p-4"
             >
               {/* Floating Speech Bubble */}
               <motion.div
                 animate={{ y: [0, -6, 0] }}
                 transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute -top-7 -right-1 sm:-right-2 bg-white dark:bg-[#1E1E1E] border-2 border-[#D4A574]/40 p-3 sm:p-4 rounded-3xl shadow-xl max-w-[200px] sm:max-w-[240px] text-left text-[11px] sm:text-xs font-medium font-sans leading-snug z-20"
+                className="absolute -top-7 -right-1 sm:-right-2 bg-white dark:bg-[#1E1E1E] border-2 border-[#BA7A3B]/40 p-3 sm:p-4 rounded-3xl shadow-xl max-w-[200px] sm:max-w-[240px] text-left text-[11px] sm:text-xs font-medium font-sans leading-snug z-20"
               >
-                <span className="text-[#D4A574] font-extrabold block text-[9px] uppercase tracking-widest mb-0.5">Uncle Sabi say:</span>
+                <span className="text-[#BA7A3B] font-extrabold block text-[9px] uppercase tracking-widest mb-0.5">Uncle Sabi say:</span>
                 &quot;Bring any hard topic come, I go break am down for you step-by-step!&quot;
               </motion.div>
 
               {/* Expanded Mascot Image fitting external circle */}
-              <div className="w-[84%] h-[84%] rounded-full overflow-hidden border-4 border-[#D4A574]/40 shadow-inner bg-white dark:bg-[#1E1E1E] flex items-center justify-center relative">
+              <div className="w-[84%] h-[84%] rounded-full overflow-hidden border-4 border-[#BA7A3B]/40 shadow-inner bg-white dark:bg-[#1E1E1E] flex items-center justify-center relative">
                 <motion.img
                   src="/uncle_sabi.png"
                   alt="Uncle Sabi Mascot"
@@ -214,9 +214,9 @@ export const LandingPage: React.FC = () => {
               <motion.div
                 animate={{ y: [0, 6, 0] }}
                 transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-                className="absolute bottom-2 left-1 sm:left-2 bg-[#FAFAD5] dark:bg-[#2D2D15] border-2 border-[#D4A574] px-3 sm:px-4 py-1.5 sm:py-2 rounded-full shadow-md text-[9px] sm:text-[10px] font-extrabold text-[#2D2D2D] dark:text-[#EAEAEA] flex items-center gap-1.5 sm:gap-2 uppercase tracking-wider z-20"
+                className="absolute bottom-2 left-1 sm:left-2 bg-[#FAFAD5] dark:bg-[#2D2D15] border-2 border-[#BA7A3B] px-3 sm:px-4 py-1.5 sm:py-2 rounded-full shadow-md text-[9px] sm:text-[10px] font-extrabold text-[#2D2D2D] dark:text-[#EAEAEA] flex items-center gap-1.5 sm:gap-2 uppercase tracking-wider z-20"
               >
-                <Flame className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#D4A574] animate-pulse" />
+                <Flame className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#BA7A3B] animate-pulse" />
                 <span>100% Real-Time AI Engine</span>
               </motion.div>
             </motion.div>
@@ -245,7 +245,7 @@ export const LandingPage: React.FC = () => {
                   onClick={() => setActiveLevelIdx(idx)}
                   className={`px-3 sm:px-6 py-1.5 sm:py-2.5 rounded-full text-[11px] sm:text-sm font-heading font-extrabold transition-all duration-200 whitespace-nowrap ${
                     active
-                      ? "bg-[#D4A574] text-[#2D2D2D] shadow-sm"
+                      ? "bg-[#BA7A3B] text-[#2D2D2D] shadow-sm"
                       : "text-[#2D2D2D]/60 dark:text-[#EAEAEA]/60 hover:text-[#2D2D2D] dark:hover:text-[#EAEAEA]"
                   }`}
                 >
@@ -266,12 +266,12 @@ export const LandingPage: React.FC = () => {
                 transition={{ duration: 0.4 }}
                 className="w-full bg-white dark:bg-[#1E1E1E] border border-[#E0E0E0] dark:border-[#2D2D2D] rounded-3xl p-6 sm:p-8 shadow-sm space-y-5 text-left relative overflow-hidden"
               >
-                <div className="absolute top-0 right-0 bg-[#FAFAD5] dark:bg-[#2D2D15] border-l border-b border-[#E0E0E0]/40 dark:border-[#2D2D2D]/40 px-4 py-2 rounded-bl-2xl text-[9px] font-extrabold uppercase tracking-widest text-[#D4A574]">
+                <div className="absolute top-0 right-0 bg-[#FAFAD5] dark:bg-[#2D2D15] border-l border-b border-[#E0E0E0]/40 dark:border-[#2D2D2D]/40 px-4 py-2 rounded-bl-2xl text-[9px] font-extrabold uppercase tracking-widest text-[#BA7A3B]">
                   Interactive Preview
                 </div>
 
                 <div className="space-y-1.5">
-                  <span className="text-[10px] font-extrabold tracking-widest text-[#D4A574] uppercase block">
+                  <span className="text-[10px] font-extrabold tracking-widest text-[#BA7A3B] uppercase block">
                     {activeLesson.badge}
                   </span>
                   <h4 className="font-heading font-extrabold text-xl sm:text-2xl text-[#2D2D2D] dark:text-[#EAEAEA]">
@@ -280,7 +280,7 @@ export const LandingPage: React.FC = () => {
                 </div>
 
                 {activeLesson.mathFormula && (
-                  <div className="w-full py-4 px-6 rounded-2xl bg-[#FAFAD5]/30 dark:bg-[#2D2D15]/10 border border-[#D4A574]/20 text-center font-serif text-base sm:text-lg whitespace-nowrap shadow-inner text-[#2D2D2D] dark:text-[#EAEAEA] tracking-wide">
+                  <div className="w-full py-4 px-6 rounded-2xl bg-[#FAFAD5]/30 dark:bg-[#2D2D15]/10 border border-[#BA7A3B]/20 text-center font-serif text-base sm:text-lg whitespace-nowrap shadow-inner text-[#2D2D2D] dark:text-[#EAEAEA] tracking-wide">
                     {renderDemoMath(activeLesson.mathFormula)}
                   </div>
                 )}
@@ -303,7 +303,7 @@ export const LandingPage: React.FC = () => {
         {/* Feature Grid */}
         <section className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full pt-6">
           <div className="p-6 bg-white dark:bg-[#1E1E1E] rounded-3xl border border-[#E0E0E0] dark:border-[#2D2D2D] space-y-3 text-left">
-            <div className="w-10 h-10 rounded-2xl bg-[#D4A574]/15 dark:bg-[#D4A574]/20 flex items-center justify-center text-[#D4A574]">
+            <div className="w-10 h-10 rounded-2xl bg-[#BA7A3B]/15 dark:bg-[#BA7A3B]/20 flex items-center justify-center text-[#BA7A3B]">
               <Globe className="w-5 h-5" />
             </div>
             <h4 className="font-heading font-extrabold text-base text-[#2D2D2D] dark:text-[#EAEAEA]">Bilingual Support</h4>
@@ -313,7 +313,7 @@ export const LandingPage: React.FC = () => {
           </div>
 
           <div className="p-6 bg-white dark:bg-[#1E1E1E] rounded-3xl border border-[#E0E0E0] dark:border-[#2D2D2D] space-y-3 text-left">
-            <div className="w-10 h-10 rounded-2xl bg-[#D4A574]/15 dark:bg-[#D4A574]/20 flex items-center justify-center text-[#D4A574]">
+            <div className="w-10 h-10 rounded-2xl bg-[#BA7A3B]/15 dark:bg-[#BA7A3B]/20 flex items-center justify-center text-[#BA7A3B]">
               <Sparkles className="w-5 h-5" />
             </div>
             <h4 className="font-heading font-extrabold text-base text-[#2D2D2D] dark:text-[#EAEAEA]">Intelligent Topic Inference</h4>
@@ -323,7 +323,7 @@ export const LandingPage: React.FC = () => {
           </div>
 
           <div className="p-6 bg-white dark:bg-[#1E1E1E] rounded-3xl border border-[#E0E0E0] dark:border-[#2D2D2D] space-y-3 text-left">
-            <div className="w-10 h-10 rounded-2xl bg-[#D4A574]/15 dark:bg-[#D4A574]/20 flex items-center justify-center text-[#D4A574]">
+            <div className="w-10 h-10 rounded-2xl bg-[#BA7A3B]/15 dark:bg-[#BA7A3B]/20 flex items-center justify-center text-[#BA7A3B]">
               <Code2 className="w-5 h-5" />
             </div>
             <h4 className="font-heading font-extrabold text-base text-[#2D2D2D] dark:text-[#EAEAEA]">Professional LaTeX Equations</h4>

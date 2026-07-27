@@ -13,6 +13,8 @@ import { BottomNav } from "@/components/BottomNav";
 import { DesktopSidebar } from "@/components/DesktopSidebar";
 import { MobileHeader } from "@/components/MobileHeader";
 
+import { WelcomeScreen } from "@/components/WelcomeScreen";
+
 export default function Page() {
   const { screen, darkModeEnabled, user, setScreen } = useAskillaStore();
   const [mounted, setMounted] = React.useState(false);
@@ -28,7 +30,7 @@ export default function Page() {
     const isOnboardingScreen = screen === "landing" || screen === "onboarding" || screen === "intro";
 
     if (isReturningUser && isOnboardingScreen) {
-      setScreen("home");
+      setScreen("welcome");
     }
   }, [mounted, user.name, screen, setScreen]);
 
@@ -39,6 +41,13 @@ export default function Page() {
       document.documentElement.classList.remove("dark");
     }
   }, [darkModeEnabled]);
+
+  // Scroll to top when screen changes
+  useEffect(() => {
+    if (mounted) {
+      window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+    }
+  }, [screen, mounted]);
 
   if (!mounted) {
     return <div className="min-h-screen bg-[#F5F5F0] dark:bg-[#121212] transition-colors" />;
@@ -56,6 +65,7 @@ export default function Page() {
       {screen === "landing" && <LandingPage />}
       {screen === "onboarding" && <OnboardingModal />}
       {screen === "intro" && <IntroWalkthrough />}
+      {screen === "welcome" && <WelcomeScreen />}
       {screen === "home" && <HomeDashboard />}
       {screen === "module" && <LearningSession />}
       {screen === "progress" && <ProgressDashboard />}

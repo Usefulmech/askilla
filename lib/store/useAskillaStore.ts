@@ -45,7 +45,7 @@ export const useAskillaStore = create<AskillaState>()(
         name: "",
         preferredLanguage: "pidgin",
       },
-      currentTopic: "Excel Basics",
+      currentTopic: "",
       currentCourse: null,
       activeModuleIndex: 0,
       activeQuestionIndex: 0,
@@ -141,15 +141,16 @@ export const useAskillaStore = create<AskillaState>()(
       logout: () =>
         set({
           screen: "landing",
+          currentTopic: "",
           currentCourse: null,
           activeModuleIndex: 0,
           activeQuestionIndex: 0,
           wrongAttemptCount: 0,
-          user: { id: "user_guest", phone: "", name: "", preferredLanguage: "pidgin" },
         }),
       resetAll: () =>
         set({
           screen: "home",
+          currentTopic: "",
           currentCourse: null,
           activeModuleIndex: 0,
           activeQuestionIndex: 0,

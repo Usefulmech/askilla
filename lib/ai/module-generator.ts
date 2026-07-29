@@ -123,10 +123,10 @@ function getNativeFallbackModule(
           },
           image_search: "african students learning data spreadsheet laptop",
           diagram: `<svg viewBox="0 0 400 120" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto">
-            <rect width="400" height="120" rx="16" fill="#FAFAD5" stroke="#D4A574" stroke-width="2"/>
-            <circle cx="60" cy="60" r="30" fill="#D4A574"/>
-            <text x="60" y="66" font-family="sans-serif" font-size="20" fill="#2D2D2D" text-anchor="middle" font-weight="bold">1</text>
-            <text x="110" y="55" font-family="sans-serif" font-size="16" fill="#2D2D2D" font-weight="bold">Input Data &amp; Understanding</text>
+            <rect width="400" height="120" rx="16" fill="#FDEEE9" stroke="#D26E40" stroke-width="2"/>
+            <circle cx="60" cy="60" r="30" fill="#D26E40"/>
+            <text x="60" y="66" font-family="sans-serif" font-size="20" fill="#1C1917" text-anchor="middle" font-weight="bold">1</text>
+            <text x="110" y="55" font-family="sans-serif" font-size="16" fill="#1C1917" font-weight="bold">Input Data &amp; Understanding</text>
             <text x="110" y="78" font-family="sans-serif" font-size="13" fill="#666666">Understand the formula before solving</text>
           </svg>`,
           source: "— Source: 3MTT Curriculum & WAEC Standard Reference",
@@ -174,8 +174,8 @@ function getNativeFallbackModule(
         },
         image_search: "student taking notes studying tablet",
         diagram: `<svg viewBox="0 0 400 120" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto">
-          <rect width="400" height="120" rx="16" fill="#FAFAD5" stroke="#D4A574" stroke-width="2"/>
-          <text x="200" y="65" font-family="sans-serif" font-size="18" fill="#2D2D2D" font-weight="bold" text-anchor="middle">Understanding ${normalizedTopic}</text>
+          <rect width="400" height="120" rx="16" fill="#FDEEE9" stroke="#D26E40" stroke-width="2"/>
+          <text x="200" y="65" font-family="sans-serif" font-size="18" fill="#1C1917" font-weight="bold" text-anchor="middle">Understanding ${normalizedTopic}</text>
         </svg>`,
         source: "— Source: Khan Academy & Standard Educational Curriculum",
         audio_available: true,

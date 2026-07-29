@@ -16,23 +16,24 @@ import { MobileHeader } from "@/components/MobileHeader";
 import { WelcomeScreen } from "@/components/WelcomeScreen";
 
 export default function Page() {
-  const { screen, darkModeEnabled, user, setScreen } = useAskillaStore();
+  const { screen, darkModeEnabled, user, setScreen, initializeUser } = useAskillaStore();
   const [mounted, setMounted] = React.useState(false);
 
   useEffect(() => {
     setMounted(true);
+    initializeUser();
   }, []);
 
   // Auto-redirect returning users who already completed onboarding
   useEffect(() => {
     if (!mounted) return;
-    const isReturningUser = user.name && user.name.trim().length > 0;
-    const isOnboardingScreen = screen === "landing" || screen === "onboarding" || screen === "intro";
+    const isReturningUser = user.phone && user.phone.trim().length > 0 && user.name && user.name.trim().length > 0;
+    const isOnboardingScreen = screen === "landing" || screen === "onboarding";
 
     if (isReturningUser && isOnboardingScreen) {
       setScreen("welcome");
     }
-  }, [mounted, user.name, screen, setScreen]);
+  }, [mounted, user.phone, user.name, screen, setScreen]);
 
   useEffect(() => {
     if (darkModeEnabled) {

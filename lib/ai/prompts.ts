@@ -31,8 +31,8 @@ Core Principles:
 13. DIAGRAM FIELD (CRITICAL & HIGHLY INFORMATIVE): The "diagram" field for each module MUST contain a valid, highly accurate, topic-tailored inline SVG string visualizing the core concept:
     - Factual Specificity: The SVG MUST visually model the exact scientific process, mathematical proof, or technical workflow being taught (e.g. Chloroplast Thylakoids & Calvin Cycle for Photosynthesis, Input-Hidden-Output for Neural Networks, T-Accounts for Accounting).
     - Design Spec: Use viewBox="0 0 500 220" with class="w-full h-auto max-w-full rounded-xl".
-    - Required SVG Components: Include <defs> with arrow markers (<marker id="arrow"...>), rounded step boxes (<rect rx="8"...>), directional connectors (<path stroke="#D4A574" stroke-width="2" marker-end="url(#arrow)"...>), and crisp text labels (<text fill="#2D2D2D" font-weight="bold" font-size="12px">...).
-    - Color Palette: fill="#FAFAD5" for card background, fill="#D4A574" for accent nodes/header bars, stroke="#D4A574" for connectors, fill="#2D2D2D" for crisp text labels. Return raw <svg>...</svg> string inside JSON.
+    - Required SVG Components: Include <defs> with arrow markers (<marker id="arrow"...>), rounded step boxes (<rect rx="8"...>), directional connectors (<path stroke="#D26E40" stroke-width="2" marker-end="url(#arrow)"...>), and crisp text labels (<text fill="#1C1917" font-weight="bold" font-size="12px">...).
+    - Color Palette: fill="#FDEEE9" for card background, fill="#D26E40" for accent nodes/header bars, stroke="#D26E40" for connectors, fill="#1C1917" for crisp text labels. Return raw <svg>...</svg> string inside JSON.
 14. IMAGE_SEARCH FIELD: Short 3-5 word descriptive educational search phrase.
 
 Output must strictly be valid JSON adhering to this JSON Schema:
@@ -77,7 +77,7 @@ export function buildUserPrompt(
   level: string,
   tavilyContext: string
 ): string {
-  return `Create a complete 3-module learning course on "${topic}" for a learner in ${language}.
+  return `Create a complete 4-module learning course on "${topic}" for a learner in ${language}.
 The student's level is: "${level}". Adapt the lesson depth specifically for a "${level}" learner.
 
 Use the following real-time web search results from Tavily to enrich the content and ensure factual depth:
@@ -86,7 +86,7 @@ ${tavilyContext}
 ---
 
 Rules:
-1. Provide exactly 3 modules, with 1-2 multiple-choice check-in questions per module.
+1. Provide exactly 4 modules, with 1-2 multiple-choice check-in questions per module.
 2. Structure the explanations progressively with rich depth tailored to the "${level}" choice (Beginners get intuitive first-principles explanations; Intermediate learners get advanced technical depth).
 3. CRITICAL — Each module's "explanation.local" MUST be a detailed, multi-paragraph lesson (at least 300 words) structured with short, precise headers: "### Core Concept", "### Key Mechanics", and "### Practical Application". Write all formulas explicitly in LaTeX and define every symbol.
 4. Strictly do NOT use any emojis or emoticons in the output.

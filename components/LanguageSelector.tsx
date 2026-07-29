@@ -33,17 +33,17 @@ export const LanguageSelector: React.FC<LanguageSelectorProps> = ({
       <button
         type="button"
         onClick={() => setOpen(!open)}
-        className="w-full flex items-center justify-between px-5 py-4 bg-white dark:bg-[#1E1E1E] border-2 border-[#E0E0E0] dark:border-[#2D2D2D] rounded-full text-[#2D2D2D] dark:text-[#EAEAEA] text-sm font-bold hover:border-[#BA7A3B] focus:outline-none focus:border-[#BA7A3B] transition-colors"
+        className="w-full flex items-center justify-between px-5 py-4 bg-white dark:bg-[#1E1E1E] border-2 border-[#E0E0E0] dark:border-white/10 rounded-full text-[#1C1917] dark:text-[#F5F5F4] text-sm font-bold hover:border-[#C25B32] focus:outline-none focus:border-[#C25B32] transition-colors"
       >
         <div className="flex items-center gap-2.5">
-          <Globe className="w-5 h-5 text-[#BA7A3B]" />
+          <Globe className="w-5 h-5 text-[#C25B32]" />
           <span>{selectedOption.label}</span>
         </div>
-        <ChevronDown className={`w-5 h-5 text-[#2D2D2D]/50 dark:text-[#EAEAEA]/50 transition-transform ${open ? "rotate-180" : ""}`} />
+        <ChevronDown className={`w-5 h-5 text-[#1C1917]/50 dark:text-[#F5F5F4]/50 transition-transform ${open ? "rotate-180" : ""}`} />
       </button>
 
       {open && (
-        <div className="absolute top-full left-0 right-0 mt-2 bg-white dark:bg-[#1E1E1E] border-2 border-[#E0E0E0] dark:border-[#2D2D2D] rounded-2xl shadow-xl z-50 overflow-hidden">
+        <div className="absolute top-full left-0 right-0 mt-2 bg-white dark:bg-[#1E1E1E] border-2 border-[#E0E0E0] dark:border-white/10 rounded-2xl shadow-xl z-50 overflow-hidden">
           {languages.map((lang) => {
             const isSelected = selectedLanguage === lang.key;
             return (
@@ -56,12 +56,12 @@ export const LanguageSelector: React.FC<LanguageSelectorProps> = ({
                 }}
                 className={`w-full flex items-center justify-between px-5 py-3.5 text-sm font-semibold transition-colors ${
                   isSelected
-                    ? "bg-[#BA7A3B]/15 dark:bg-[#BA7A3B]/20 text-[#2D2D2D] dark:text-[#EAEAEA] font-bold"
-                    : "text-[#2D2D2D] dark:text-[#EAEAEA] hover:bg-[#F5F5F0] dark:hover:bg-[#252525]"
+                    ? "bg-[#C25B32]/15 dark:bg-[#C25B32]/20 text-[#1C1917] dark:text-[#F5F5F4] font-bold"
+                    : "text-[#1C1917] dark:text-[#F5F5F4] hover:bg-[#F5F5F0] dark:hover:bg-[#252525]"
                 }`}
               >
                 <span>{lang.label}</span>
-                {isSelected && <Check className="w-4 h-4 text-[#BA7A3B]" />}
+                {isSelected && <Check className="w-4 h-4 text-[#C25B32]" />}
               </button>
             );
           })}

@@ -8,6 +8,7 @@ import { LearningLanguage } from "@/lib/types/askilla";
 
 import { AboutModal } from "./AboutModal";
 import { EditProfileModal } from "./EditProfileModal";
+import { PageContent, PageShell } from "./PageShell";
 import { Edit3 } from "lucide-react";
 
 export const SettingsView: React.FC = () => {
@@ -27,45 +28,45 @@ export const SettingsView: React.FC = () => {
   const [editProfileOpen, setEditProfileOpen] = React.useState(false);
 
   return (
-    <div className="min-h-screen bg-[#F5F5F0] dark:bg-[#121212] text-[#2D2D2D] dark:text-[#EAEAEA] pb-24 md:pb-12 md:pl-64 transition-colors duration-200">
+    <PageShell>
       {/* Header (Hidden on mobile, sticky on desktop) */}
-      <header className="w-full px-4 md:px-12 py-4 hidden md:flex items-center justify-between border-b border-[#E0E0E0]/60 dark:border-[#2D2D2D]/60 sticky top-0 bg-[#F5F5F0]/95 dark:bg-[#121212]/95 backdrop-blur-md z-40 transition-colors">
+      <header className="w-full px-4 md:px-12 py-4 hidden md:flex items-center justify-between border-b border-[#E0E0E0]/60 dark:border-white/5 sticky top-0 bg-[#F5F5F0]/95 dark:bg-[#121212]/95 backdrop-blur-md z-40 transition-colors">
         <button
           type="button"
           onClick={() => setScreen("home")}
-          className="p-2 rounded-full hover:bg-white dark:hover:bg-[#1E1E1E] text-[#2D2D2D] dark:text-[#EAEAEA] md:hidden"
+          className="p-2 rounded-full hover:bg-white dark:hover:bg-[#1E1E1E] text-[#1C1917] dark:text-[#F5F5F4] md:hidden"
         >
           <ArrowLeft className="w-5 h-5" />
         </button>
-        <h1 className="font-heading font-extrabold text-2xl text-[#2D2D2D] dark:text-[#EAEAEA]">
+        <h1 className="font-heading font-extrabold text-2xl text-[#1C1917] dark:text-[#F5F5F4]">
           Profile
         </h1>
         <div className="w-8" />
       </header>
 
-      <div className="w-full px-4 md:px-12 pt-24 md:pt-8 pb-8 space-y-6 text-left">
+      <PageContent className="space-y-6 text-left">
 
         {/* User Info Card */}
-        <div className="bg-white dark:bg-[#1E1E1E] rounded-3xl p-6 border border-[#E0E0E0] dark:border-[#2D2D2D] shadow-sm flex items-center justify-between gap-4">
-          <div className="flex items-center gap-4">
-            <div className="w-14 h-14 rounded-full bg-[#FAFAD5] dark:bg-[#2D2D15] border-2 border-[#BA7A3B] dark:border-[#8E5724] flex items-center justify-center font-heading font-extrabold text-xl text-[#2D2D2D] dark:text-[#EAEAEA]">
-              {user.name ? user.name[0].toUpperCase() : <UserIcon className="w-6 h-6 text-[#2D2D2D] dark:text-[#EAEAEA]" />}
+        <div className="bg-white dark:bg-[#1E1E1E] rounded-3xl p-4 sm:p-6 border border-[#E0E0E0] dark:border-white/10 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="flex items-center gap-4 w-full sm:w-auto">
+            <div className="w-14 h-14 rounded-full bg-[#FDEEE9] dark:bg-[#2D1F1A] border-2 border-[#C25B32] dark:border-[#94401F] flex items-center justify-center font-heading font-extrabold text-xl text-[#1C1917] dark:text-[#F5F5F4] shrink-0">
+              {user.name ? user.name[0].toUpperCase() : <UserIcon className="w-6 h-6 text-[#1C1917] dark:text-[#F5F5F4]" />}
             </div>
-            <div>
-              <h2 className="font-heading font-bold text-lg text-[#2D2D2D] dark:text-[#EAEAEA]">
+            <div className="flex-1">
+              <h2 className="font-heading font-bold text-lg text-[#1C1917] dark:text-[#F5F5F4]">
                 {user.name || "Learner"}
               </h2>
-              <p className="text-xs text-[#2D2D2D]/60 dark:text-[#EAEAEA]/60 font-sans">
-                {user.phone ? `+234 ${user.phone}` : "No phone linked"}
+              <p className="text-xs text-[#1C1917]/60 dark:text-[#F5F5F4]/60 font-sans">
+                {user.phone || "No phone linked"}
               </p>
             </div>
           </div>
           <button
             type="button"
             onClick={() => setEditProfileOpen(true)}
-            className="px-4 py-2.5 rounded-2xl bg-[#FAFAD5] hover:bg-[#BA7A3B]/30 dark:bg-[#2D2D15] border border-[#BA7A3B] text-[#2D2D2D] dark:text-[#EAEAEA] text-xs font-bold transition-all flex items-center gap-1.5 active:scale-95 shrink-0"
+            className="w-full sm:w-auto px-4 py-2.5 rounded-2xl bg-[#FDEEE9] hover:bg-[#C25B32]/30 dark:bg-[#2D1F1A] border border-[#C25B32] text-[#1C1917] dark:text-[#F5F5F4] text-xs font-bold transition-all flex items-center justify-center gap-1.5 active:scale-95 shrink-0"
           >
-            <Edit3 className="w-4 h-4 text-[#BA7A3B]" />
+            <Edit3 className="w-4 h-4 text-[#C25B32]" />
             Edit Profile
           </button>
         </div>
@@ -73,14 +74,14 @@ export const SettingsView: React.FC = () => {
         {/* Responsive Desktop Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Language Selection */}
-          <div className="bg-white dark:bg-[#1E1E1E] rounded-3xl p-6 border border-[#E0E0E0] dark:border-[#2D2D2D] shadow-sm space-y-4">
+          <div className="bg-white dark:bg-[#1E1E1E] rounded-3xl p-6 border border-[#E0E0E0] dark:border-white/10 shadow-sm space-y-4">
             <div className="flex items-center gap-2">
-              <Globe className="w-5 h-5 text-[#BA7A3B]" />
-              <h2 className="font-heading font-bold text-base text-[#2D2D2D] dark:text-[#EAEAEA]">
+              <Globe className="w-5 h-5 text-[#C25B32]" />
+              <h2 className="font-heading font-bold text-base text-[#1C1917] dark:text-[#F5F5F4]">
                 Your Learning Language
               </h2>
             </div>
-            <p className="text-xs text-[#2D2D2D]/70 dark:text-[#EAEAEA]/70 font-sans">
+            <p className="text-xs text-[#1C1917]/70 dark:text-[#F5F5F4]/70 font-sans">
               Askilla will generate lessons and explanations natively in this language.
             </p>
             <LanguageSelector
@@ -90,24 +91,24 @@ export const SettingsView: React.FC = () => {
           </div>
 
           {/* Preferences Toggles */}
-          <div className="bg-white dark:bg-[#1E1E1E] rounded-3xl p-6 border border-[#E0E0E0] dark:border-[#2D2D2D] shadow-sm space-y-4">
-            <h2 className="font-heading font-bold text-base text-[#2D2D2D] dark:text-[#EAEAEA] mb-2">
+          <div className="bg-white dark:bg-[#1E1E1E] rounded-3xl p-6 border border-[#E0E0E0] dark:border-white/10 shadow-sm space-y-4">
+            <h2 className="font-heading font-bold text-base text-[#1C1917] dark:text-[#F5F5F4] mb-2">
               Preferences &amp; Controls
             </h2>
 
-            <div className="flex items-center justify-between py-2 border-b border-[#E0E0E0]/60 dark:border-[#2D2D2D]/60">
+            <div className="flex items-center justify-between py-2 border-b border-[#E0E0E0]/60 dark:border-white/5">
               <div className="flex items-center gap-3">
-                <Volume2 className="w-5 h-5 text-[#BA7A3B]" />
+                <Volume2 className="w-5 h-5 text-[#C25B32]" />
                 <div>
-                  <p className="text-sm font-semibold text-[#2D2D2D] dark:text-[#EAEAEA]">Voice Feedback</p>
-                  <p className="text-xs text-[#2D2D2D]/60 dark:text-[#EAEAEA]/60">Read Uncle Sabi explanations aloud</p>
+                  <p className="text-sm font-semibold text-[#1C1917] dark:text-[#F5F5F4]">Voice Feedback</p>
+                  <p className="text-xs text-[#1C1917]/60 dark:text-[#F5F5F4]/60">Read Uncle Sabi explanations aloud</p>
                 </div>
               </div>
               <button
                 type="button"
                 onClick={toggleVoiceFeedback}
-                className={`w-14 h-7 rounded-full transition-colors p-1 ${
-                  voiceFeedbackEnabled ? "bg-[#BA7A3B]" : "bg-[#E0E0E0] dark:bg-[#333333]"
+                className={`w-14 h-7 rounded-full transition-colors p-1 flex items-center shrink-0 ${
+                  voiceFeedbackEnabled ? "bg-[#C25B32]" : "bg-[#E0E0E0] dark:bg-[#333333]"
                 }`}
               >
                 <div
@@ -118,19 +119,19 @@ export const SettingsView: React.FC = () => {
               </button>
             </div>
 
-            <div className="flex items-center justify-between py-2 border-b border-[#E0E0E0]/60 dark:border-[#2D2D2D]/60">
+            <div className="flex items-center justify-between py-2 border-b border-[#E0E0E0]/60 dark:border-white/5">
               <div className="flex items-center gap-3">
-                <Moon className="w-5 h-5 text-[#BA7A3B]" />
+                <Moon className="w-5 h-5 text-[#C25B32]" />
                 <div>
-                  <p className="text-sm font-semibold text-[#2D2D2D] dark:text-[#EAEAEA]">Dark Mode</p>
-                  <p className="text-xs text-[#2D2D2D]/60 dark:text-[#EAEAEA]/60">Soft low-strain dark notebook contrast</p>
+                  <p className="text-sm font-semibold text-[#1C1917] dark:text-[#F5F5F4]">Dark Mode</p>
+                  <p className="text-xs text-[#1C1917]/60 dark:text-[#F5F5F4]/60">Soft low-strain dark notebook contrast</p>
                 </div>
               </div>
               <button
                 type="button"
                 onClick={toggleDarkMode}
-                className={`w-14 h-7 rounded-full transition-colors p-1 ${
-                  darkModeEnabled ? "bg-[#BA7A3B]" : "bg-[#E0E0E0] dark:bg-[#333333]"
+                className={`w-14 h-7 rounded-full transition-colors p-1 flex items-center shrink-0 ${
+                  darkModeEnabled ? "bg-[#C25B32]" : "bg-[#E0E0E0] dark:bg-[#333333]"
                 }`}
               >
                 <div
@@ -156,24 +157,24 @@ export const SettingsView: React.FC = () => {
         </div>
 
         {/* About Section (Static) */}
-        <div className="bg-white dark:bg-[#1E1E1E] rounded-3xl p-6 border border-[#E0E0E0] dark:border-[#2D2D2D] shadow-sm space-y-2">
+        <div className="bg-white dark:bg-[#1E1E1E] rounded-3xl p-6 border border-[#E0E0E0] dark:border-white/10 shadow-sm space-y-2">
           <div className="flex items-center gap-2">
-            <Info className="w-5 h-5 text-[#BA7A3B]" />
-            <h2 className="font-heading font-bold text-base text-[#2D2D2D] dark:text-[#EAEAEA]">
+            <Info className="w-5 h-5 text-[#C25B32]" />
+            <h2 className="font-heading font-bold text-base text-[#1C1917] dark:text-[#F5F5F4]">
               About Askilla
             </h2>
           </div>
-          <p className="text-xs text-[#2D2D2D]/70 dark:text-[#EAEAEA]/70 font-sans leading-relaxed">
-            Askilla is an AI-powered vernacular micro-learning platform built for the <strong>3MTT Knowledge Showcase 2.0</strong>. Powered by OpenAI GPT-4o and Web Speech API, it delivers native language learning across Nigeria.
+          <p className="text-xs text-[#1C1917]/70 dark:text-[#F5F5F4]/70 font-sans leading-relaxed text-center">
+            Askilla is an AI-powered vernacular micro-learning platform built for the <strong>3MTT Knowledge Showcase 2.0</strong>. Powered by OpenAI GPT-4o and Web Speech API, it delivers English and Pidgin learning across Nigeria.
           </p>
-          <p className="text-xs text-[#BA7A3B] font-extrabold pt-1">
+          <p className="text-xs text-[#C25B32] font-extrabold pt-1">
             Ask anything. Sabi everything.
           </p>
         </div>
-      </div>
+      </PageContent>
 
       <AboutModal isOpen={aboutOpen} onClose={() => setAboutOpen(false)} />
       <EditProfileModal isOpen={editProfileOpen} onClose={() => setEditProfileOpen(false)} />
-    </div>
+    </PageShell>
   );
 };

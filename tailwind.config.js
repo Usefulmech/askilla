@@ -13,7 +13,7 @@ module.exports = {
         askilla: {
           bg: "#F5F5F0",
           text: "#2D2D2D",
-          action: "#D4A574",
+          action: "#E89C7C",
           "action-hover": "#C49463",
           surface: "#FFFFFF",
           "surface-subtle": "#EAEAE3",

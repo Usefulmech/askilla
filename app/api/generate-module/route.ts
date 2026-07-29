@@ -33,8 +33,12 @@ export async function POST(req: Request) {
       });
 
       if (existingModule && existingModule.content) {
+        const cachedModule = existingModule.content as any;
         return NextResponse.json({
-          module: existingModule.content,
+          module: {
+            ...cachedModule,
+            id: existingModule.id,
+          },
           cached: true,
         });
       }
@@ -46,15 +50,17 @@ export async function POST(req: Request) {
     const moduleContent = await generateAskillaModule(cleanTopic, language, level);
 
     // Persist to PostgreSQL Neon database asynchronously & log to ML dataset
+    let persistedModuleId = moduleContent.id;
     try {
-      await prisma.module.create({
+      const savedModule = await prisma.module.create({
         data: {
-          topic: cleanTopic,
+          topic: moduleContent.concise_topic || cleanTopic,
           language: language,
           difficulty: "beginner",
           content: JSON.parse(JSON.stringify(moduleContent)),
         },
       });
+      persistedModuleId = savedModule.id;
     } catch (saveErr) {
       console.warn("PostgreSQL DB save skipped:", saveErr);
     }
@@ -78,7 +84,10 @@ export async function POST(req: Request) {
     }
 
     return NextResponse.json({
-      module: moduleContent,
+      module: {
+        ...moduleContent,
+        id: persistedModuleId,
+      },
       cached: false,
     });
   } catch (error) {

@@ -6,11 +6,13 @@ import { Volume2, Pause, Loader2 } from "lucide-react";
 interface AudioPlayerProps {
   text: string;
   label?: string;
+  appLanguage?: string;
 }
 
 export const AudioPlayer: React.FC<AudioPlayerProps> = ({
   text,
   label = "Listen to Uncle Sabi",
+  appLanguage = "english",
 }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -52,7 +54,7 @@ export const AudioPlayer: React.FC<AudioPlayerProps> = ({
       const res = await fetch("/api/tts", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ text: textToSpeak, voice: "echo" }),
+        body: JSON.stringify({ text: textToSpeak, voice: "echo", appLanguage }),
       });
 
       if (res.ok) {
@@ -119,25 +121,25 @@ export const AudioPlayer: React.FC<AudioPlayerProps> = ({
       type="button"
       onClick={handlePlayTTS}
       disabled={isLoading}
-      className={`px-3 py-2 sm:px-5 sm:py-3 rounded-full border-2 text-xs sm:text-sm font-bold transition-all duration-200 flex items-center gap-1.5 sm:gap-2.5 active:scale-95 shadow-sm whitespace-nowrap dark:bg-[#1E1E1E] dark:border-[#2D2D2D] dark:text-[#EAEAEA] ${
+      className={`px-3 py-2 sm:px-5 sm:py-3 rounded-full border-2 text-xs sm:text-sm font-bold transition-all duration-200 flex items-center gap-1.5 sm:gap-2.5 active:scale-95 shadow-sm whitespace-nowrap dark:bg-[#1E1E1E] dark:border-white/10 dark:text-[#F5F5F4] ${
         isPlaying
-          ? "bg-[#BA7A3B] border-[#BA7A3B] text-[#2D2D2D] dark:bg-[#BA7A3B] dark:text-[#2D2D2D] ring-4 ring-[#BA7A3B]/30 animate-pulse"
-          : "bg-[#FAFAD5]/70 border-[#BA7A3B] text-[#2D2D2D] hover:bg-[#BA7A3B]/20"
+          ? "bg-[#C25B32] border-[#C25B32] text-[#1C1917] dark:bg-[#C25B32] dark:text-[#1C1917] ring-4 ring-[#C25B32]/30 animate-pulse"
+          : "bg-[#FDEEE9]/70 border-[#C25B32] text-[#1C1917] hover:bg-[#C25B32]/20"
       }`}
     >
       {isLoading ? (
         <>
-          <Loader2 className="w-4 h-4 sm:w-5 sm:h-5 animate-spin text-[#BA7A3B]" />
+          <Loader2 className="w-4 h-4 sm:w-5 sm:h-5 animate-spin text-[#C25B32]" />
           <span>Loading...</span>
         </>
       ) : isPlaying ? (
         <>
-          <Pause className="w-4 h-4 sm:w-5 sm:h-5 fill-current text-[#2D2D2D]" />
+          <Pause className="w-4 h-4 sm:w-5 sm:h-5 fill-current text-[#1C1917]" />
           <span>Pause</span>
         </>
       ) : (
         <>
-          <Volume2 className="w-4 h-4 sm:w-5 sm:h-5 text-[#BA7A3B] shrink-0" />
+          <Volume2 className="w-4 h-4 sm:w-5 sm:h-5 text-[#C25B32] shrink-0" />
           <span className="hidden sm:inline">{label}</span>
           <span className="sm:hidden">Listen</span>
         </>

@@ -48,11 +48,11 @@ export const UncleSabiMascot: React.FC<UncleSabiMascotProps> = ({
         xmlns="http://www.w3.org/2000/svg"
       >
         <circle cx="50" cy="50" r="46" fill="#F5F0E8" />
-        <path d="M 30 36 C 30 16, 70 16, 70 36 Z" fill="#BA7A3B" stroke="#7C572D" strokeWidth="2.5" />
+        <path d="M 30 36 C 30 16, 70 16, 70 36 Z" fill="#C25B32" stroke="#7C572D" strokeWidth="2.5" />
         <circle cx="50" cy="52" r="22" fill="#A87B51" />
-        <circle cx="41" cy="50" r="6.5" stroke="#2D2D2D" strokeWidth="2.5" fill="none" />
-        <circle cx="59" cy="50" r="6.5" stroke="#2D2D2D" strokeWidth="2.5" fill="none" />
-        <path d="M 41 62 Q 50 69 59 62" stroke="#2D2D2D" strokeWidth="3" strokeLinecap="round" fill="none" />
+        <circle cx="41" cy="50" r="6.5" stroke="#1C1917" strokeWidth="2.5" fill="none" />
+        <circle cx="59" cy="50" r="6.5" stroke="#1C1917" strokeWidth="2.5" fill="none" />
+        <path d="M 41 62 Q 50 69 59 62" stroke="#1C1917" strokeWidth="3" strokeLinecap="round" fill="none" />
         <path d="M 22 84 Q 50 70 78 84 L 84 100 L 16 100 Z" fill="#7C572D" />
       </svg>
     );
@@ -62,9 +62,9 @@ export const UncleSabiMascot: React.FC<UncleSabiMascotProps> = ({
     return (
       <div className="relative inline-block my-4">
         {/* Outer decorative shadow accent ring */}
-        <div className="absolute -z-10 -top-2 -right-2 w-32 h-32 rounded-full bg-[#BA7A3B]/30 dark:bg-[#BA7A3B]/15 animate-pulse" />
+        <div className="absolute -z-10 -top-2 -right-2 w-32 h-32 rounded-full bg-[#C25B32]/30 dark:bg-[#C25B32]/15 animate-pulse" />
         <motion.div
-          className="w-32 h-32 rounded-full border-4 border-[#2D2D2D] dark:border-[#1E1E1E] bg-[#FAFAD5] dark:bg-[#2D2D15] flex items-center justify-center overflow-hidden shadow-md"
+          className="w-32 h-32 rounded-full border-4 border-[#1C1917] dark:border-[#1E1E1E] bg-[#FDEEE9] dark:bg-[#2D1F1A] flex items-center justify-center overflow-hidden shadow-md"
           initial={{ scale: 0.8, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ duration: 0.4 }}
@@ -77,7 +77,7 @@ export const UncleSabiMascot: React.FC<UncleSabiMascotProps> = ({
 
   const avatarElement = (
     <motion.div
-      className={`relative rounded-full border-2 border-[#BA7A3B] dark:border-[#8E5724] bg-[#FAFAD5] dark:bg-[#2D2D15] flex items-center justify-center overflow-hidden shadow-sm shrink-0 ${avatarSizes[size]}`}
+      className={`relative rounded-full border-2 border-[#C25B32] dark:border-[#94401F] bg-[#FDEEE9] dark:bg-[#2D1F1A] flex items-center justify-center overflow-hidden shadow-sm shrink-0 ${avatarSizes[size]}`}
       initial={{ scale: 0.9, opacity: 0 }}
       animate={{ 
         scale: 1, 
@@ -105,7 +105,7 @@ export const UncleSabiMascot: React.FC<UncleSabiMascotProps> = ({
       {/* Speech Bubble */}
       {showBubble && message && (
         <motion.div
-          className="relative bg-white dark:bg-[#1E1E1E] border border-[#E0E0E0] dark:border-[#2D2D2D] text-[#2D2D2D] dark:text-[#EAEAEA] rounded-2xl p-4 shadow-sm max-w-lg flex-1 text-sm md:text-base leading-relaxed"
+          className="relative bg-white dark:bg-[#1E1E1E] border border-[#E0E0E0] dark:border-white/10 text-[#1C1917] dark:text-[#F5F5F4] rounded-2xl p-4 shadow-sm max-w-lg flex-1 text-sm md:text-base leading-relaxed"
           initial={{ y: 8, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.3, delay: 0.1 }}

@@ -18,7 +18,7 @@ export const BottomNav: React.FC = () => {
   ];
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 bg-white dark:bg-[#1E1E1E] border-t border-[#E0E0E0] dark:border-[#2D2D2D] shadow-md z-40 md:hidden transition-colors duration-200">
+    <nav className="fixed bottom-0 left-0 right-0 bg-white dark:bg-[#1E1E1E] border-t border-[#E0E0E0] dark:border-white/10 shadow-md z-40 md:hidden transition-colors duration-200">
       <div className="max-w-xl mx-auto flex items-center justify-around py-2 px-2">
         {navItems.map((item) => {
           const isActive = screen === item.screen;
@@ -30,11 +30,11 @@ export const BottomNav: React.FC = () => {
               onClick={() => setScreen(item.screen)}
               className={`flex flex-col items-center gap-1 px-3 py-1.5 rounded-xl transition-all duration-200 ${
                 isActive
-                  ? "text-[#BA7A3B] font-bold"
-                  : "text-[#2D2D2D]/50 dark:text-[#EAEAEA]/55 hover:text-[#2D2D2D] dark:hover:text-[#EAEAEA]"
+                  ? "text-[#C25B32] font-bold"
+                  : "text-[#1C1917] dark:text-white hover:text-[#C25B32] dark:hover:text-[#C25B32]"
               }`}
             >
-              <Icon className={`w-5 h-5 ${isActive ? "text-[#BA7A3B]" : ""}`} />
+              <Icon className={`w-5 h-5 ${isActive ? "text-[#C25B32]" : ""}`} />
               <span className="text-[10px] font-semibold font-sans tracking-tight">{item.label}</span>
             </button>
           );

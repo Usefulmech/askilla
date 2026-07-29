@@ -7,6 +7,7 @@ import { ArrowLeft, Home, RotateCcw, Eye, Lightbulb, Check, ChevronRight } from 
 import { useAskillaStore } from "@/lib/store/useAskillaStore";
 import { AudioPlayer } from "./AudioPlayer";
 import { VoiceInput } from "./VoiceInput";
+import { PageShell } from "./PageShell";
 import { BlockMath, InlineMath } from "react-katex";
 import "katex/dist/katex.min.css";
 
@@ -59,13 +60,15 @@ export const LearningSession: React.FC = () => {
   useEffect(() => {
     if (messages.length === 0) {
       if (currentCourse) {
-        const isFinished = completedModuleIds.length >= currentCourse.modules.length;
+        // Check if user has already earned a certificate for this topic
+        const hasCertificate = useAskillaStore.getState().completedCertificates.some(cert => cert.topic === currentCourse.topic);
+        const isFinished = hasCertificate || (completedModuleIds.length >= currentCourse.modules.length);
 
         if (isFinished) {
           const finishedMsg =
             language === "pidgin"
-              ? `Uncle Sabi dey proud of you well well! You don complete all ${currentCourse.modules.length} modules for **${currentCourse.topic}**! Wetin you wan do next?`
-              : `Uncle Sabi is super proud of your dedication! You have completed all ${currentCourse.modules.length} modules for **${currentCourse.topic}**! What would you like to do next?`;
+              ? `Uncle Sabi dey proud of you well well! You don already master **${currentCourse.topic}**! Wetin you wan do next?`
+              : `Uncle Sabi is super proud of your dedication! You have already mastered **${currentCourse.topic}**! What would you like to do next?`;
 
           const nextTopicSuggestion = currentCourse.related_topics?.[0] || `${currentCourse.topic} Advanced`;
 
@@ -95,24 +98,13 @@ export const LearningSession: React.FC = () => {
             },
           ]);
         }
-      } else {
-        const welcomeMsg =
-          language === "pidgin"
-            ? `Wetin you wan learn today? Uncle Sabi dey here to teach you **${currentTopic}** step-by-step. No stress at all. Excel, data analysis, or writing - I go break everything down.`
-            : `Welcome. Uncle Sabi is here to guide you through learning **${currentTopic}** from scratch. Let's do this together.`;
-
+      } else if (currentTopic) {
         const levelPrompt =
           language === "pidgin"
-            ? "Before we start, wetin be your current level for this domain?"
-            : "Before we start, what is your current level in this topic?";
-
+            ? `Oya! Make we start to dey learn **${currentTopic}**. Wetin be your level for this topic?`
+            : `Let's start learning **${currentTopic}**! What is your current level?`;
+            
         setMessages([
-          {
-            id: "welcome",
-            sender: "uncle_sabi",
-            type: "text",
-            content: welcomeMsg,
-          },
           {
             id: "level_prompt",
             sender: "uncle_sabi",
@@ -121,6 +113,9 @@ export const LearningSession: React.FC = () => {
             options: ["Complete Beginner", "Know a little"],
           },
         ]);
+      } else {
+        // New user - show empty state, no prefilled content
+        setMessages([]);
       }
     }
   }, [currentTopic, language, currentCourse, completedModuleIds]);
@@ -342,6 +337,9 @@ export const LearningSession: React.FC = () => {
       if (res.ok) {
         const data = await res.json();
         setCourse(data.module);
+        if (data.module.concise_topic) {
+          useAskillaStore.setState({ currentTopic: data.module.concise_topic });
+        }
         loadSubModule(data.module, 0);
       } else {
         const failMsg: ChatMessage = {
@@ -467,6 +465,7 @@ export const LearningSession: React.FC = () => {
     const mod = currentCourse.modules[modIdx];
     const isCorrect =
       selectedAns.trim().toLowerCase() === questionObj.correct_answer.trim().toLowerCase();
+    const willCompleteLesson = isCorrect && qIdx + 1 >= mod.questions.length;
 
     const userAnsMsg: ChatMessage = {
       id: `user_ans_${Date.now()}`,
@@ -481,14 +480,44 @@ export const LearningSession: React.FC = () => {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          userId: user.id,
+          phone: user.phone,
           moduleId: currentCourse.id,
+          moduleIndex: modIdx,
           questionIndex: qIdx,
           userAnswer: selectedAns,
           isCorrect,
+          completed: willCompleteLesson,
           language,
         }),
       });
+    } catch (e) {
+      console.warn(e);
+    }
+
+    // Log to ML dataset for training
+    try {
+      const mod = currentCourse.modules[modIdx];
+      fetch("/api/log-dataset", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          event_type: "question_attempt",
+          topic: currentTopic,
+          language,
+          level: "beginner",
+          prompt: questionObj.question,
+          explanation: mod?.explanation?.local || "",
+          user_answer: selectedAns,
+          is_correct: isCorrect,
+          feedback: isCorrect ? questionObj.correct_feedback : questionObj.wrong_feedback,
+          metadata: {
+            module_id: currentCourse.id,
+            question_id: questionObj.id,
+            module_index: modIdx,
+            question_index: qIdx,
+          },
+        }),
+      }).catch((e) => console.warn("Dataset log error:", e));
     } catch (e) {
       console.warn(e);
     }
@@ -507,7 +536,7 @@ export const LearningSession: React.FC = () => {
       confetti({
         particleCount: 60,
         spread: 60,
-        colors: ["#BA7A3B", "#2D2D2D", "#FAFAD5"],
+        colors: ["#C25B32", "#1C1917", "#FDEEE9"],
       });
 
       const hasNextQuestion = qIdx + 1 < mod.questions.length;
@@ -722,63 +751,65 @@ export const LearningSession: React.FC = () => {
       .replace(/\$\$\s*([\s\S]*?)\s*\$\$/g, "\\[ $1 \\]")
       .replace(/\$([^\$\n]+)\$/g, "\\( $1 \\)");
 
-    // Process line-by-line to parse Markdown headers (###, ##, #) and lists cleanly
-    const lines = processedText.split("\n");
+    // 1. Split by block math first: \[ ... \] so multi-line math isn't broken by newline splits
+    const blockMathParts = processedText.split(/(\\\[[\s\S]*?\\\])/g);
 
     return (
       <div className="space-y-2.5 text-left font-sans leading-relaxed">
-        {lines.map((line, lineIdx) => {
-          const trimmed = line.trim();
-          if (!trimmed) {
-            return <div key={`empty-${lineIdx}`} className="h-1" />;
-          }
+        {blockMathParts.map((blockPart, blockIdx) => {
+          if (!blockPart) return null;
 
-          // Render Markdown Headers: ### Header Name
-          if (trimmed.startsWith("### ") || trimmed.startsWith("## ") || trimmed.startsWith("# ")) {
-            const headerTitle = trimmed.replace(/^#{1,3}\s+/, "");
+          // Render Block Math
+          if (blockPart.startsWith("\\[") && blockPart.endsWith("\\]")) {
+            const mathContent = blockPart.slice(2, -2).trim();
             return (
-              <h3
-                key={`header-${lineIdx}`}
-                className="font-heading font-extrabold text-xs sm:text-sm md:text-base text-[#BA7A3B] mt-4 mb-2 uppercase tracking-wider flex items-center gap-2 border-b border-[#BA7A3B]/25 pb-1 text-left"
+              <div
+                key={`block-math-${blockIdx}`}
+                className="my-3 p-4 rounded-2xl bg-[#FDEEE9]/50 dark:bg-[#2D1F1A]/30 border-2 border-[#C25B32]/40 text-center font-serif text-base sm:text-xl overflow-x-auto whitespace-nowrap shadow-md text-[#1C1917] dark:text-[#F5F5F4] tracking-wide"
               >
-                <span className="w-2 h-2 rounded-full bg-[#BA7A3B] shrink-0" />
-                <span>{headerTitle}</span>
-              </h3>
+                <BlockMath math={mathContent} />
+              </div>
             );
           }
 
-          // Check if line is a bullet item (- or * or 1.)
-          const isBullet = /^(?:[\-\*]|\d+\.)\s+/.test(trimmed);
-          const cleanLineText = isBullet ? trimmed.replace(/^(?:[\-\*]|\d+\.)\s+/, "") : line;
+          // Process normal text line-by-line to parse Markdown headers (###, ##, #) and lists cleanly
+          const lines = blockPart.split("\n");
+          return lines.map((line, lineIdx) => {
+            const trimmed = line.trim();
+            if (!trimmed) {
+              return <div key={`empty-${blockIdx}-${lineIdx}`} className="h-1" />;
+            }
 
-          // Split by block math first: \[ ... \]
-          const blockParts = cleanLineText.split(/(\\\[[\s\S]*?\\\])/g);
-
-          const renderedContent = blockParts.map((blockPart, idx) => {
-            if (blockPart.startsWith("\\[") && blockPart.endsWith("\\]")) {
-              const mathContent = blockPart.slice(2, -2).trim();
+            // Render Markdown Headers: ### Header Name
+            if (trimmed.startsWith("### ") || trimmed.startsWith("## ") || trimmed.startsWith("# ")) {
+              const headerTitle = trimmed.replace(/^#{1,3}\s+/, "");
               return (
-                <div
-                  key={`block-math-${lineIdx}-${idx}`}
-                  className="my-3 p-4 rounded-2xl bg-[#FAFAD5]/50 dark:bg-[#2D2D15]/30 border-2 border-[#BA7A3B]/40 text-center font-serif text-base sm:text-xl overflow-x-auto whitespace-nowrap shadow-md text-[#2D2D2D] dark:text-[#EAEAEA] tracking-wide"
+                <h3
+                  key={`header-${blockIdx}-${lineIdx}`}
+                  className="font-heading font-extrabold text-xs sm:text-sm md:text-base text-[#C25B32] mt-4 mb-2 uppercase tracking-wider flex items-center gap-2 border-b border-[#C25B32]/25 pb-1 text-left"
                 >
-                  <BlockMath math={mathContent} />
-                </div>
+                  <span className="w-2 h-2 rounded-full bg-[#C25B32] shrink-0" />
+                  <span>{headerTitle}</span>
+                </h3>
               );
             }
 
-            // Split by inline math \( ... \) and bold ** ... **
-            const inlineParts = blockPart.split(/(\\\([\s\S]*?\\\))|(\*\*.*?\*\*)/g);
+            // Check if line is a bullet item (- or * or 1.)
+            const isBullet = /^(?:[\-\*]|\d+\.)\s+/.test(trimmed);
+            const cleanLineText = isBullet ? trimmed.replace(/^(?:[\-\*]|\d+\.)\s+/, "") : line;
 
-            return inlineParts.map((part, i) => {
+            // Split by inline math \( ... \) and bold ** ... **
+            const inlineParts = cleanLineText.split(/(\\\([\s\S]*?\\\))|(\*\*.*?\*\*)/g);
+
+            const renderedContent = inlineParts.map((part, i) => {
               if (!part) return null;
 
               if (part.startsWith("\\(") && part.endsWith("\\)")) {
                 const mathContent = part.slice(2, -2).trim();
                 return (
                   <span
-                    key={`inline-math-${lineIdx}-${idx}-${i}`}
-                    className="font-serif italic mx-0.5 px-1 py-0.5 bg-[#FAFAD5]/60 dark:bg-[#2D2D15]/40 rounded-md text-[#2D2D2D] dark:text-[#EAEAEA] border border-[#BA7A3B]/30"
+                    key={`inline-math-${blockIdx}-${lineIdx}-${i}`}
+                    className="font-serif italic mx-0.5 px-1 py-0.5 bg-[#FDEEE9]/60 dark:bg-[#2D1F1A]/40 rounded-md text-[#1C1917] dark:text-[#F5F5F4] border border-[#C25B32]/30"
                   >
                     <InlineMath math={mathContent} />
                   </span>
@@ -788,57 +819,57 @@ export const LearningSession: React.FC = () => {
               if (part.startsWith("**") && part.endsWith("**")) {
                 return (
                   <strong
-                    key={`bold-${lineIdx}-${idx}-${i}`}
-                    className="font-extrabold text-[#2D2D2D] dark:text-[#FFFFFF] bg-[#BA7A3B]/20 dark:bg-[#BA7A3B]/30 px-1.5 py-0.5 rounded-md border border-[#BA7A3B]/35 mx-0.5 inline-block my-0.5"
+                    key={`bold-${blockIdx}-${lineIdx}-${i}`}
+                    className="font-extrabold text-[#1C1917] dark:text-[#FFFFFF] bg-[#C25B32]/20 dark:bg-[#C25B32]/30 px-1.5 py-0.5 rounded-md border border-[#C25B32]/35 mx-0.5 inline-block my-0.5"
                   >
                     {part.slice(2, -2)}
                   </strong>
                 );
               }
 
-              return <span key={`text-${lineIdx}-${idx}-${i}`}>{part}</span>;
+              return <span key={`text-${blockIdx}-${lineIdx}-${i}`}>{part}</span>;
             });
-          });
 
-          if (isBullet) {
+            if (isBullet) {
+              return (
+                <div key={`bullet-${blockIdx}-${lineIdx}`} className="flex items-start gap-2.5 my-1 pl-1 text-left text-xs sm:text-sm md:text-base font-sans font-medium text-[#1C1917]/90 dark:text-[#F5F5F4]/90 leading-relaxed">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#C25B32] shrink-0 mt-2" />
+                  <div className="flex-1">{renderedContent}</div>
+                </div>
+              );
+            }
+
             return (
-              <div key={`bullet-${lineIdx}`} className="flex items-start gap-2.5 my-1 pl-1 text-left text-xs sm:text-sm md:text-base font-sans font-medium text-[#2D2D2D]/90 dark:text-[#EAEAEA]/90 leading-relaxed">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#BA7A3B] shrink-0 mt-2" />
-                <div className="flex-1">{renderedContent}</div>
-              </div>
+              <p key={`p-${blockIdx}-${lineIdx}`} className="my-1.5 text-left text-xs sm:text-sm md:text-base font-sans font-medium text-[#1C1917]/90 dark:text-[#F5F5F4]/90 leading-relaxed">
+                {renderedContent}
+              </p>
             );
-          }
-
-          return (
-            <p key={`p-${lineIdx}`} className="my-1.5 text-left text-xs sm:text-sm md:text-base font-sans font-medium text-[#2D2D2D]/90 dark:text-[#EAEAEA]/90 leading-relaxed">
-              {renderedContent}
-            </p>
-          );
+          });
         })}
       </div>
     );
   };
 
   return (
-    <div className="min-h-screen bg-[#F5F5F0] dark:bg-[#121212] text-[#2D2D2D] dark:text-[#EAEAEA] flex flex-col justify-between pb-32 md:pl-64 transition-colors duration-200">
+    <PageShell bottomInset="chat" className="flex flex-col justify-between pt-16 md:pt-0">
       {/* Sticky Header & Progress Wrapper */}
-      <div className="sticky top-0 z-40 w-full bg-[#F5F5F0]/95 dark:bg-[#121212]/95 border-b border-[#E0E0E0]/20 dark:border-[#2D2D2D]/20 backdrop-blur-md transition-colors">
+      <div className="sticky top-16 md:top-0 z-30 w-full bg-[#F5F5F0]/95 dark:bg-[#121212]/95 border-b border-[#E0E0E0]/20 dark:border-white/5 backdrop-blur-md transition-colors">
         {/* Sticky Header */}
-        <header className="w-full">
+        <header className="hidden md:block w-full">
           <div className="max-w-6xl xl:max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-4 flex items-center justify-between">
             <div className="flex items-center gap-3">
               <button
                 type="button"
                 onClick={() => setScreen("home")}
-                className="p-2.5 rounded-full hover:bg-white dark:hover:bg-[#1E1E1E] border border-transparent hover:border-[#E0E0E0] dark:hover:border-[#2D2D2D] text-[#2D2D2D] dark:text-[#EAEAEA] transition-all active:scale-95"
+                className="p-2.5 rounded-full hover:bg-white dark:hover:bg-[#1E1E1E] border border-transparent hover:border-[#E0E0E0] dark:hover:border-[#1C1917] text-[#1C1917] dark:text-[#F5F5F4] transition-all active:scale-95"
               >
                 <ArrowLeft className="w-5 h-5" />
               </button>
               <div className="flex flex-col text-left">
-                <span className="text-[10px] font-heading font-extrabold text-[#BA7A3B] tracking-widest uppercase">
+                <span className="text-[10px] font-heading font-extrabold text-[#C25B32] tracking-widest uppercase">
                   Askilla Inline Chat
                 </span>
-                <h1 className="font-heading font-extrabold text-sm sm:text-base md:text-lg text-[#2D2D2D] dark:text-[#EAEAEA] line-clamp-1">
+                <h1 className="font-heading font-extrabold text-sm sm:text-base md:text-lg text-[#1C1917] dark:text-[#F5F5F4] line-clamp-1">
                   {currentTopic}
                 </h1>
               </div>
@@ -847,9 +878,9 @@ export const LearningSession: React.FC = () => {
             <button
               type="button"
               onClick={() => setScreen("home")}
-              className="p-2.5 bg-white dark:bg-[#1E1E1E] border border-[#E0E0E0] dark:border-[#2D2D2D] hover:bg-[#F5F5F0] dark:hover:bg-[#121212] rounded-full text-xs font-bold font-heading active:scale-95 transition-all flex items-center gap-1.5"
+              className="p-2.5 bg-white dark:bg-[#1E1E1E] border border-[#E0E0E0] dark:border-white/10 hover:bg-[#F5F5F0] dark:hover:bg-[#121212] rounded-full text-xs font-bold font-heading active:scale-95 transition-all flex items-center gap-1.5"
             >
-              <Home className="w-4 h-4 text-[#BA7A3B]" />
+              <Home className="w-4 h-4 text-[#C25B32]" />
               <span className="hidden sm:inline">Home</span>
             </button>
           </div>
@@ -869,12 +900,12 @@ export const LearningSession: React.FC = () => {
             : Math.round((completedCount / totalMods) * 100);
 
           return (
-            <div className="w-full bg-[#FAFAD5]/80 dark:bg-[#2D2D15]/60 border-t border-[#E0E0E0]/10 dark:border-[#2D2D2D]/10 py-2.5 px-4 shadow-sm transition-all">
-              <div className="max-w-6xl xl:max-w-7xl mx-auto px-4 sm:px-6 md:px-8 flex items-center justify-between text-xs font-sans font-medium text-[#2D2D2D]/60 dark:text-[#EAEAEA]/60">
+            <div className="w-full bg-[#FDEEE9]/80 dark:bg-[#2D1F1A]/60 border-t border-[#E0E0E0]/10 dark:border-white/10/10 py-2.5 px-4 shadow-sm transition-all">
+              <div className="max-w-6xl xl:max-w-7xl mx-auto px-4 sm:px-6 md:px-8 flex items-center justify-between text-xs font-sans font-medium text-[#1C1917]/60 dark:text-[#F5F5F4]/60">
                 <div className="flex items-center gap-2 max-w-[60%]">
-                  <span className="w-2 h-2 rounded-full bg-[#BA7A3B] shrink-0" />
+                  <span className="w-2 h-2 rounded-full bg-[#C25B32] shrink-0" />
                   <span className="truncate">
-                    Topic: <strong className="font-extrabold text-[#2D2D2D] dark:text-[#EAEAEA]">{currentModTitle}</strong>
+                    Topic: <strong className="font-extrabold text-[#1C1917] dark:text-[#F5F5F4]">{currentModTitle}</strong>
                   </span>
                 </div>
                 <div className="flex items-center gap-3 shrink-0">
@@ -884,9 +915,9 @@ export const LearningSession: React.FC = () => {
                   <span className="sm:hidden">
                     {activeIndex + 1}/{totalMods}
                   </span>
-                  <div className="w-16 sm:w-28 h-2 bg-[#E0E0E0] dark:bg-[#2D2D2D] rounded-full overflow-hidden shadow-inner">
+                  <div className="w-16 sm:w-28 h-2 bg-[#E0E0E0] dark:bg-white/10 rounded-full overflow-hidden shadow-inner">
                     <div 
-                      className="h-full bg-[#BA7A3B] rounded-full transition-all duration-300"
+                      className="h-full bg-[#C25B32] rounded-full transition-all duration-300"
                       style={{ width: `${progressPercent}%` }}
                     />
                   </div>
@@ -900,8 +931,21 @@ export const LearningSession: React.FC = () => {
       {/* Chat Thread Container */}
       <main className="w-full max-w-4xl lg:max-w-5xl xl:max-w-5xl mx-auto px-4 sm:px-6 md:px-8 py-6 space-y-6 flex-1 flex flex-col justify-start">
         <div className="space-y-6">
-          <AnimatePresence initial={false}>
-            {messages.map((msg) => {
+          {messages.length === 0 ? (
+            <div className="flex flex-col items-center justify-center py-16 text-center">
+              <div className="w-20 h-20 rounded-full border-2 border-[#C25B32]/30 bg-[#FDEEE9]/30 dark:bg-[#2D1F1A]/20 flex items-center justify-center mb-6">
+                <Lightbulb className="w-10 h-10 text-[#C25B32]/60" />
+              </div>
+              <h3 className="font-heading font-extrabold text-xl sm:text-2xl text-[#1C1917] dark:text-[#F5F5F4] mb-3">
+                Start Your Learning Journey
+              </h3>
+              <p className="text-sm sm:text-base text-[#1C1917]/60 dark:text-[#F5F5F4]/60 max-w-md leading-relaxed">
+                Select a topic from the home screen to begin learning with Uncle Sabi. He'll guide you through step-by-step lessons in your preferred language.
+              </p>
+            </div>
+          ) : (
+            <AnimatePresence initial={false}>
+              {messages.map((msg) => {
               const isSabi = msg.sender === "uncle_sabi";
 
               return (
@@ -915,7 +959,7 @@ export const LearningSession: React.FC = () => {
                 >
                   {/* Sabi Avatar */}
                   {isSabi && (
-                    <div className="w-8 h-8 sm:w-11 sm:h-11 rounded-full border-2 border-[#BA7A3B] bg-[#FAFAD5] dark:bg-[#2D2D15] overflow-hidden flex items-center justify-center shrink-0 shadow-sm mt-0.5">
+                    <div className="w-8 h-8 sm:w-11 sm:h-11 rounded-full border-2 border-[#C25B32] bg-[#FDEEE9] dark:bg-[#2D1F1A] overflow-hidden flex items-center justify-center shrink-0 shadow-sm mt-0.5">
                       <img src="/uncle_sabi.png" alt="Uncle Sabi" className="w-full h-full object-cover" />
                     </div>
                   )}
@@ -926,38 +970,44 @@ export const LearningSession: React.FC = () => {
                     <div
                       className={`p-3.5 sm:p-5 md:p-6 lg:p-6 rounded-2xl sm:rounded-3xl border shadow-sm text-left min-w-0 overflow-hidden ${
                         isSabi
-                          ? "bg-white dark:bg-[#1E1E1E] border-[#E0E0E0] dark:border-[#2D2D2D] text-[#2D2D2D] dark:text-[#EAEAEA]"
-                          : "bg-[#BA7A3B] border-[#BA7A3B] text-[#2D2D2D] font-extrabold rounded-tr-none rounded-br-2xl inline-block shadow-md"
+                          ? "bg-white dark:bg-[#1E1E1E] border-[#E0E0E0] dark:border-white/10 text-[#1C1917] dark:text-[#F5F5F4]"
+                          : "bg-[#C25B32] border-[#C25B32] text-[#1C1917] font-extrabold rounded-tr-none rounded-br-2xl inline-block shadow-md"
                       }`}
                     >
                       {/* Submodule layout inside chat */}
                       {msg.type === "explanation" && msg.data ? (
                         <div className="space-y-3.5">
-                          <div className="flex items-center justify-between gap-2 border-b border-[#E0E0E0]/60 dark:border-[#2D2D2D]/60 pb-2">
-                            <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#BA7A3B]">
+                          <div className="flex items-center justify-between gap-2 border-b border-[#E0E0E0]/60 dark:border-white/5 pb-2">
+                            <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#C25B32]">
                               Uncle Sabi Explanation
                             </span>
-                            <AudioPlayer text={msg.content} />
+                            {language === 'english' && <AudioPlayer text={msg.content} appLanguage={language} />}
                           </div>
-                          <div className="text-xs sm:text-base leading-relaxed font-sans font-medium whitespace-pre-line text-[#2D2D2D]/90 dark:text-[#EAEAEA]/90 break-words">
+                          <div className="text-xs sm:text-base leading-relaxed font-sans font-medium whitespace-pre-line text-[#1C1917]/90 dark:text-[#F5F5F4]/90 break-words">
                             {renderFormattedText(msg.content)}
                           </div>
                           {msg.data.diagram && (
-                            <div className="my-3.5 p-3 sm:p-5 overflow-hidden rounded-2xl border border-[#BA7A3B]/40 bg-[#FAFAD5]/45 dark:bg-[#2D2D15]/20 shadow-inner text-[#2D2D2D] dark:text-[#EAEAEA] flex flex-col items-center gap-2">
-                              <div
-                                className="w-full flex justify-center items-center overflow-x-auto"
-                                dangerouslySetInnerHTML={{ __html: cleanSvg(msg.data.diagram) }}
-                              />
-                              <div className="flex items-center gap-1.5 text-[10px] font-sans font-extrabold uppercase tracking-wider text-[#BA7A3B]">
-                                <span className="w-1.5 h-1.5 rounded-full bg-[#BA7A3B] shrink-0" />
+                            <div className="my-3.5 p-3 sm:p-5 overflow-hidden rounded-2xl border border-[#C25B32]/40 bg-[#FDEEE9]/45 dark:bg-[#2D1F1A]/20 shadow-inner text-[#1C1917] dark:text-[#F5F5F4] flex flex-col items-center gap-2">
+                              {msg.data.diagram.includes("<svg") ? (
+                                <div
+                                  className="w-full flex justify-center items-center overflow-x-auto"
+                                  dangerouslySetInnerHTML={{ __html: cleanSvg(msg.data.diagram) }}
+                                />
+                              ) : (
+                                <div className="w-full">
+                                  {renderFormattedText(msg.data.diagram)}
+                                </div>
+                              )}
+                              <div className="flex items-center gap-1.5 text-[10px] font-sans font-extrabold uppercase tracking-wider text-[#C25B32]">
+                                <span className="w-1.5 h-1.5 rounded-full bg-[#C25B32] shrink-0" />
                                 Uncle Sabi Concept Visualizer
                               </div>
                             </div>
                           )}
                           {msg.data.native_equivalents &&
                             Object.keys(msg.data.native_equivalents).length > 0 && (
-                              <div className="pt-2.5 border-t border-[#E0E0E0]/60 dark:border-[#2D2D2D]/60 text-xs text-[#2D2D2D]/65 dark:text-[#EAEAEA]/65 font-sans space-y-1">
-                              <p className="font-extrabold text-[#2D2D2D] dark:text-[#EAEAEA] uppercase tracking-wider">
+                              <div className="pt-2.5 border-t border-[#E0E0E0]/60 dark:border-white/5 text-xs text-[#1C1917]/65 dark:text-[#F5F5F4]/65 font-sans space-y-1">
+                              <p className="font-extrabold text-[#1C1917] dark:text-[#F5F5F4] uppercase tracking-wider">
                                   Key Terms Simplified:
                                 </p>
                                 {Object.entries(msg.data.native_equivalents).map(([t, eq]: any) => (
@@ -968,9 +1018,9 @@ export const LearningSession: React.FC = () => {
                               </div>
                             )}
                           {msg.data.source && (
-                            <p className="text-[10px] text-[#2D2D2D]/40 dark:text-[#EAEAEA]/40 font-sans flex items-center gap-1 pt-1">
-                              <span className="inline-block w-1.5 h-1.5 rounded-full bg-[#BA7A3B]/50" />
-                              Sourced from <span className="font-bold text-[#2D2D2D]/60 dark:text-[#EAEAEA]/60">{friendlySiteName(msg.data.source)}</span>
+                            <p className="text-[10px] text-[#1C1917]/40 dark:text-[#F5F5F4]/40 font-sans flex items-center gap-1 pt-1">
+                              <span className="inline-block w-1.5 h-1.5 rounded-full bg-[#C25B32]/50" />
+                              Sourced from <span className="font-bold text-[#1C1917]/60 dark:text-[#F5F5F4]/60">{friendlySiteName(msg.data.source)}</span>
                             </p>
                           )}
                         </div>
@@ -978,12 +1028,20 @@ export const LearningSession: React.FC = () => {
                         <div className="space-y-3">
                           {/* Primary high-precision SVG vector diagram */}
                           {msg.data.diagram ? (
-                            <div
-                              className="p-4 sm:p-6 overflow-hidden rounded-2xl border border-[#BA7A3B]/40 bg-[#FAFAD5]/45 dark:bg-[#2D2D15]/20 shadow-inner text-[#2D2D2D] dark:text-[#EAEAEA] flex justify-center items-center"
-                              dangerouslySetInnerHTML={{ __html: cleanSvg(msg.data.diagram) }}
-                            />
+                            <div className="p-4 sm:p-6 overflow-hidden rounded-2xl border border-[#C25B32]/40 bg-[#FDEEE9]/45 dark:bg-[#2D1F1A]/20 shadow-inner text-[#1C1917] dark:text-[#F5F5F4] flex justify-center items-center flex-col gap-2">
+                              {msg.data.diagram.includes("<svg") ? (
+                                <div
+                                  className="w-full flex justify-center items-center overflow-x-auto"
+                                  dangerouslySetInnerHTML={{ __html: cleanSvg(msg.data.diagram) }}
+                                />
+                              ) : (
+                                <div className="w-full">
+                                  {renderFormattedText(msg.data.diagram)}
+                                </div>
+                              )}
+                            </div>
                           ) : msg.content ? (
-                            <div className="overflow-hidden rounded-2xl border border-[#E0E0E0]/60 dark:border-[#2D2D2D]/60 bg-white dark:bg-[#1A1A1A] p-2 shadow-sm">
+                            <div className="overflow-hidden rounded-2xl border border-[#E0E0E0]/60 dark:border-white/5 bg-white dark:bg-[#1A1A1A] p-2 shadow-sm">
                               <img
                                 src={`https://image.pollinations.ai/prompt/${encodeURIComponent(
                                   `${msg.content} clean educational diagram textbook illustration vector style white background high contrast`
@@ -999,19 +1057,19 @@ export const LearningSession: React.FC = () => {
                               />
                             </div>
                           ) : null}
-                          <p className="text-[10px] font-sans italic text-[#2D2D2D]/60 dark:text-[#EAEAEA]/60">
+                          <p className="text-[10px] font-sans italic text-[#1C1917]/60 dark:text-[#F5F5F4]/60">
                             Uncle Sabi concept visualizer.
                           </p>
                         </div>
                       ) : msg.type === "question" ? (
                         <div className="space-y-4">
-                          <div className="flex items-center justify-between gap-2 border-b border-[#E0E0E0]/60 dark:border-[#2D2D2D]/60 pb-2">
-                            <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#BA7A3B]">
+                          <div className="flex items-center justify-between gap-2 border-b border-[#E0E0E0]/60 dark:border-white/5 pb-2">
+                            <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#C25B32]">
                               Check-in Question
                             </span>
-                            <AudioPlayer text={msg.content} />
+                            {language === 'english' && <AudioPlayer text={msg.content} appLanguage={language} />}
                           </div>
-                          <h4 className="font-heading font-extrabold text-sm sm:text-base leading-snug text-[#2D2D2D] dark:text-[#EAEAEA]">
+                          <h4 className="font-heading font-extrabold text-sm sm:text-base leading-snug text-[#1C1917] dark:text-[#F5F5F4]">
                             {renderFormattedText(msg.content)}
                           </h4>
                           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 pt-1">
@@ -1022,10 +1080,10 @@ export const LearningSession: React.FC = () => {
                                 onClick={() =>
                                   handleAnswerQuestion(msg.data.modIdx, msg.data.qIdx, opt, msg.data.questionObj)
                                 }
-                                className="w-full text-left p-3.5 rounded-2xl border-2 border-[#E0E0E0] dark:border-[#3D3D3D] hover:border-[#BA7A3B] text-xs sm:text-sm font-semibold transition-all duration-200 bg-white dark:bg-[#1E1E1E] text-[#2D2D2D] dark:text-[#EAEAEA] hover:bg-[#FAFAD5]/40 dark:hover:bg-[#2D2D15]/30 flex items-center justify-between active:scale-[0.98]"
+                                className="w-full text-left p-3.5 rounded-2xl border-2 border-[#E0E0E0] dark:border-[#3D3D3D] hover:border-[#C25B32] text-xs sm:text-sm font-semibold transition-all duration-200 bg-white dark:bg-[#1E1E1E] text-[#1C1917] dark:text-[#F5F5F4] hover:bg-[#FDEEE9]/40 dark:hover:bg-[#2D1F1A]/30 flex items-center justify-between active:scale-[0.98]"
                               >
                                 <span>{opt}</span>
-                                <ChevronRight className="w-4 h-4 text-[#BA7A3B]" />
+                                <ChevronRight className="w-4 h-4 text-[#C25B32]" />
                               </button>
                             ))}
                           </div>
@@ -1047,11 +1105,11 @@ export const LearningSession: React.FC = () => {
                         // Standard Text Bubble
                         <div className="space-y-3.5">
                           {isSabi && (
-                            <div className="flex items-center justify-between gap-2 border-b border-[#E0E0E0]/60 dark:border-[#2D2D2D]/60 pb-2">
-                              <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#BA7A3B]">
+                            <div className="flex items-center justify-between gap-2 border-b border-[#E0E0E0]/60 dark:border-white/5 pb-2">
+                              <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#C25B32]">
                                 Uncle Sabi Says
                               </span>
-                              <AudioPlayer text={msg.content} />
+                              {language === 'english' && <AudioPlayer text={msg.content} appLanguage={language} />}
                             </div>
                           )}
                           <div className="text-xs sm:text-sm font-sans font-medium whitespace-pre-line leading-relaxed">
@@ -1075,7 +1133,7 @@ export const LearningSession: React.FC = () => {
                                 handleCtaClick(opt, msg);
                               }
                             }}
-                            className="px-5 py-2.5 bg-[#FAFAD5] dark:bg-[#2D2D15] border border-[#BA7A3B] text-[#2D2D2D] dark:text-[#EAEAEA] font-heading font-extrabold text-xs rounded-full hover:bg-[#BA7A3B] hover:text-white transition-all duration-200 shadow-sm active:scale-95"
+                            className="px-4 py-1.5 bg-[#FDEEE9] dark:bg-[#2D1F1A] border border-[#C25B32] text-[#1C1917] dark:text-[#F5F5F4] font-heading font-extrabold text-[11px] rounded-full hover:bg-[#C25B32] hover:text-white transition-all duration-200 shadow-sm active:scale-95"
                           >
                             {opt}
                           </button>
@@ -1087,6 +1145,7 @@ export const LearningSession: React.FC = () => {
               );
             })}
           </AnimatePresence>
+          )}
 
           {/* Loading bubble placeholder */}
           {isLoading && (
@@ -1095,13 +1154,13 @@ export const LearningSession: React.FC = () => {
               animate={{ opacity: 1, y: 0 }}
               className="flex items-start gap-3 w-full justify-start"
             >
-              <div className="w-10 h-10 rounded-full border border-[#BA7A3B] bg-[#FAFAD5] dark:bg-[#2D2D15] overflow-hidden flex items-center justify-center shrink-0 shadow-sm">
+              <div className="w-10 h-10 rounded-full border border-[#C25B32] bg-[#FDEEE9] dark:bg-[#2D1F1A] overflow-hidden flex items-center justify-center shrink-0 shadow-sm">
                 <img src="/uncle_sabi.png" alt="Uncle Sabi" className="w-full h-full object-cover" />
               </div>
-              <div className="bg-white dark:bg-[#1E1E1E] rounded-3xl p-4 border border-[#E0E0E0] dark:border-[#2D2D2D] flex items-center gap-2">
-                <span className="w-2.5 h-2.5 bg-[#BA7A3B] rounded-full animate-bounce" style={{ animationDelay: "0ms" }} />
-                <span className="w-2.5 h-2.5 bg-[#BA7A3B] rounded-full animate-bounce" style={{ animationDelay: "150ms" }} />
-                <span className="w-2.5 h-2.5 bg-[#BA7A3B] rounded-full animate-bounce" style={{ animationDelay: "300ms" }} />
+              <div className="bg-white dark:bg-[#1E1E1E] rounded-3xl p-4 border border-[#E0E0E0] dark:border-white/10 flex items-center gap-2">
+                <span className="w-2.5 h-2.5 bg-[#C25B32] rounded-full animate-bounce" style={{ animationDelay: "0ms" }} />
+                <span className="w-2.5 h-2.5 bg-[#C25B32] rounded-full animate-bounce" style={{ animationDelay: "150ms" }} />
+                <span className="w-2.5 h-2.5 bg-[#C25B32] rounded-full animate-bounce" style={{ animationDelay: "300ms" }} />
               </div>
             </motion.div>
           )}
@@ -1111,14 +1170,14 @@ export const LearningSession: React.FC = () => {
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              className="p-4 bg-[#FAFAD5] dark:bg-[#2D2D15] border-l-4 border-l-[#BA7A3B] border border-[#E0E0E0] dark:border-[#2D2D2D] rounded-2xl flex items-start gap-3 text-left w-full sm:max-w-xl mx-auto"
+              className="p-4 bg-[#FDEEE9] dark:bg-[#2D1F1A] border-l-4 border-l-[#C25B32] border border-[#E0E0E0] dark:border-white/10 rounded-2xl flex items-start gap-3 text-left w-full sm:max-w-xl mx-auto"
             >
-              <Lightbulb className="w-5 h-5 text-[#BA7A3B] shrink-0 mt-0.5" />
+              <Lightbulb className="w-5 h-5 text-[#C25B32] shrink-0 mt-0.5" />
               <div>
-                <h5 className="font-heading font-extrabold text-xs text-[#2D2D2D] dark:text-[#EAEAEA] uppercase tracking-wider">
+                <h5 className="font-heading font-extrabold text-xs text-[#1C1917] dark:text-[#F5F5F4] uppercase tracking-wider">
                   Uncle Sabi Hint
                 </h5>
-                <p className="text-xs sm:text-sm font-sans mt-0.5 leading-relaxed text-[#2D2D2D]/85 dark:text-[#EAEAEA]/85">
+                <p className="text-xs sm:text-sm font-sans mt-0.5 leading-relaxed text-[#1C1917]/85 dark:text-[#F5F5F4]/85">
                   {hintText}
                 </p>
               </div>
@@ -1130,9 +1189,9 @@ export const LearningSession: React.FC = () => {
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              className="p-4 bg-emerald-50 dark:bg-emerald-950/20 border-l-4 border-l-[#BA7A3B] border border-emerald-200 dark:border-emerald-900/40 rounded-2xl flex items-start gap-3 text-left w-full sm:max-w-xl mx-auto"
+              className="p-4 bg-emerald-50 dark:bg-emerald-950/20 border-l-4 border-l-[#C25B32] border border-emerald-200 dark:border-emerald-900/40 rounded-2xl flex items-start gap-3 text-left w-full sm:max-w-xl mx-auto"
             >
-              <Check className="w-5 h-5 text-[#BA7A3B] shrink-0 mt-0.5" />
+              <Check className="w-5 h-5 text-[#C25B32] shrink-0 mt-0.5" />
               <div>
                 <h5 className="font-heading font-extrabold text-xs text-emerald-800 dark:text-emerald-300 uppercase tracking-wider">
                   Answer Revealed
@@ -1149,7 +1208,7 @@ export const LearningSession: React.FC = () => {
       </main>
 
       {/* Sticky, Conversational Chat Input Box Footer */}
-      <footer className="fixed bottom-0 left-0 right-0 md:pl-64 bg-[#F5F5F0]/95 dark:bg-[#121212]/95 border-t border-[#E0E0E0]/20 dark:border-[#2D2D2D]/20 p-4 z-40 backdrop-blur-md">
+      <footer className="fixed bottom-0 left-0 md:left-64 right-0 bg-[#F5F5F0]/95 dark:bg-[#121212]/95 border-t border-[#E0E0E0]/20 dark:border-white/5 p-4 z-40 backdrop-blur-md">
         <form
           onSubmit={(e) => {
             e.preventDefault();
@@ -1167,25 +1226,30 @@ export const LearningSession: React.FC = () => {
                   ? "Ask Uncle Sabi any question..."
                   : "Ask Uncle Sabi a question..."
               }
-              className="w-full py-3.5 pl-4 pr-12 rounded-full border-2 border-[#E0E0E0] dark:border-[#2D2D2D] bg-white dark:bg-[#1E1E1E] text-xs sm:text-sm font-semibold focus:outline-none focus:border-[#BA7A3B] transition-all text-[#2D2D2D] dark:text-[#EAEAEA] shadow-inner"
+              className={`w-full py-3.5 pl-4 ${
+                language === "pidgin" ? "pr-4" : "pr-12"
+              } rounded-full border-2 border-[#E0E0E0] dark:border-white/10 bg-white dark:bg-[#1E1E1E] text-xs sm:text-sm font-semibold focus:outline-none focus:border-[#C25B32] transition-all text-[#1C1917] dark:text-[#F5F5F4] shadow-inner`}
             />
-            {/* Integrated Voice Input microphone trigger */}
-            <div className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center">
-              <VoiceInput
-                onTranscript={(transcript) => setInputValue(transcript)}
-                label="Voice Input"
-                iconOnly
-              />
-            </div>
+            {/* Integrated Voice Input microphone trigger (Hidden in Pidgin mode to save STT credits) */}
+            {language !== "pidgin" && (
+              <div className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center">
+                <VoiceInput
+                  onTranscript={(transcript) => setInputValue(transcript)}
+                  label="Voice Input"
+                  iconOnly
+                  appLanguage={language}
+                />
+              </div>
+            )}
           </div>
           <button
             type="submit"
-            className="px-4 sm:px-6 py-3.5 bg-gradient-to-r from-[#BA7A3B] to-[#A66A30] text-[#2D2D2D] hover:from-[#A66A30] hover:to-[#8E5724] font-heading font-extrabold text-xs sm:text-sm rounded-full active:scale-95 transition-all shadow-md"
+            className="px-4 sm:px-6 py-3.5 bg-gradient-to-r from-[#C25B32] to-[#94401F] text-white hover:from-[#94401F] hover:to-[#94401F] font-heading font-extrabold text-xs sm:text-sm rounded-full active:scale-95 transition-all shadow-md"
           >
             Send
           </button>
         </form>
       </footer>
-    </div>
+    </PageShell>
   );
 };

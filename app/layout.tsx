@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
+import "katex/dist/katex.min.css";
 
 export const metadata: Metadata = {
   title: "Askilla — Ask Anything. Sabi Everything.",
@@ -30,7 +31,7 @@ export default function RootLayout({
         <link rel="icon" type="image/svg+xml" href="/icon.svg" />
         <link rel="apple-touch-icon" href="/icon.svg" />
       </head>
-      <body className="antialiased min-h-screen bg-[#F5F5F0] dark:bg-[#121212] text-[#2D2D2D] dark:text-[#EAEAEA] selection:bg-[#BA7A3B]/30 overflow-x-hidden">
+      <body className="antialiased min-h-screen bg-[#F5F5F0] dark:bg-[#121212] text-[#1C1917] dark:text-[#F5F5F4] selection:bg-[#C25B32]/30 overflow-x-hidden">
         {children}
       </body>
     </html>

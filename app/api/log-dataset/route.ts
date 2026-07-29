@@ -40,7 +40,7 @@ export async function POST(req: Request) {
     // 1. Primary: Save to Neon PostgreSQL DB (Production Persistent)
     let dbRecordId = "";
     try {
-      const dbRes = await (prisma as any).datasetLog.create({
+      const dbRes = await prisma.datasetLog.create({
         data: recordData,
       });
       dbRecordId = dbRes.id;
@@ -81,7 +81,7 @@ export async function GET() {
   try {
     // 1. Primary: Fetch from Neon PostgreSQL DB
     try {
-      const dbLogs = await (prisma as any).datasetLog.findMany({
+      const dbLogs = await prisma.datasetLog.findMany({
         orderBy: { createdAt: "desc" },
         take: 500,
       });

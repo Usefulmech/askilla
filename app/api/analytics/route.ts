@@ -7,12 +7,38 @@ export const fetchCache = "force-no-store";
 
 export async function GET(req: NextRequest) {
   try {
-    const userId = req.nextUrl?.searchParams?.get("userId") || "user_guest";
+    const phone = req.nextUrl?.searchParams?.get("phone");
+
+    if (!phone) {
+      return NextResponse.json({ error: "Phone number is required" }, { status: 400 });
+    }
+
+    // Get user by phone first
+    const user = await prisma.user.findUnique({
+      where: { phone },
+    });
+
+    if (!user) {
+      return NextResponse.json({
+        success: true,
+        stats: {
+          completedModules: 0,
+          totalAttempts: 0,
+          accuracyRate: 0,
+          languageBreakdown: {
+            pidgin: 50,
+            english: 50,
+          },
+          avgAttemptsPerQuestion: "0.0",
+          learningSpeedSeconds: 120,
+        },
+      });
+    }
 
     // 1. Fetch completed modules count
     const completedCount = await prisma.userProgress.count({
       where: {
-        userId,
+        userId: user.id,
         completed: true,
       },
     });
@@ -20,7 +46,7 @@ export async function GET(req: NextRequest) {
     // 2. Fetch all question attempts for correctness metrics
     const attempts = await prisma.questionAttempt.findMany({
       where: {
-        userId,
+        userId: user.id,
       },
     });
 

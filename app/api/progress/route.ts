@@ -8,44 +8,113 @@ export const fetchCache = "force-no-store";
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const { userId, moduleId, questionIndex, userAnswer, isCorrect, feedbackGiven, language } = body;
+    const {
+      phone,
+      moduleId,
+      moduleIndex,
+      questionIndex,
+      userAnswer,
+      isCorrect,
+      completed,
+      feedbackGiven,
+      language,
+      idempotencyKey,
+    } = body;
 
     if (!moduleId) {
       return NextResponse.json({ error: "Module ID is required" }, { status: 400 });
     }
 
+    if (!phone) {
+      return NextResponse.json({ error: "Phone number is required" }, { status: 400 });
+    }
+
     try {
-      const cleanUserId = userId || "user_guest";
+      const user = await prisma.user.findUnique({
+        where: { phone },
+      });
 
-      // Ensure the user exists in the database first to avoid foreign key violations
-      await prisma.user.upsert({
-        where: { id: cleanUserId },
-        update: {},
-        create: {
-          id: cleanUserId,
-          phone: cleanUserId,
-          name: "Learner",
-          preferredLanguage: language || "english",
+      if (!user) {
+        return NextResponse.json({ error: "User must be created before recording progress" }, { status: 404 });
+      }
+
+      const module = await prisma.module.findUnique({
+        where: { id: moduleId },
+      });
+
+      if (!module) {
+        return NextResponse.json({ error: "Module was not found in the course database" }, { status: 404 });
+      }
+
+      const safeModuleIndex = Number.isFinite(Number(moduleIndex)) ? Number(moduleIndex) : 0;
+      const safeQuestionIndex = Number.isFinite(Number(questionIndex)) ? Number(questionIndex) : 0;
+      const normalizedAnswer = userAnswer || "";
+
+      const existingAttempt = await prisma.questionAttempt.findFirst({
+        where: {
+          userId: user.id,
+          moduleId,
+          questionIndex: safeQuestionIndex,
+          userAnswer: normalizedAnswer,
         },
       });
 
-      // Save dataset attempt entry to PostgreSQL
-      const attempt = await prisma.questionAttempt.create({
-        data: {
-          userId: cleanUserId,
-          moduleId: moduleId,
-          questionIndex: questionIndex || 0,
-          userAnswer: userAnswer || "",
-          isCorrect: Boolean(isCorrect),
-          feedbackGiven: feedbackGiven || "",
-          language: language || "english",
+      const attempt = existingAttempt || await prisma.questionAttempt.create({
+          data: {
+            userId: user.id,
+            moduleId,
+            questionIndex: safeQuestionIndex,
+            userAnswer: normalizedAnswer,
+            isCorrect: Boolean(isCorrect),
+            feedbackGiven: feedbackGiven || "",
+            language: language || "english",
+          },
+        });
+
+      const existingProgress = await prisma.userProgress.findFirst({
+        where: {
+          userId: user.id,
+          moduleId,
         },
       });
 
-      return NextResponse.json({ success: true, attempt });
+      const nextCompletedCount = Math.max(
+        existingProgress?.currentQuestion || 0,
+        Boolean(completed) ? safeModuleIndex + 1 : safeModuleIndex
+      );
+
+      const progressData = {
+        currentQuestion: nextCompletedCount,
+        correctAnswers: (existingProgress?.correctAnswers || 0) + (Boolean(isCorrect) && !existingAttempt ? 1 : 0),
+        wrongAttempts: (existingProgress?.wrongAttempts || 0) + (!Boolean(isCorrect) && !existingAttempt ? 1 : 0),
+        completed: Boolean(completed) || existingProgress?.completed || false,
+        completedAt: Boolean(completed) ? new Date() : existingProgress?.completedAt || null,
+      };
+
+      const progress = existingProgress
+        ? await prisma.userProgress.update({
+            where: { id: existingProgress.id },
+            data: progressData,
+          })
+        : await prisma.userProgress.create({
+            data: {
+              userId: user.id,
+              moduleId,
+              ...progressData,
+            },
+          });
+
+      return NextResponse.json({
+        success: true,
+        attempt,
+        progress,
+        existing: Boolean(existingAttempt),
+        userId: user.id,
+        idempotencyKey,
+      });
     } catch (dbErr) {
-      console.warn("PostgreSQL attempt save skipped (offline mode):", dbErr);
-      return NextResponse.json({ success: true, offline: true });
+      console.warn("PostgreSQL progress save failed:", dbErr);
+      return NextResponse.json({ error: "Failed to record progress" }, { status: 500 });
     }
   } catch (error) {
     console.error("Error saving progress:", error);

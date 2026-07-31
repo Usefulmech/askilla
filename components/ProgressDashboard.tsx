@@ -27,9 +27,9 @@ export const ProgressDashboard: React.FC = () => {
   const [activeCertModal, setActiveCertModal] = useState<CompletedCertificate | null>(null);
   const [shareModalData, setShareModalData] = useState<{ topic: string; shareUrl: string } | null>(null);
 
-  const handleShareCertificate = (topic: string, name: string) => {
+  const handleShareCertificate = (topic: string, name: string, certLang?: string) => {
     const origin = typeof window !== "undefined" ? window.location.origin : "";
-    const shareUrl = `${origin}/share?topic=${encodeURIComponent(topic)}&learner=${encodeURIComponent(name)}&lang=${encodeURIComponent(language)}`;
+    const shareUrl = `${origin}/share?topic=${encodeURIComponent(topic)}&learner=${encodeURIComponent(name)}&lang=${encodeURIComponent(certLang || language)}`;
     setShareModalData({ topic, shareUrl });
   };
   const [stats, setStats] = useState({
@@ -64,7 +64,7 @@ export const ProgressDashboard: React.FC = () => {
   const modulePercentage = totalModules > 0 ? Math.round((completedCount / totalModules) * 100) : 100;
 
   useEffect(() => {
-    if (completedCount >= totalModules && topicName) {
+    if (currentCourse && completedCount >= totalModules && topicName) {
       const certId = `cert_${Date.now()}`;
       
       // Save certificate to database
@@ -88,7 +88,20 @@ export const ProgressDashboard: React.FC = () => {
         language: language,
       });
     }
-  }, [completedCount, totalModules, topicName, user.name, user.phone, stats.accuracyRate, language, archiveCertificate]);
+  }, [currentCourse, completedCount, totalModules, topicName, user.name, user.phone, stats.accuracyRate, language, archiveCertificate]);
+
+  const activeCompletedCert = currentCourse && completedCount >= totalModules
+    ? {
+        topic: topicName,
+        learnerName: user.name || "Learner",
+        dateCompleted: new Date().toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }),
+        totalModules: totalModules,
+        scorePercent: stats.accuracyRate || 100,
+        language: language,
+      }
+    : completedCertificates.length > 0
+    ? completedCertificates[0]
+    : null;
 
   const handleExportMlDataset = async () => {
     try {
@@ -359,7 +372,7 @@ export const ProgressDashboard: React.FC = () => {
         </div>
 
         {/* Premium Styled Shareable Achievement Card */}
-        {completedCount === 0 || completedCount < totalModules ? (
+        {!activeCompletedCert ? (
           <div className="bg-white dark:bg-[#1E1E1E] rounded-3xl p-8 shadow-sm border border-dashed border-[#E0E0E0] dark:border-white/10 space-y-4 w-full max-w-full text-center relative overflow-hidden flex flex-col items-center py-12">
             <div className="w-16 h-16 bg-[#F5F5F0] dark:bg-[#1C1C1C] border border-dashed border-[#C25B32]/35 rounded-full flex items-center justify-center text-[#C25B32]">
               <Award className="w-8 h-8 opacity-65" />
@@ -380,28 +393,28 @@ export const ProgressDashboard: React.FC = () => {
             <div className="absolute top-3 right-3 w-5 h-5 sm:w-6 sm:h-6 border-t-2 border-r-2 border-[#C25B32]" />
             <div className="absolute bottom-3 left-3 w-5 h-5 sm:w-6 sm:h-6 border-b-2 border-l-2 border-[#C25B32]" />
             <div className="absolute bottom-3 right-3 w-5 h-5 sm:w-6 sm:h-6 border-b-2 border-r-2 border-[#C25B32]" />
-
+ 
             {/* Watermark Logo */}
             <div className="absolute -right-16 -bottom-16 w-56 h-56 opacity-[0.02] dark:opacity-[0.04] pointer-events-none">
               <Award className="w-full h-full text-[#C25B32]" />
             </div>
-
+ 
             <div className="w-16 h-16 sm:w-20 sm:h-20 bg-[#FDEEE9] dark:bg-[#2D1F1A] border-2 border-[#C25B32] rounded-full flex items-center justify-center text-[#C25B32] shadow-inner shrink-0">
               <Award className="w-8 h-8 sm:w-10 sm:h-10" />
             </div>
-
+ 
             <div className="space-y-3 max-w-2xl">
               <span className="text-[9px] sm:text-[10px] font-heading font-extrabold text-[#C25B32] uppercase tracking-widest bg-[#C25B32]/10 px-3 py-1 rounded-full border border-[#C25B32]/30">
                 Verified Sabi Certification
               </span>
               <h3 className="font-heading font-extrabold text-2xl sm:text-4xl lg:text-5xl text-[#1C1917] dark:text-[#F5F5F4] tracking-tight leading-tight pt-1">
-                I Sabi {topicName} Now!
+                I Sabi {activeCompletedCert.topic} Now!
               </h3>
               <p className="text-xs sm:text-sm text-[#1C1917]/70 dark:text-[#F5F5F4]/70 font-sans font-medium max-w-md mx-auto leading-relaxed border-t border-b border-[#E0E0E0]/60 dark:border-white/5 py-3 mt-2">
-                Awarded by Askilla to {user.name || "Learner"} for successfully mastering the core modules in {language.toUpperCase()} mode with {effectiveAccuracyRate}% check-in correctness.
+                Awarded by Askilla to {activeCompletedCert.learnerName || user.name || "Learner"} for successfully mastering the core modules in {activeCompletedCert.language.toUpperCase()} mode with {activeCompletedCert.scorePercent}% check-in correctness.
               </p>
             </div>
-
+ 
             {/* Signatures, Date and Share CTA Layout */}
             <div className="w-full max-w-md space-y-4 pt-2">
               <div className="grid grid-cols-2 gap-4 sm:gap-8 text-xs font-medium text-[#1C1917]/60 dark:text-[#F5F5F4]/60">
@@ -411,15 +424,15 @@ export const ProgressDashboard: React.FC = () => {
                 </div>
                 <div className="border-t border-[#E0E0E0] dark:border-white/10 pt-2">
                   <p className="font-sans font-bold text-[#1C1917] dark:text-[#F5F5F4]">
-                    {new Date().toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" })}
+                    {activeCompletedCert.dateCompleted}
                   </p>
                   <p className="font-sans text-[9px] mt-0.5">Verification Date</p>
                 </div>
               </div>
-
+ 
               <button
                 type="button"
-                onClick={() => handleShareCertificate(topicName, user.name || "Learner")}
+                onClick={() => handleShareCertificate(activeCompletedCert.topic, activeCompletedCert.learnerName || user.name || "Learner", activeCompletedCert.language)}
                 className="w-full py-3 px-6 bg-[#C25B32] text-[#1C1917] font-extrabold text-xs sm:text-sm rounded-full shadow-md hover:bg-[#94401F] active:scale-95 transition-all flex items-center justify-center gap-2"
               >
                 <Share2 className="w-4 h-4" />

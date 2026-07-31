@@ -40,6 +40,12 @@ function formatUser(user: any) {
   const certificates = (user.certificates || []).map((cert: any) => ({
     id: cert.id,
     topic: cert.topic,
+    learnerName: user.name || "Askilla Learner",
+    dateCompleted: cert.completedAt
+      ? new Date(cert.completedAt).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })
+      : new Date().toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }),
+    totalModules: 3,
+    scorePercent: 100,
     language: cert.language,
     completedAt: cert.completedAt,
     shareUrl: cert.shareUrl,
